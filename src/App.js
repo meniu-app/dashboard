@@ -30,21 +30,21 @@ class App extends Component {
   }
 
   render() {
-    const { restaurants, isRestaurantsDataReady, isScanned } = this.props;
+    const { restaurants, isRestaurantsDataReady } = this.props;
     return (
       <div>
         <Router>
           <Suspense fallback={<Spinner></Spinner>}>
-            {!isScanned && <Navbar/>}
+            <Navbar/>
             {
             <Switch>
               <Route exact path="/">
-                {/* <AuthenticatedRoute> */}
+                <AuthenticatedRoute>
                   <div className="main-wrapper d-flex">
                     <Sidenav />
                     <Dashboard restaurants={restaurants} isRestaurantsDataReady={isRestaurantsDataReady} />
                   </div>
-                {/* </AuthenticatedRoute> */}
+                </AuthenticatedRoute>
               </Route>
               {/* <Route path="/restaurant/:id">
                 <RestaurantDetail />
