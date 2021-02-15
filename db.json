@@ -1,0 +1,51 @@
+{
+    "restaurants": [
+      {
+        "id": 1,
+        "address": "Calle Juan Martín",
+        "type": "restaurant",
+        "nombre": "Lola Castro Frutas",
+        "latitude": 37.880273,
+        "longitude": -4.792098
+      },
+      {
+        "id": 2,
+        "address": "Calle Pepe Cruz",
+        "type": "restaurant",
+        "nombre": "Ultramarinos Lolo Castro",
+        "latitude": 37.862323,
+        "longitude": -4.77812
+      },
+      {
+        "id": 3,
+        "address": "Avenida de la Cruz",
+        "type": "restaurant",
+        "nombre": "Pescados El Boquerón",
+        "latitude": 37.856273,
+        "longitude": -4.776992
+      }
+    ],
+    "products": [
+      {
+        "id": 1,
+        "name": "Pollo",
+        "shopId": 1
+      },
+      {
+        "id": 2,
+        "name": "Carne",
+        "shopId": 1
+      },
+      {
+        "id": 3,
+        "name": "Pescado",
+        "shopId": 2
+      },
+      {
+        "id": 4,
+        "name": "Carne",
+        "shopId": 2
+      }
+    ]
+  }
+  
