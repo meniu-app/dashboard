@@ -28,7 +28,7 @@ axios.interceptors.response.use(
     const refreshToken = getRefreshToken();
     if (refreshToken && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      return fetch(`${baseUrl}/token/refresh/`, {
+      return fetch(`${baseUrl}/v1/token/refresh/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${refreshToken}`,
@@ -60,11 +60,11 @@ const api = {
   refreshToken: (body) => {
     return axios.post(`${baseUrl}/v1/token/refresh/`, body);
   },
-  getRestaurants: () => {
+  getRestaurant: () => {
     return axios.get(`${baseUrl}/v1/restaurant/`);
   },
-  getRestaurantDetail: (id) => {
-    return axios.get(`${baseUrl}/v1/restaurant/${id}`);
+  getRestaurantDetail: () => {
+    return axios.get(`${baseUrl}/v1/restaurant/b092a102-1435-4157-bb66-d1c1adae3ccc/`);
   },
   getMenuDetail: (id) => {
     return axios.get(`${baseUrl}/v1/menu/${id}/`);

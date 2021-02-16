@@ -16,7 +16,6 @@ const Footer = lazy(() => import('./components/Footer'));
 const Login = lazy(() => import('./components/Auth/Login'));
 const Dashboard = lazy(() => import('./components/Dashboard/Dashboard'));
 const Sidenav = lazy(() => import('./components/Sidenav/Sidenav'));
-// const RestaurantDetail = lazy(() => import('./components/Restaurant/RestaurantDetail'));
 const Profile = lazy(() => import('./components/Profile/Profile'));
 const ProfileEdit = lazy(() => import('./components/Profile/ProfileEdit'));
 import Spinner from './components/Spinner';
@@ -26,29 +25,26 @@ class App extends Component {
     // Initialize mixpanel service
     initialize();
     const { appActions } = this.props;
-    await appActions.getRestaurantInitialData();
+    await appActions.getRestaurantDetailInitialData();
   }
 
   render() {
-    const { restaurants, isRestaurantsDataReady } = this.props;
+    const { restaurantDetail, restaurantDataReady } = this.props;
     return (
       <div>
         <Router>
           <Suspense fallback={<Spinner></Spinner>}>
-            <Navbar/>
+            <Navbar restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady}/>
             {
             <Switch>
               <Route exact path="/">
                 <AuthenticatedRoute>
                   <div className="main-wrapper d-flex">
-                    <Sidenav />
-                    <Dashboard restaurants={restaurants} isRestaurantsDataReady={isRestaurantsDataReady} />
+                    <Sidenav restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} />
+                    <Dashboard restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} />
                   </div>
                 </AuthenticatedRoute>
               </Route>
-              {/* <Route path="/restaurant/:id">
-                <RestaurantDetail />
-              </Route> */}
               <Route exact path="/profile">
                 <AuthenticatedRoute>
                   <Profile />
@@ -79,15 +75,13 @@ class App extends Component {
 
 App.propTypes = {
   appActions: PropTypes.objectOf(PropTypes.func).isRequired,
-  restaurants: PropTypes.array.isRequired,
-  isRestaurantsDataReady: PropTypes.bool.isRequired,
-  isScanned: PropTypes.bool.isRequired,
+  restaurantDetail: PropTypes.object.isRequired,
+  restaurantDataReady: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  restaurants: state.app.restaurants,
-  isRestaurantsDataReady: state.app.isRestaurantsDataReady,
-  isScanned: state.app.isScanned
+  restaurantDetail: state.app.restaurantDetail,
+  restaurantDataReady: state.app.restaurantDataReady,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -20,14 +20,20 @@ class Navbar extends Component {
     }
 
     render() {
-        const { isLoggedIn } = this.props;
+        const { isLoggedIn, restaurantDetail, restaurantDataReady } = this.props;
         const env = config.env;
         return (
             <nav className="navbar navbar-expand-md navbar-light bg-light">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
-                        Meniu Dashboard{env === 'development' ? ' - Dev' : ''}
-                    </Link>
+                    {
+                     restaurantDataReady ?
+                        <Link className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
+                            {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
+                        </Link> :
+                        <Link className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
+                            Meniu Dashboard {env === 'development' ? ' - Dev' : ''}
+                        </Link>
+                    }
 
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -55,7 +61,8 @@ Navbar.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
     history: PropTypes.object,
-    process: PropTypes.object
+    restaurantDetail: PropTypes.object.isRequired,
+    restaurantDataReady: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({

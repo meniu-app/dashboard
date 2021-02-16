@@ -29,7 +29,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 restaurants: action.payload,
-                isRestaurantsDataReady: true,
+                isRestaurantsDataReady: true
             };
         case GET_RESTAURANTS_INITIAL_DATA_ERROR:
             return {
@@ -41,38 +41,38 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 restaurantDataReady: false,
-                restaurant: {}
+                restaurantDetail: {}
             };
         case GET_RESTAURANT_DETAIL_INITIAL_DATA_SUCCESS:
             return {
                 ...state,
-                restaurant: action.payload.data,
-                isScanned: action.payload.isScanned,
+                restaurantDetail: action.payload.data,
+                isLoggedIn: true,
                 restaurantDataReady: true
             };
         case GET_RESTAURANT_DETAIL_INITIAL_DATA_ERROR:
             return {
                 ...state,
-                restaurant: {},
+                restaurantDetail: {},
                 restaurantDataReady: false,
             };
         case GET_MENU_DETAIL_INITIAL_DATA:
             return {
                 ...state,
-                restaurantMenus: {id: 1},
-                restaurantMenusDataReady: false,
+                menuDetail: {},
+                menuDetailDataReady: false,
             };
         case GET_MENU_DETAIL_INITIAL_DATA_SUCCESS:
             return {
                 ...state,
-                restaurantMenus: action.payload,
-                restaurantMenusDataReady: true
+                menuDetail: action.payload,
+                menuDetailDataReady: true
             };
         case GET_MENU_DETAIL_INITIAL_DATA_ERROR:
             return {
                 ...state,
-                restaurantMenus: {},
-                restaurantMenusDataReady: false,
+                menuDetail: {},
+                menuDetailDataReady: false,
             };
         case GET_DISH_DETAIL_INITIAL_DATA:
             return {

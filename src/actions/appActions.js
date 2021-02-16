@@ -97,6 +97,7 @@ export const postLoginData = (email, password) => async (dispatch) => {
     try {
         const response = await API.login({'email': email, 'password': password});
         const data = response['data'];
+        console.log(data)
         if (data) {
             setAccessToken(data['access']);
             setRefreshToken(data['refresh']);
@@ -155,12 +156,12 @@ const getRestaurantDetailInitialDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object} This contains data from restaurants
  */
-export const getRestaurantDetailInitialData = (id, isScanned) => async (dispatch) => {
+export const getRestaurantDetailInitialData = () => async (dispatch) => {
     dispatch(getRestaurantDetailInitialDataInitAction());
     try {
-        const response = await API.getRestaurantDetail(id);
+        const response = await API.getRestaurantDetail();
         const data = response['data'];
-        return dispatch(getRestaurantDetailInitialDataSuccessAction({data, isScanned}));
+        return dispatch(getRestaurantDetailInitialDataSuccessAction({data}));
     } catch (error) {
         return dispatch(getRestaurantDetailInitialDataErrorAction({error: error}));
     }

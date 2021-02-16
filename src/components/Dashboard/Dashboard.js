@@ -1,48 +1,98 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { track } from '../../mixpanel';
 
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 import MainModal from './MainModal';
+import { bindActionCreators } from 'redux';
+import * as appAction from '../../actions/appActions';
+import { connect } from 'react-redux';
 
-const Dashboard = ({ restaurants, isRestaurantsDataReady }) => {
-    const restaurantUrl = "https://images.pexels.com/photos/67468/pexels-photo-67468.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260";
-    track('Restaurants-View')
+class Dashboard extends Component {
 
-    return (
-        <div id="main-content" className="container px-0">
-            <MainModal />
-            {!isRestaurantsDataReady && <Spinner/>}
-            <ul className="list-group mt-0">
+    async componentDidMount() {
+        const { appActions } = this.props;
+        await appActions.getRestaurantDetailInitialData();
+    }
+
+    render() {
+
+        const { menuDetail, menuDetailDataReady, } = this.props;
+        let categories = []
+
+        if (menuDetailDataReady) {
+            categories = Object.keys(menuDetail.categories).map(key => {return {id: key, ...menuDetail.categories[key]}})
+        }
+
+        return (
+            <div id="main-content" className="container px-0">
+                <MainModal />
                 {
-                    restaurants.map(restaurant => {
-                        return (
-                            <li className="list-group-item" key={restaurant.id}>
-                                <Link to={`/restaurant/${restaurant.id}`} className="restaurant--card__item m-2" onClick={() => track('Restaurant clicked', { event: 'Restaurant clicked', itemId: restaurant.id, restaurant })}>
-                                    <div className="row">
-                                        <div className="col-8">
-                                            <h5 className="mb-2">{restaurant.name}</h5>
-                                            <p className="mb-2 restaurant-dish__description">{restaurant.address}</p>
-                                        </div>
-                                        <div className="col-4">
-                                            <img className="image--restaurant"
-                                                src={`${restaurant.logo !== '' ? restaurant.logo_url : restaurantUrl }`} alt="image" srcSet=""/>
+                menuDetailDataReady &&
+                <div className="px-3">
+                    <div>
+                        <h4>{menuDetail.name}</h4>
+                    </div> 
+                    {
+                        // console.log(categories)
+                        categories.map(category => {
+                            return (
+                                <div key={category.id}>
+                                    <div className="card my-3" style={{width: 'fit-content'}}>
+                                        <div className="card-body">
+                                            <h6>{category.name}</h6>
+                                            <button className="btn btn-primary">Edit category</button>
                                         </div>
                                     </div>
-                                </Link>
-                            </li>
-                        )
-                    })
+                                    <div className="row">
+                                    {
+                                        category.items.map(item => {
+                                            return (
+                                                <div className="col-6"  key={item.id}>
+                                                    <div className="card my-2">
+                                                        <div className="card-body d-flex">
+                                                            <div className="me-3 flex-fill">
+                                                                <h5>{item.name}</h5>
+                                                                <h6>{item.price}</h6>
+                                                                <p>{item.description}</p>
+                                                            </div>
+                                                            <div>
+                                                                <img src="https://via.placeholder.com/100C/O" alt=""/>
+                                                            </div>
+                                                        </div>
+                                                        <button className="btn btn-primary m-3" style={{width: 'fit-content'}}>Edit item</button>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
                 }
-            </ul>
-        </div>
-    )
+            </div>
+        )
+    }
 }
 
 Dashboard.propTypes = {
-    restaurants: PropTypes.array.isRequired,
-    isRestaurantsDataReady: PropTypes.bool.isRequired
+    appActions: PropTypes.objectOf(PropTypes.func).isRequired,
+    menuDetail: PropTypes.object.isRequired,
+    menuDetailDataReady: PropTypes.bool.isRequired,
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+    menuDetail: state.app.menuDetail,
+    menuDetailDataReady: state.app.menuDetailDataReady,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    appActions: bindActionCreators(appAction, dispatch),
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Dashboard);
