@@ -1,5 +1,7 @@
 export default {
     app: {
+        appStarted: false,
+
         isLoggedIn: false,
 
         isRestaurantsDataReady: false,

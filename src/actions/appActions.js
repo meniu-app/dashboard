@@ -15,6 +15,7 @@ import {
     GET_MENU_DETAIL_INITIAL_DATA,
     GET_MENU_DETAIL_INITIAL_DATA_SUCCESS,
     GET_MENU_DETAIL_INITIAL_DATA_ERROR,
+    APP_START,
 } from './types';
 import API from '../api/Api';
 import {
@@ -97,7 +98,6 @@ export const postLoginData = (email, password) => async (dispatch) => {
     try {
         const response = await API.login({'email': email, 'password': password});
         const data = response['data'];
-        console.log(data)
         if (data) {
             setAccessToken(data['access']);
             setRefreshToken(data['refresh']);
@@ -117,6 +117,7 @@ const postLogoutAction = () => ({
     POST_LOGOUT
 });
 
+
 /**
  * Function to fetch init data from Auth user
  * @param {function} dispatch it is a function to dispatch actions to
@@ -126,6 +127,25 @@ const postLogoutAction = () => ({
 export const postLogout = () => async (dispatch) => {
     return dispatch(postLogoutAction());
 }
+
+/**
+ * Action which is callled when the app starts
+ */
+const appStartAction = () => ({
+    type: 
+    APP_START
+});
+
+/**
+ * Function to fetch init data from Auth user
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains data from restaurants
+ */
+export const appStart = () => async (dispatch) => {
+    return dispatch(appStartAction());
+}
+
 
 /**
  * Action to get restaurant details

@@ -1,4 +1,5 @@
 import {
+    APP_START,
     GET_RESTAURANTS_INITIAL_DATA,
     GET_RESTAURANTS_INITIAL_DATA_SUCCESS,
     GET_RESTAURANTS_INITIAL_DATA_ERROR,
@@ -18,8 +19,13 @@ import {
 } from '../actions/types';
 import initialState from './initialState';
 
-export default function(state = initialState, action) {
+export default function(state = initialState.app, action) {
     switch (action.type) {
+        case APP_START:
+            return {
+                ...state,
+                appStarted: true
+            };
         case GET_RESTAURANTS_INITIAL_DATA:
             return {
                 ...state,
@@ -108,8 +114,8 @@ export default function(state = initialState, action) {
             };
         case POST_LOGOUT:
             return {
-                ...state,
-                isLoggedIn: false
+                ...initialState.app,
+                appStarted: true
             };
         default:
             return state;

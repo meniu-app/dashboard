@@ -5,6 +5,7 @@ import { bindActionCreators }from 'redux';
 import { connect } from 'react-redux';
 import * as appAction from './actions/appActions';
 import { initialize } from './mixpanel';
+import Api from './api/Api';
 
 /**
  * Load components
@@ -19,19 +20,29 @@ const Sidenav = lazy(() => import('./components/Sidenav/Sidenav'));
 const Profile = lazy(() => import('./components/Profile/Profile'));
 const ProfileEdit = lazy(() => import('./components/Profile/ProfileEdit'));
 import Spinner from './components/Spinner';
+import { getRefreshToken, removeTokens } from './api/TokenHandler';
 
 class App extends Component {
   async componentDidMount() {
     // Initialize mixpanel service
     initialize();
     const { appActions } = this.props;
-    await appActions.getRestaurantDetailInitialData();
+    const refreshToken = getRefreshToken();
+    if (refreshToken !== null) {
+      const init = await Api.refreshToken({refresh: refreshToken}); 
+      if (init.status === 200)
+        await appActions.getRestaurantDetailInitialData();
+      else
+        removeTokens();
+    }
+    await appActions.appStart();
   }
 
   render() {
-    const { restaurantDetail, restaurantDataReady } = this.props;
+    const { appStarted, restaurantDetail, restaurantDataReady } = this.props;
     return (
       <div>
+        {appStarted ?
         <Router>
           <Suspense fallback={<Spinner></Spinner>}>
             <Navbar restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady}/>
@@ -67,7 +78,9 @@ class App extends Component {
             }
             <Footer />
           </Suspense>
-        </Router>
+        </Router>:
+        <Spinner></Spinner>
+        }
       </div>
     );
   }
@@ -75,11 +88,13 @@ class App extends Component {
 
 App.propTypes = {
   appActions: PropTypes.objectOf(PropTypes.func).isRequired,
+  appStarted: PropTypes.bool.isRequired,
   restaurantDetail: PropTypes.object.isRequired,
   restaurantDataReady: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  appStarted: state.app.appStarted,
   restaurantDetail: state.app.restaurantDetail,
   restaurantDataReady: state.app.restaurantDataReady,
 });

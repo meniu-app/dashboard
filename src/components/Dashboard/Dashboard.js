@@ -33,7 +33,6 @@ class Dashboard extends Component {
                         <h4>{menuDetail.name}</h4>
                     </div> 
                     {
-                        // console.log(categories)
                         categories.map(category => {
                             return (
                                 <div key={category.id}>
