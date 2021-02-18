@@ -341,10 +341,10 @@ export const addCategoryData = (data) => async (dispatch) => {
 }
 
 /**
- * Action to add new category
+ * Action to add new item
  */
 // const addItemDataInitAction = () => ({
-//     type: ADD_CATEGORY_DATA
+//     type: ADD_ITEM_DATA
 // });
 
 /**
@@ -378,5 +378,46 @@ export const addItemData = (data) => async (dispatch) => {
     } catch (error) {
         console.log(error)
         return dispatch(addItemDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Action to add new restaurant
+ */
+// const addRestaurantDataInitAction = () => ({
+//     type: ADD_RESTAURANT_DATA
+// });
+
+/**
+ * Action which is callled when the addRestaurantDataInitAction success
+ */
+const addRestaurantDataSuccessAction = (data) => ({
+    type: ADD_ITEM_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the addItemDataInitAction failed
+ */
+const addRestaurantDataErrorAction = (error) => ({
+    type: ADD_ITEM_DATA_ERROR,
+    payload: error
+});
+
+/**
+ * Function to add data to Item
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const addRestaurantData = (data) => async (dispatch) => {
+    try {
+        const response = await API.addRestaurant(data);
+        const responseData = response['data'];
+        console.log(responseData)
+        return dispatch(addRestaurantDataSuccessAction(responseData));
+    } catch (error) {
+        console.log(error)
+        return dispatch(addRestaurantDataErrorAction({error: error}));
     }
 }

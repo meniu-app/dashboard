@@ -72,6 +72,9 @@ const api = {
   getDishDetail: (id) => {
     return axios.get(`${baseUrl}/v1/item/${id}/`);
   },
+  addRestaurant: (data) => {
+    return axios.post(`${baseUrl}/v1/restaurant/`, data)
+  },
   addCategory: (data) => {
     return axios.post(`${baseUrl}/v1/category/`, data)
   },
