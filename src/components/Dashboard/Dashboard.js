@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import { connect } from 'react-redux';
 import ItemModal from '../Item/ItemModal';
+import RestaurantModal from '../Restaurant/RestaurantModal';
 
 class Dashboard extends Component {
 
@@ -28,6 +29,7 @@ class Dashboard extends Component {
             <div id="main-content" className="container px-0">
                 <MainModal />
                 <ItemModal categories={categories} />
+                <RestaurantModal categories={categories} />
                 {
                 menuDetailDataReady &&
                 <div className="px-3">

@@ -42,6 +42,13 @@ class MainModal extends Component {
                                         <p>Add another user to your store</p>
                                     </div>
                                 </div>
+                                <div className="col-12 d-flex py-2">
+                                    <img src="https://via.placeholder.com/100C/O" alt=""/>
+                                    <div className="mx-3">
+                                        <h4>Restaurant</h4>
+                                        <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#restaurantModal">Add a new restaurant</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="modal-footer">
