@@ -16,6 +16,11 @@ import {
     GET_MENU_DETAIL_INITIAL_DATA_SUCCESS,
     GET_MENU_DETAIL_INITIAL_DATA_ERROR,
     APP_START,
+    ADD_CATEGORY_DATA_SUCCESS,
+    ADD_CATEGORY_DATA_ERROR,
+    ADD_ITEM_DATA_SUCCESS,
+    ADD_ITEM_DATA_ERROR,
+    // ADD_CATEGORY_DATA,
 } from './types';
 import API from '../api/Api';
 import {
@@ -145,7 +150,6 @@ const appStartAction = () => ({
 export const appStart = () => async (dispatch) => {
     return dispatch(appStartAction());
 }
-
 
 /**
  * Action to get restaurant details
@@ -295,4 +299,84 @@ export const getMenuDetailInitialData = (id) => async (dispatch) => {
  */
 export const removemenuDetailInitialData = () => async (dispatch) => {
     dispatch(getMenuDetailInitialDataInitAction());
+}
+
+/**
+ * Action to add new category
+ */
+// const addCategoryDataInitAction = () => ({
+//     type: ADD_CATEGORY_DATA
+// });
+
+/**
+ * Action which is callled when the addCategoryDataInitAction success
+ */
+const addCategoyDataSuccessAction = (data) => ({
+    type:ADD_CATEGORY_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the addCategoryDataInitAction failed
+ */
+const addcategoryDataErrorAction = (error) => ({
+    type: ADD_CATEGORY_DATA_ERROR,
+    payload: error
+});
+
+/**
+ * Function to fetch init data from DIsh detail
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains data from dish
+ */
+export const addCategoryData = (data) => async (dispatch) => {
+    try {
+        const response = await API.addCategory(data);
+        const responseData = response['data'];
+        return dispatch(addCategoyDataSuccessAction(responseData));
+    } catch (error) {
+        return dispatch(addcategoryDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Action to add new category
+ */
+// const addItemDataInitAction = () => ({
+//     type: ADD_CATEGORY_DATA
+// });
+
+/**
+ * Action which is callled when the addItemDataInitAction success
+ */
+const addItemDataSuccessAction = (data) => ({
+    type: ADD_ITEM_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the addItemDataInitAction failed
+ */
+const addItemDataErrorAction = (error) => ({
+    type: ADD_ITEM_DATA_ERROR,
+    payload: error
+});
+
+/**
+ * Function to add data to Item
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const addItemData = (data) => async (dispatch) => {
+    try {
+        const response = await API.addItem(data);
+        const responseData = response['data'];
+        console.log(responseData)
+        return dispatch(addItemDataSuccessAction(responseData));
+    } catch (error) {
+        console.log(error)
+        return dispatch(addItemDataErrorAction({error: error}));
+    }
 }
