@@ -422,7 +422,7 @@ export const addRestaurantData = (data) => async (dispatch) => {
         return dispatch(addRestaurantDataSuccessAction(responseData));
     } catch (error) {
         console.log(error)
-        dispatch(alertActivateAction({text: 'An error occurred', alert: 'error'}))
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}))
         return dispatch(addRestaurantDataErrorAction({error: error}));
     }
 }
