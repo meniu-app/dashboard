@@ -16,6 +16,11 @@ import {
     GET_MENU_DETAIL_INITIAL_DATA,
     GET_MENU_DETAIL_INITIAL_DATA_SUCCESS,
     GET_MENU_DETAIL_INITIAL_DATA_ERROR,
+    ADD_RESTAURANT_DATA,
+    ADD_RESTAURANT_DATA_SUCCESS,
+    ADD_RESTAURANT_DATA_ERROR,
+    ALERT_DEACTIVATE,
+    ALERT_ACTIVATE,
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -117,6 +122,34 @@ export default function(state = initialState.app, action) {
                 ...initialState.app,
                 appStarted: true
             };
+        case ADD_RESTAURANT_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case ADD_RESTAURANT_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case ADD_RESTAURANT_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case ALERT_ACTIVATE:
+            return {
+                ...state,
+                message: action.payload
+            }
+        case ALERT_DEACTIVATE:
+            return {
+                ...state,
+                message: {
+                    text: '',
+                    alert: ''
+                }
+            }
         default:
             return state;
     }

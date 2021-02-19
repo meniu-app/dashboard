@@ -26,7 +26,7 @@ axios.interceptors.response.use(
   function (error) {
     const originalRequest = error.config;
     const refreshToken = getRefreshToken();
-    if (refreshToken && error.response.status === 401 && !originalRequest._retry) {
+    if (refreshToken && error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       return fetch(`${baseUrl}/v1/token/refresh/`, {
         method: 'POST',

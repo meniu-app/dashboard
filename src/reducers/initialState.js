@@ -13,6 +13,13 @@ export default {
         restaurantDataReady: false,
 
         menuDetail: {},
-        menuDetailDataReady: false
+        menuDetailDataReady: false,
+
+        formLoading: false,
+
+        message: {
+            text: '',
+            alert: 'success'
+        }
     }
 }

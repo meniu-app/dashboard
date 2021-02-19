@@ -21,6 +21,7 @@ const Profile = lazy(() => import('./components/Profile/Profile'));
 const ProfileEdit = lazy(() => import('./components/Profile/ProfileEdit'));
 import Spinner from './components/Spinner';
 import { getRefreshToken, removeTokens } from './api/TokenHandler';
+import Alert from './components/Alert';
 
 class App extends Component {
   async componentDidMount() {
@@ -46,6 +47,7 @@ class App extends Component {
         <Router>
           <Suspense fallback={<Spinner></Spinner>}>
             <Navbar restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady}/>
+            <Alert />
             {
             <Switch>
               <Route exact path="/">

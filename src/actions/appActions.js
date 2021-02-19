@@ -20,6 +20,11 @@ import {
     ADD_CATEGORY_DATA_ERROR,
     ADD_ITEM_DATA_SUCCESS,
     ADD_ITEM_DATA_ERROR,
+    ADD_RESTAURANT_DATA_ERROR,
+    ADD_RESTAURANT_DATA_SUCCESS,
+    ADD_RESTAURANT_DATA,
+    ALERT_ACTIVATE,
+    ALERT_DEACTIVATE,
     // ADD_CATEGORY_DATA,
 } from './types';
 import API from '../api/Api';
@@ -384,24 +389,22 @@ export const addItemData = (data) => async (dispatch) => {
 /**
  * Action to add new restaurant
  */
-// const addRestaurantDataInitAction = () => ({
-//     type: ADD_RESTAURANT_DATA
-// });
+const addRestaurantDataInitAction = () => ({
+    type: ADD_RESTAURANT_DATA
+});
 
 /**
  * Action which is callled when the addRestaurantDataInitAction success
  */
-const addRestaurantDataSuccessAction = (data) => ({
-    type: ADD_ITEM_DATA_SUCCESS,
-    payload: data
+const addRestaurantDataSuccessAction = () => ({
+    type: ADD_RESTAURANT_DATA_SUCCESS
 });
 
 /**
  * Action which is callled when the addItemDataInitAction failed
  */
-const addRestaurantDataErrorAction = (error) => ({
-    type: ADD_ITEM_DATA_ERROR,
-    payload: error
+const addRestaurantDataErrorAction = () => ({
+    type: ADD_RESTAURANT_DATA_ERROR
 });
 
 /**
@@ -411,13 +414,37 @@ const addRestaurantDataErrorAction = (error) => ({
  * @returns {Object}
  */
 export const addRestaurantData = (data) => async (dispatch) => {
+    dispatch(addRestaurantDataInitAction());
     try {
         const response = await API.addRestaurant(data);
         const responseData = response['data'];
-        console.log(responseData)
+        dispatch(alertActivateAction({text: 'Restaurant successfully added', alert: 'success'}));
         return dispatch(addRestaurantDataSuccessAction(responseData));
     } catch (error) {
         console.log(error)
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'error'}))
         return dispatch(addRestaurantDataErrorAction({error: error}));
     }
+}
+
+/**
+ * Alert deactivate
+ */
+const alertDeactivateAction = () => ({
+    type: ALERT_DEACTIVATE
+});
+
+/**
+ * Alert activate
+ */
+const alertActivateAction = (data) => ({
+    type: ALERT_ACTIVATE,
+    payload: data
+});
+
+/**
+ * Function to deactivate alert
+ */
+export const alertDeactivate = () => async (dispatch) => {
+    dispatch(alertDeactivateAction())
 }

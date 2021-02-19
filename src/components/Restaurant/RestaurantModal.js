@@ -3,34 +3,22 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
+import Spinner from '../Spinner';
 
 class RestaurantModal extends Component {
 
     async handleSubmit (event, props) {
-        event.preventDefault();
         const { appActions } = props;
-        // const {name, address, email, phone} = event.target;
 
-        // const data = {
-        //     name: name.value,
-        //     address: address.value,
-        //     email: email.value,
-        //     phone: phone.value,
-        //     banner: undefined,
-        //     logo: undefined
-        // }
-
-        // const banner = new FormData(document.getElementById('restaurantBannerInput'));
-        // data.banner = banner;
-
-        // const logo = new FormData(document.getElementById('restaurantLogoInput'));
-        // data.logo = logo;
-        console.log(event)
+        event.preventDefault();
         const data = new FormData(event.target)
-        await appActions.addRestaurantData(data);
+        const response = await appActions.addRestaurantData(data)
+        if (response)
+            document.getElementById('button-close-modal').click();
     }
 
     render () {
+        const { formLoading } = this.props;
 
         return (
             <div className="modal fade" id="restaurantModal" tabIndex="-1" aria-labelledby="restaurantModalLabel" aria-hidden="true">
@@ -38,9 +26,10 @@ class RestaurantModal extends Component {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="restaurantModalLabel">Add new restaurant</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button id="button-close-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
+                            { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
                                 <div className="mb-3">
                                     <label htmlFor="restaurantNameInput" className="form-label">Restaurant name</label>
@@ -71,6 +60,8 @@ class RestaurantModal extends Component {
                                     <button type="submit" className="btn btn-primary">Submit</button>
                                 </div>
                             </form>
+                            : <Spinner />
+                            }
                         </div>
                     </div>
                 </div>
@@ -81,12 +72,14 @@ class RestaurantModal extends Component {
 
 RestaurantModal.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
-    categories: PropTypes.array.isRequired
+    categories: PropTypes.array.isRequired,
+    formLoading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     menuDetail: state.app.menuDetail,
     menuDetailDataReady: state.app.menuDetailDataReady,
+    formLoading: state.app.formLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
