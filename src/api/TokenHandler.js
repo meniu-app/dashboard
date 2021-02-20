@@ -39,5 +39,29 @@ export const removeTokens = () => {
     } catch (error) {
         console.error(error);
     }
-    
+}
+
+export const setUser = (user) => {
+    try {
+        localStorage.setItem('USER', JSON.stringify(user));
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export const getUser = () => {
+    try {
+        const user = localStorage.getItem('USER');
+        return JSON.parse(user);
+    } catch (error) {
+        return undefined;
+    }
+}
+
+export const removeUser = () => {
+    try {
+        localStorage.removeItem('USER');
+    } catch (error) {
+        console.error(error);
+    }
 }

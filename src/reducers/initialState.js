@@ -4,10 +4,10 @@ export default {
 
         isLoggedIn: false,
 
-        isRestaurantsDataReady: false,
-        restaurantDish: {},
-
         isScanned: false,
+
+        restaurants: [],
+        restaurantsDataReady: false,
 
         restaurantDetail: {},
         restaurantDataReady: false,

@@ -10,9 +10,6 @@ import {
     GET_RESTAURANT_DETAIL_INITIAL_DATA,
     GET_RESTAURANT_DETAIL_INITIAL_DATA_SUCCESS,
     GET_RESTAURANT_DETAIL_INITIAL_DATA_ERROR,
-    GET_DISH_DETAIL_INITIAL_DATA,
-    GET_DISH_DETAIL_INITIAL_DATA_SUCCESS,
-    GET_DISH_DETAIL_INITIAL_DATA_ERROR,
     GET_MENU_DETAIL_INITIAL_DATA,
     GET_MENU_DETAIL_INITIAL_DATA_SUCCESS,
     GET_MENU_DETAIL_INITIAL_DATA_ERROR,
@@ -43,19 +40,20 @@ export default function(state = initialState.app, action) {
         case GET_RESTAURANTS_INITIAL_DATA:
             return {
                 ...state,
-                restaurants: []
+                restaurants: [],
+                restaurantsDataReady: false
             };
         case GET_RESTAURANTS_INITIAL_DATA_SUCCESS:
             return {
                 ...state,
                 restaurants: action.payload,
-                isRestaurantsDataReady: true
+                restaurantsDataReady: true
             };
         case GET_RESTAURANTS_INITIAL_DATA_ERROR:
             return {
                 ...state,
                 restaurants: [],
-                isRestaurantsDataReady: true,
+                restaurantsDataReady: true,
             };
         case GET_RESTAURANT_DETAIL_INITIAL_DATA:
             return {
@@ -68,13 +66,17 @@ export default function(state = initialState.app, action) {
                 ...state,
                 restaurantDetail: action.payload.data,
                 isLoggedIn: true,
-                restaurantDataReady: true
+                restaurantDataReady: true,
+                menuDetail: {},
+                menuDetailDataReady: false,
             };
         case GET_RESTAURANT_DETAIL_INITIAL_DATA_ERROR:
             return {
                 ...state,
                 restaurantDetail: {},
                 restaurantDataReady: false,
+                menuDetail: {},
+                menuDetailDataReady: false,
             };
         case GET_MENU_DETAIL_INITIAL_DATA:
             return {
@@ -93,24 +95,6 @@ export default function(state = initialState.app, action) {
                 ...state,
                 menuDetail: {},
                 menuDetailDataReady: false,
-            };
-        case GET_DISH_DETAIL_INITIAL_DATA:
-            return {
-                ...state,
-                restaurantDish: {},
-                restaurantDishDataReady: false
-            };
-        case GET_DISH_DETAIL_INITIAL_DATA_SUCCESS:
-            return {
-                ...state,
-                restaurantDish: action.payload,
-                restaurantDishDataReady: true
-            };
-        case GET_DISH_DETAIL_INITIAL_DATA_ERROR:
-            return {
-                ...state,
-                restaurantDish: {},
-                restaurantDishDataReady: false,
             };
         case POST_LOGIN:
             return {
@@ -134,12 +118,13 @@ export default function(state = initialState.app, action) {
         case ADD_RESTAURANT_DATA:
             return {
                 ...state,
-                formLoading: true
+                formLoading: true,
             }
         case ADD_RESTAURANT_DATA_SUCCESS:
             return {
                 ...state,
-                formLoading: false
+                formLoading: false,
+                restaurants: state.restaurants.concat(action.payload)
             }
         case ADD_RESTAURANT_DATA_ERROR:
             return {

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import * as appAction from '../actions/appActions';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { removeTokens } from '../api/TokenHandler';
+import { removeTokens, removeUser } from '../api/TokenHandler';
 import { track } from '../mixpanel';
 import config from '../config';
 
@@ -16,6 +16,7 @@ class Navbar extends Component {
         await appActions.postLogout();
         track('Logout clicked');
         removeTokens();
+        removeUser();
         this.props.history.push('/');
     }
 

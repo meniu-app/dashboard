@@ -34,13 +34,13 @@ class UserModal extends Component {
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="radio" name="role" defaultValue="Owner" id="userRoleInput1" defaultChecked />
+                                    <input className="form-check-input" type="radio" name="role" defaultValue="2" id="userRoleInput1" defaultChecked />
                                         <label className="form-check-label" htmlFor="userRoleInput1">
                                             Owner
                                         </label>
                                     </div>
                                 <div className="form-check">
-                                    <input className="form-check-input" type="radio" name="role" defaultValue="Business Manager" id="userRoleInput2" />
+                                    <input className="form-check-input" type="radio" name="role" defaultValue="3" id="userRoleInput2" />
                                     <label className="form-check-label" htmlFor="userRoleInput2">
                                         Business Manager
                                     </label>

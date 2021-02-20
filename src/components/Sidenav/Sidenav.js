@@ -11,10 +11,37 @@ class Sidenav extends Component {
         await appActions.getMenuDetailInitialData(id);
     }
 
+    async getRestaurantDetail(id) {
+        const { appActions } = this.props;
+        await appActions.getRestaurantDetailInitialData(id)
+    }
+
+    showCategoryEdit() {
+        
+    }
+
     render() {
-        const { restaurantDetail, restaurantDataReady } = this.props;
+        const { restaurantDetail, restaurantDataReady, restaurants, restaurantsDataReady } = this.props;
         return (
             <nav id="main-sidebar">
+                {
+                    restaurantsDataReady ?
+                    <div className="row">
+                        <h5>Restaurants</h5>
+                        {
+                            restaurants.map(restaurant => {
+                                return (
+                                    <div className="col-12 text-center mb-2" key={restaurant.id}>
+                                         <button className="btn btn-ligth" onClick={() => this.getRestaurantDetail(restaurant.id)}>
+                                            {restaurant.name}
+                                        </button>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    : <> </>
+                }
                 <div className="row my-4">
                     <div className="col-12 text-center">
                         <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainModal">
@@ -23,13 +50,29 @@ class Sidenav extends Component {
                     </div>
                 </div>
                 <div className="row">
+                    <h5>Menus</h5>
                 {
                     restaurantDataReady &&
                     restaurantDetail.menus.map(menu => {
                         return (
-                            <div className="col-12 text-center" key={menu.id}>
+                            <div className="col-12 text-center mb-2" key={menu.id}>
                                 <button className="btn btn-ligth" onClick={() => this.getMenuDetail(menu.id)}>
                                     {menu.name}
+                                </button>
+                            </div>
+                        )
+                    })
+                }
+                </div>
+                <div className="row">
+                    <h5>Categories</h5>
+                {
+                    restaurantDataReady &&
+                    restaurantDetail.categories.map(category => {
+                        return (
+                            <div className="col-12 text-center mb-2" key={category.id}>
+                                <button className="btn btn-ligth" onClick={() => this.showCategoryEdit(category.id)}>
+                                    {category.name}
                                 </button>
                             </div>
                         )
@@ -44,12 +87,16 @@ class Sidenav extends Component {
 Sidenav.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
     restaurantDetail: PropTypes.object.isRequired,
-    restaurantDataReady: PropTypes.bool.isRequired
+    restaurantDataReady: PropTypes.bool.isRequired,
+    restaurants: PropTypes.array.isRequired,
+    restaurantsDataReady: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     menuDetail: state.app.menudetail,
     menuDataReady: state.app.menuDataReady,
+    restaurants: state.app.restaurants,
+    restaurantsDataReady: state.app.restaurantsDataReady
 });
 
 const mapDispatchToProps = (dispatch) => ({

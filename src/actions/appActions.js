@@ -38,6 +38,7 @@ import API from '../api/Api';
 import {
     setAccessToken,
     setRefreshToken,
+    setUser,
 } from '../api/TokenHandler';
 
 /**
@@ -118,6 +119,7 @@ export const postLoginData = (email, password) => async (dispatch) => {
         if (data) {
             setAccessToken(data['access']);
             setRefreshToken(data['refresh']);
+            setUser(data['authenticatedUser']);
             return dispatch(postLoginInitSuccessAction(data));
         }
         return dispatch(postLoginInitErrorAction(`Error: Bad credentials`));
@@ -192,10 +194,10 @@ const getRestaurantDetailInitialDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object} This contains data from restaurants
  */
-export const getRestaurantDetailInitialData = () => async (dispatch) => {
+export const getRestaurantDetailInitialData = (id) => async (dispatch) => {
     dispatch(getRestaurantDetailInitialDataInitAction());
     try {
-        const response = await API.getRestaurantDetail();
+        const response = await API.getRestaurantDetail(id);
         const data = response['data'];
         return dispatch(getRestaurantDetailInitialDataSuccessAction({data}));
     } catch (error) {
@@ -410,8 +412,9 @@ const addRestaurantDataInitAction = () => ({
 /**
  * Action which is callled when the addRestaurantDataInitAction success
  */
-const addRestaurantDataSuccessAction = () => ({
-    type: ADD_RESTAURANT_DATA_SUCCESS
+const addRestaurantDataSuccessAction = (data) => ({
+    type: ADD_RESTAURANT_DATA_SUCCESS,
+    payload: data
 });
 
 /**
@@ -536,7 +539,7 @@ export const addUserData = (data, role) => async (dispatch) => {
     dispatch(addUserDataInitAction());
     try {
         let response = undefined;
-        if (role === 'Owner')
+        if (role === '2')
             response = await API.addOwner(data);
         else
             response = await API.addBusinessManager(data);

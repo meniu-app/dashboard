@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAccessToken, getRefreshToken, removeTokens, setAccessToken, } from './TokenHandler';
+import { getAccessToken, getRefreshToken, removeTokens, removeUser, setAccessToken, } from './TokenHandler';
 import config from '../config';
 
 const baseUrl = config.env === 'development' ? 'https://meniu-server-dev.herokuapp.com/api' : 'https://meniu-server.herokuapp.com/api';
@@ -44,6 +44,7 @@ axios.interceptors.response.use(
         }
         if (res.status === 401) {
           removeTokens();
+          removeUser();
           return Promise.reject({'error': 'No tokens found'})
         }
       })
@@ -55,16 +56,16 @@ axios.interceptors.response.use(
 //functions to make api calls
 const api = {
   login: (body) => {
-    return axios.post(`${baseUrl}/v1/token/obtain/`, body);
+    return axios.post(`${baseUrl}/v1/login`, body);
   },
   refreshToken: (body) => {
     return axios.post(`${baseUrl}/v1/token/refresh/`, body);
   },
-  getRestaurant: () => {
+  getRestaurants: () => {
     return axios.get(`${baseUrl}/v1/restaurant/`);
   },
-  getRestaurantDetail: () => {
-    return axios.get(`${baseUrl}/v1/restaurant/b092a102-1435-4157-bb66-d1c1adae3ccc/`);
+  getRestaurantDetail: (id = 'b092a102-1435-4157-bb66-d1c1adae3ccc') => {
+    return axios.get(`${baseUrl}/v1/restaurant/${id}/`);
   },
   getMenuDetail: (id) => {
     return axios.get(`${baseUrl}/v1/menu/${id}/`);
@@ -88,10 +89,10 @@ const api = {
     return axios.post(`${baseUrl}/v1/image/`, data)
   },
   addOwner: (data) => {
-    return axios.post(`${baseUrl}/v1/owner/`, data)
+    return axios.post(`${baseUrl}/v1/owner`, data)
   },
   addBusinessManager: (data) => {
-    return axios.post(`${baseUrl}/v1/business-manager/`, data)
+    return axios.post(`${baseUrl}/v1/business-manager`, data)
   },
 };
 

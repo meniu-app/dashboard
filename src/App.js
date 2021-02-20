@@ -20,7 +20,7 @@ const Sidenav = lazy(() => import('./components/Sidenav/Sidenav'));
 const Profile = lazy(() => import('./components/Profile/Profile'));
 const ProfileEdit = lazy(() => import('./components/Profile/ProfileEdit'));
 import Spinner from './components/Spinner';
-import { getRefreshToken, removeTokens } from './api/TokenHandler';
+import { getRefreshToken, getUser, removeTokens, removeUser } from './api/TokenHandler';
 import Alert from './components/Alert';
 
 class App extends Component {
@@ -31,10 +31,18 @@ class App extends Component {
     const refreshToken = getRefreshToken();
     if (refreshToken !== null) {
       const init = await Api.refreshToken({refresh: refreshToken}); 
-      if (init.status === 200)
+      if (init.status === 200) {
         await appActions.getRestaurantDetailInitialData();
-      else
+        const user = getUser();
+        if (user !== undefined) {
+          if (user.role === '1')
+            await appActions.getRestaurantInitialData();
+        }
+      }
+      else {
         removeTokens();
+        removeUser();
+      }
     }
     await appActions.appStart();
   }
