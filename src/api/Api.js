@@ -80,6 +80,9 @@ const api = {
   },
   addItem: (data) => {
     return axios.post(`${baseUrl}/v1/item/`, data)
+  },
+  addMenu: (data) => {
+    return axios.post(`${baseUrl}/v1/menu/`, data)
   }
 };
 

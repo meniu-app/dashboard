@@ -21,6 +21,15 @@ import {
     ADD_RESTAURANT_DATA_ERROR,
     ALERT_DEACTIVATE,
     ALERT_ACTIVATE,
+    ADD_ITEM_DATA,
+    ADD_ITEM_DATA_SUCCESS,
+    ADD_ITEM_DATA_ERROR,
+    ADD_CATEGORY_DATA,
+    ADD_CATEGORY_DATA_SUCCESS,
+    ADD_CATEGORY_DATA_ERROR,
+    ADD_MENU_DATA,
+    ADD_MENU_DATA_SUCCESS,
+    ADD_MENU_DATA_ERROR,
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -137,6 +146,59 @@ export default function(state = initialState.app, action) {
                 ...state,
                 formLoading: false
             }
+        case ADD_ITEM_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case ADD_ITEM_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case ADD_ITEM_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case ADD_CATEGORY_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case ADD_CATEGORY_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false,
+                restaurantDetail: {
+                    ...state.restaurantDetail,
+                    categories: state.restaurantDetail.categories.concat(action.payload)
+                }
+            }
+        case ADD_CATEGORY_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+                }
+        case ADD_MENU_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case ADD_MENU_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false,
+                restaurantDetail: {
+                    ...state.restaurantDetail,
+                    menus: state.restaurantDetail.menus.concat(action.payload)
+                }
+            }
+        case ADD_MENU_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+                }
         case ALERT_ACTIVATE:
             return {
                 ...state,

@@ -25,21 +25,21 @@ class MainModal extends Component {
                                     <img src="https://via.placeholder.com/100C/O" alt=""/>
                                     <div className="mx-3">
                                         <h4>Category</h4>
-                                        <p>Add a category to your menu</p>
+                                        <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#categoryModal">Add a category to your menu</button>
                                     </div>
                                 </div>
                                 <div className="col-12 d-flex py-2">
                                     <img src="https://via.placeholder.com/100C/O" alt=""/>
                                     <div className="mx-3">
                                         <h4>Menu</h4>
-                                        <p>Add a menu to your store</p>
+                                        <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#menuModal">Add a menu to your store</button>
                                     </div>
                                 </div>
                                 <div className="col-12 d-flex py-2">
                                     <img src="https://via.placeholder.com/100C/O" alt=""/>
                                     <div className="mx-3">
                                         <h4>New User</h4>
-                                        <p>Add another user to your store</p>
+                                        <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#userModal">Add another user to your store</button>
                                     </div>
                                 </div>
                                 <div className="col-12 d-flex py-2">

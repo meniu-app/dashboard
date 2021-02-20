@@ -8,6 +8,9 @@ import * as appAction from '../../actions/appActions';
 import { connect } from 'react-redux';
 import ItemModal from '../Item/ItemModal';
 import RestaurantModal from '../Restaurant/RestaurantModal';
+import CategoryModal from '../Category/CategoryModal';
+import MenuModal from '../Menu/MenuModal';
+import UserModal from '../User/UserModal';
 
 class Dashboard extends Component {
 
@@ -18,7 +21,7 @@ class Dashboard extends Component {
 
     render() {
 
-        const { menuDetail, menuDetailDataReady, } = this.props;
+        const { menuDetail, menuDetailDataReady, restaurantDataReady } = this.props;
         let categories = []
 
         if (menuDetailDataReady) {
@@ -28,8 +31,16 @@ class Dashboard extends Component {
         return (
             <div id="main-content" className="container px-0">
                 <MainModal />
-                <ItemModal categories={categories} />
-                <RestaurantModal categories={categories} />
+                {
+                    restaurantDataReady &&
+                    <div>
+                        <RestaurantModal />
+                        <ItemModal />
+                        <CategoryModal />
+                        <MenuModal />
+                        <UserModal />
+                    </div>
+                }
                 {
                 menuDetailDataReady &&
                 <div className="px-3">
@@ -84,11 +95,13 @@ Dashboard.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
     menuDetail: PropTypes.object.isRequired,
     menuDetailDataReady: PropTypes.bool.isRequired,
+    restaurantDataReady: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     menuDetail: state.app.menuDetail,
     menuDetailDataReady: state.app.menuDetailDataReady,
+    restaurantDataReady: state.app.restaurantDataReady
 });
 
 const mapDispatchToProps = (dispatch) => ({

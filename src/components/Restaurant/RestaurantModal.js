@@ -72,7 +72,6 @@ class RestaurantModal extends Component {
 
 RestaurantModal.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
-    categories: PropTypes.array.isRequired,
     formLoading: PropTypes.bool.isRequired
 };
 

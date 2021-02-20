@@ -25,7 +25,11 @@ import {
     ADD_RESTAURANT_DATA,
     ALERT_ACTIVATE,
     ALERT_DEACTIVATE,
-    // ADD_CATEGORY_DATA,
+    ADD_ITEM_DATA,
+    ADD_CATEGORY_DATA,
+    ADD_MENU_DATA,
+    ADD_MENU_DATA_SUCCESS,
+    ADD_MENU_DATA_ERROR,
 } from './types';
 import API from '../api/Api';
 import {
@@ -309,9 +313,9 @@ export const removemenuDetailInitialData = () => async (dispatch) => {
 /**
  * Action to add new category
  */
-// const addCategoryDataInitAction = () => ({
-//     type: ADD_CATEGORY_DATA
-// });
+const addCategoryDataInitAction = () => ({
+    type: ADD_CATEGORY_DATA
+});
 
 /**
  * Action which is callled when the addCategoryDataInitAction success
@@ -336,11 +340,14 @@ const addcategoryDataErrorAction = (error) => ({
  * @returns {Object} This contains data from dish
  */
 export const addCategoryData = (data) => async (dispatch) => {
+    dispatch(addCategoryDataInitAction());
     try {
         const response = await API.addCategory(data);
         const responseData = response['data'];
+        dispatch(alertActivateAction({text: 'Category successfully added', alert: 'success'}));
         return dispatch(addCategoyDataSuccessAction(responseData));
     } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(addcategoryDataErrorAction({error: error}));
     }
 }
@@ -348,9 +355,9 @@ export const addCategoryData = (data) => async (dispatch) => {
 /**
  * Action to add new item
  */
-// const addItemDataInitAction = () => ({
-//     type: ADD_ITEM_DATA
-// });
+const addItemDataInitAction = () => ({
+    type: ADD_ITEM_DATA
+});
 
 /**
  * Action which is callled when the addItemDataInitAction success
@@ -375,13 +382,14 @@ const addItemDataErrorAction = (error) => ({
  * @returns {Object}
  */
 export const addItemData = (data) => async (dispatch) => {
+    dispatch(addItemDataInitAction());
     try {
         const response = await API.addItem(data);
         const responseData = response['data'];
-        console.log(responseData)
+        dispatch(alertActivateAction({text: 'Item successfully added', alert: 'success'}));
         return dispatch(addItemDataSuccessAction(responseData));
     } catch (error) {
-        console.log(error)
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(addItemDataErrorAction({error: error}));
     }
 }
@@ -421,8 +429,7 @@ export const addRestaurantData = (data) => async (dispatch) => {
         dispatch(alertActivateAction({text: 'Restaurant successfully added', alert: 'success'}));
         return dispatch(addRestaurantDataSuccessAction(responseData));
     } catch (error) {
-        console.log(error)
-        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}))
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(addRestaurantDataErrorAction({error: error}));
     }
 }
@@ -447,4 +454,46 @@ const alertActivateAction = (data) => ({
  */
 export const alertDeactivate = () => async (dispatch) => {
     dispatch(alertDeactivateAction())
+}
+
+
+/**
+ * Action to add new menu
+ */
+const addMenuDataInitAction = () => ({
+    type: ADD_MENU_DATA
+});
+
+/**
+ * Action which is callled when the addMenuDataInitAction success
+ */
+const addMenuDataSuccessAction = (data) => ({
+    type: ADD_MENU_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the addMenuDataInitAction failed
+ */
+const addMenuDataErrorAction = () => ({
+    type: ADD_MENU_DATA_ERROR
+});
+
+/**
+ * Function to add data to Item
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const addMenuData = (data) => async (dispatch) => {
+    dispatch(addMenuDataInitAction());
+    try {
+        const response = await API.addMenu(data);
+        const responseData = response['data'];
+        dispatch(alertActivateAction({text: 'Menu successfully added', alert: 'success'}));
+        return dispatch(addMenuDataSuccessAction(responseData));
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(addMenuDataErrorAction({error: error}));
+    }
 }
