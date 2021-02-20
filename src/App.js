@@ -29,7 +29,7 @@ class App extends Component {
     initialize();
     const { appActions } = this.props;
     const refreshToken = getRefreshToken();
-    if (refreshToken !== null) {
+    if (refreshToken !== null && refreshToken !== undefined) {
       const init = await Api.refreshToken({refresh: refreshToken}); 
       if (init.status === 200) {
         await appActions.getRestaurantDetailInitialData();
