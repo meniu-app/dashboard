@@ -83,7 +83,16 @@ const api = {
   },
   addMenu: (data) => {
     return axios.post(`${baseUrl}/v1/menu/`, data)
-  }
+  },
+  addImage: (data) => {
+    return axios.post(`${baseUrl}/v1/image/`, data)
+  },
+  addOwner: (data) => {
+    return axios.post(`${baseUrl}/v1/owner/`, data)
+  },
+  addBusinessManager: (data) => {
+    return axios.post(`${baseUrl}/v1/business-manager/`, data)
+  },
 };
 
 export default api;

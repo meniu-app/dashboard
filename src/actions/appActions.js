@@ -30,6 +30,9 @@ import {
     ADD_MENU_DATA,
     ADD_MENU_DATA_SUCCESS,
     ADD_MENU_DATA_ERROR,
+    ADD_USER_DATA,
+    ADD_USER_DATA_SUCCESS,
+    ADD_USER_DATA_ERROR,
 } from './types';
 import API from '../api/Api';
 import {
@@ -381,11 +384,14 @@ const addItemDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object}
  */
-export const addItemData = (data) => async (dispatch) => {
+export const addItemData = (data, imageData) => async (dispatch) => {
     dispatch(addItemDataInitAction());
     try {
         const response = await API.addItem(data);
         const responseData = response['data'];
+        // Making image post after item is created
+        imageData.append('item', responseData.id);
+        await API.addImage(imageData);
         dispatch(alertActivateAction({text: 'Item successfully added', alert: 'success'}));
         return dispatch(addItemDataSuccessAction(responseData));
     } catch (error) {
@@ -495,5 +501,50 @@ export const addMenuData = (data) => async (dispatch) => {
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(addMenuDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Action to add new user
+ */
+const addUserDataInitAction = () => ({
+    type: ADD_USER_DATA
+});
+
+/**
+ * Action which is callled when the addUserDataInitAction success
+ */
+const addUserDataSuccessAction = (data) => ({
+    type: ADD_USER_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the addUserDataInitAction failed
+ */
+const addUserDataErrorAction = () => ({
+    type: ADD_USER_DATA_ERROR
+});
+
+/**
+ * Function to add data to Item
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const addUserData = (data, role) => async (dispatch) => {
+    dispatch(addUserDataInitAction());
+    try {
+        let response = undefined;
+        if (role === 'Owner')
+            response = await API.addOwner(data);
+        else
+            response = await API.addBusinessManager(data);
+        const responseData = response['data'];
+        dispatch(alertActivateAction({text: 'User successfully added', alert: 'success'}));
+        return dispatch(addUserDataSuccessAction(responseData));
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(addUserDataErrorAction({error: error}));
     }
 }

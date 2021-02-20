@@ -22,20 +22,18 @@ class ItemModal extends Component {
             image: image
         }
         const data = new FormData();
+        const imageData = new FormData(event.target);
         data.append('name', formData.name);
         data.append('price', formData.price);
         data.append('description', formData.description);
         data.append('category', formData.category);
         data.append('menu', formData.menu);
         data.append('active', formData.active);
-        data.append('images[]', formData.image)
-        data.append('images', formData.image)
-        data.append('images[]', formData.image)
-        data.append('images', formData.image)
 
-        const response = await appActions.addItemData(data)
+        const response = await appActions.addItemData(data, imageData);
         if (response)
             document.getElementById('button-close-modal-item').click();
+        
     }
 
     render () {

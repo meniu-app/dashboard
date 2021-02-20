@@ -9,13 +9,14 @@ class UserModal extends Component {
 
     async handleSubmit (event, props) {
         const { appActions, restaurantDetail } = props;
+        const { role } = event.target;
 
         event.preventDefault();
         const data = new FormData(event.target)
         data.append('restaurant', restaurantDetail.id)
-        const response = await appActions.addRestaurantData(data)
+        const response = await appActions.addUserData(data, role.value)
         if (response)
-            document.getElementById('button-close-modal').click();
+            document.getElementById('button-close-modal-user').click();
     }
 
     render () {
@@ -27,7 +28,7 @@ class UserModal extends Component {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="userModalLabel">Add new user</h5>
-                            <button id="button-close-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button id="button-close-modal-user" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             { !formLoading ?

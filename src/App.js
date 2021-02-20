@@ -13,7 +13,7 @@ import Api from './api/Api';
 const AuthenticatedRoute = lazy(() => import('./components/AuthenticatedRoute'));
 const UnAuthenticatedRoute = lazy(() => import('./components/UnAuthenticatedRoute'));
 const Navbar = lazy(() => import('./components/Navbar'));
-const Footer = lazy(() => import('./components/Footer'));
+// const Footer = lazy(() => import('./components/Footer'));
 const Login = lazy(() => import('./components/Auth/Login'));
 const Dashboard = lazy(() => import('./components/Dashboard/Dashboard'));
 const Sidenav = lazy(() => import('./components/Sidenav/Sidenav'));
@@ -78,7 +78,7 @@ class App extends Component {
               </Route>
             </Switch>
             }
-            <Footer />
+            {/* <Footer /> */}
           </Suspense>
         </Router>:
         <Spinner></Spinner>
