@@ -4,17 +4,45 @@ import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
+import { SwatchesPicker } from 'react-color';
 
 class RestaurantModal extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            background: '#fff',
+            color: '#fff',
+            backgroundImage: false
+        };
+    }
+    
+    handleBackgroundChange = (color) => {
+        this.setState({ background: color.hex });
+    }
+
+    handleColorChange = (color) => {
+        this.setState({ color: color.hex });
+    }
+
+    handleBackgroudImageChange = (e) => {
+        this.setState({backgroundImage: e.target.checked})
+    }
 
     async handleSubmit (event, props) {
         const { appActions } = props;
 
         event.preventDefault();
-        const data = new FormData(event.target)
+        const data = new FormData(event.target);
+        const settings = {
+            color: this.state.color,
+            backgroundColor: this.state.background,
+            backgroundImage: this.state.backgroundImage
+        }
+        data.append('settings', JSON.stringify(settings));
         const response = await appActions.addRestaurantData(data)
         if (response)
-            document.getElementById('button-close-modal').click();
+            document.getElementById('button-close-modal-restaurant').click();
     }
 
     render () {
@@ -26,7 +54,7 @@ class RestaurantModal extends Component {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="restaurantModalLabel">Add new restaurant</h5>
-                            <button id="button-close-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button id="button-close-modal-restaurant" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             { !formLoading ?
@@ -55,6 +83,19 @@ class RestaurantModal extends Component {
                                     <label htmlFor="restaurantBannerInput">Restaurant banner</label>
                                     <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" />
                                 </div>
+                                <div className="form-check form-switch">
+                                    <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={this.state.backgroundImage} onChange={ this.handleBackgroudImageChange } />
+                                    <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="restaurantBannerInput">Restaurant background</label>
+                                    <SwatchesPicker onChange={ this.handleBackgroundChange } />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="restaurantBannerInput">Restaurant color</label>
+                                    <SwatchesPicker onChange={ this.handleColorChange } />
+                                </div>
+                                
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
                                     <button type="submit" className="btn btn-primary">Submit</button>
