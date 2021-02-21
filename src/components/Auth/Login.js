@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import * as appAction from '../../actions/appActions';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { track } from '../../mixpanel';
-
 class Login extends Component {
 
     constructor(props) {
@@ -35,8 +33,6 @@ class Login extends Component {
     }
 
     render() {
-        // Mixpanel track
-        track('Login-View');
 
         return (
             <div className="container mb-5">

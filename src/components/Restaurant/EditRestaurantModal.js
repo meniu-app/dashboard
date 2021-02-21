@@ -29,9 +29,11 @@ class EditRestaurantModal extends Component {
     }
 
     async handleSubmit (event, props) {
+        event.preventDefault();
         const { appActions } = props;
 
-        event.preventDefault();
+        event.target = document.getElementById('editRestaurantForm');
+
         const data = new FormData(event.target);
         const settings = {
             color: this.state.color,
@@ -64,7 +66,7 @@ class EditRestaurantModal extends Component {
                         </div>
                         <div className="modal-body">
                             { !formLoading ?
-                            <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
+                            <form id="editRestaurantForm" onSubmit={(e) => this.handleSubmit(e, this.props)} method="PATCH" encType="multipart/form-data">
                                 <div className="mb-3">
                                     <label htmlFor="restaurantNameInput" className="form-label">Restaurant name</label>
                                     <input name="name" type="text" className="form-control" id="restaurantNameInput" defaultValue={newRestaurant.name} onChange={ handleChangeRestaurant } placeholder="My Restaurant" required/>
@@ -101,10 +103,9 @@ class EditRestaurantModal extends Component {
                                     <label htmlFor="restaurantBannerInput">Restaurant color</label>
                                     <TwitterPicker onChange={ this.handleColorChange } value={newRestaurant.settings.color} />
                                 </div>
-                                
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <input type="submit" className="btn btn-primary" onClick={e => this.handleSubmit(e, this.props)} value="Submit" />
                                 </div>
                             </form>
                             : <Spinner />

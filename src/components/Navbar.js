@@ -15,7 +15,6 @@ class Navbar extends Component {
     logout = async () => {
         const { appActions } = this.props;
         await appActions.postLogout();
-        track('Logout clicked');
         removeTokens();
         removeUser();
         this.props.history.push('/');
@@ -31,12 +30,12 @@ class Navbar extends Component {
                 <div className="container-fluid">
                     {
                      restaurantDataReady ?
-                        <Link className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
+                        <Link className="navbar-brand" to="/">
                             {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
                             <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit</button>
                             <EditRestaurantModal restaurantDetail={restaurantDetail} handleChangeRestaurant={this.handleChangeRestaurant} />
                         </Link> :
-                        <Link className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
+                        <Link className="navbar-brand" to="/">
                             Meniu Dashboard {env === 'development' ? ' - Dev' : ''}
                         </Link>
                     }

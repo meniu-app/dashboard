@@ -27,7 +27,7 @@ class CategoryModal extends Component {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="categoryModalLabel">Add new category</h5>
+                            <h5 className="modal-title" id="categoryModalLabel">Editcategory</h5>
                             <button id="button-close-modal-category" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">

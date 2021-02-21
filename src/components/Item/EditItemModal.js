@@ -57,7 +57,7 @@ class EditItemModal extends Component {
                         </div>
                         <div className="modal-body">
                             { !formLoading ?
-                            <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
+                            <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="PATCH" encType="multipart/form-data">
                                 <div className="mb-3">
                                     <label htmlFor="itemNameInput" className="form-label">Item name</label>
                                     <input name="name" type="text" className="form-control"  id="itemNameInput" value={newItem.name} onChange={ handleChangeItem } placeholder="Sopa de tomate" required/>

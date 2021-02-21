@@ -598,7 +598,6 @@ export const editItemData = (data, imageData, id) => async (dispatch) => {
         dispatch(alertActivateAction({text: 'Item successfully edited', alert: 'success'}));
         return dispatch(editItemDataSuccessAction(responseData));
     } catch (error) {
-        console.log(error)
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(editItemDataErrorAction({error: error}));
     }

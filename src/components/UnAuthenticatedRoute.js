@@ -3,11 +3,9 @@ import {Redirect, Route} from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom'
-import { track } from '../mixpanel';
 
 class AuthenticatedRoute extends Component {
   render() {
-    track('Unauthorized-Route-View')
     if (this.props.isLoggedIn) {
       return <Redirect to="/"></Redirect>
     }
