@@ -30,6 +30,9 @@ import {
     EDIT_RESTAURANT_DATA,
     EDIT_RESTAURANT_DATA_SUCCESS,
     EDIT_RESTAURANT_DATA_ERROR,
+    EDIT_ITEM_DATA,
+    EDIT_ITEM_DATA_SUCCESS,
+    EDIT_ITEM_DATA_ERROR,
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -164,6 +167,30 @@ export default function(state = initialState.app, action) {
                 formLoading: false
             }
         case ADD_ITEM_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case EDIT_ITEM_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case EDIT_ITEM_DATA_SUCCESS:
+            var item = action.payload;
+            var items = [...state.menuDetail.categories[item.category].items]
+            items.splice(items.findIndex(i => (i.id === item.id)), 1, item);
+            var newCategories = {...state.menuDetail.categories}
+            newCategories[item.category].items = items;
+            var newMenuDetail = {...state.menuDetail};
+            newMenuDetail.categories = newCategories;
+
+            return {
+                ...state,
+                formLoading: false,
+                menuDetail: {...newMenuDetail}
+            }
+        case EDIT_ITEM_DATA_ERROR:
             return {
                 ...state,
                 formLoading: false

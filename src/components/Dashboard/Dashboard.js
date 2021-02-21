@@ -80,17 +80,12 @@ class Dashboard extends Component {
                         categories.map(category => {
                             return (
                                 <div key={category.id}>
-                                    <div className="card my-3" style={{width: 'fit-content'}}>
-                                        <div className="card-body">
-                                            <h6>{category.name}</h6>
-                                            <button className="btn btn-primary">Edit category</button>
-                                        </div>
-                                    </div>
+                                    <h5 className="text-center my-3">{category.name}</h5>
                                     <div className="row">
                                     {
                                         category.items.map(item => {
                                             return (
-                                                <div className="col-6"  key={item.id}>
+                                                <div className="col-4"  key={item.id}>
                                                     <div className="card my-2">
                                                         <div className="card-body d-flex">
                                                             <div className="me-3 flex-fill">
