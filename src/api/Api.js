@@ -82,6 +82,9 @@ const api = {
   addCategory: (data) => {
     return axios.post(`${baseUrl}/v1/category/`, data)
   },
+  editCategory: (data, id) => {
+    return axios.patch(`${baseUrl}/v1/category/${id}/`, data)
+  },
   addItem: (data) => {
     return axios.post(`${baseUrl}/v1/item/`, data)
   },

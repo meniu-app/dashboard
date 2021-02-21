@@ -3,8 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
+import EditCategoryModal from '../Category/EditCategoryModal';
 
 class Sidenav extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedCategory: {
+                id: '',
+                name: '',
+                description: ''
+            }
+        }
+    }
 
     async getMenuDetail(id) {
         const { appActions } = this.props;
@@ -16,8 +28,17 @@ class Sidenav extends Component {
         await appActions.getRestaurantDetailInitialData(id)
     }
 
-    showCategoryEdit() {
-        
+    handleChangeCategory = (e) => {
+        this.setState({
+            selectedCategory: {
+                ...this.state.selectedCategory,
+                [e.target.name]: e.target.value
+            }
+        });
+    }
+
+    setSelectedCategory(item) {
+        this.setState({selectedCategory: item});
     }
 
     render() {
@@ -66,12 +87,13 @@ class Sidenav extends Component {
                 </div>
                 <div className="row">
                     <h5>Categories</h5>
+                    <EditCategoryModal category={{...this.state.selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
                 {
                     restaurantDataReady &&
                     restaurantDetail.categories.map(category => {
                         return (
                             <div className="col-12 text-center mb-2" key={category.id}>
-                                <button className="btn btn-ligth" onClick={() => this.showCategoryEdit(category.id)}>
+                                <button className="btn btn-ligth" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
                                     {category.name}
                                 </button>
                             </div>

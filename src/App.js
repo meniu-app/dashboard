@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators }from 'redux';
 import { connect } from 'react-redux';
 import * as appAction from './actions/appActions';
-import { initialize } from './mixpanel';
 import Api from './api/Api';
 
 /**
@@ -25,8 +24,6 @@ import Alert from './components/Alert';
 
 class App extends Component {
   async componentDidMount() {
-    // Initialize mixpanel service
-    initialize();
     const { appActions } = this.props;
     const refreshToken = getRefreshToken();
     if (refreshToken !== null && refreshToken !== undefined) {
