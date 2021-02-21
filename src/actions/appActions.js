@@ -33,6 +33,12 @@ import {
     ADD_USER_DATA,
     ADD_USER_DATA_SUCCESS,
     ADD_USER_DATA_ERROR,
+    EDIT_ITEM_DATA,
+    EDIT_ITEM_DATA_SUCCESS,
+    EDIT_ITEM_DATA_ERROR,
+    EDIT_RESTAURANT_DATA_SUCCESS,
+    EDIT_RESTAURANT_DATA_ERROR,
+    EDIT_RESTAURANT_DATA,
 } from './types';
 import API from '../api/Api';
 import {
@@ -549,5 +555,92 @@ export const addUserData = (data, role) => async (dispatch) => {
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(addUserDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Action to edit new item
+ */
+const editItemDataInitAction = () => ({
+    type: EDIT_ITEM_DATA
+});
+
+/**
+ * Action which is callled when the editItemDataInitAction success
+ */
+const editItemDataSuccessAction = (data) => ({
+    type: EDIT_ITEM_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the editItemDataInitAction failed
+ */
+const editItemDataErrorAction = (error) => ({
+    type: EDIT_ITEM_DATA_ERROR,
+    payload: error
+});
+
+/**
+ * Function to add data to Item
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const editItemData = (data, imageData, id) => async (dispatch) => {
+    dispatch(editItemDataInitAction());
+    try {
+        const response = await API.editItem(data, id);
+        const responseData = response['data'];
+        // Making image post after item is created
+        // imageData.append('item', responseData.id);
+        // await API.addImage(imageData);
+        dispatch(alertActivateAction({text: 'Item successfully edited', alert: 'success'}));
+        return dispatch(editItemDataSuccessAction(responseData));
+    } catch (error) {
+        console.log(error)
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(editItemDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Action to edit restaurant
+ */
+const editRestaurantDataInitAction = () => ({
+    type: EDIT_RESTAURANT_DATA
+});
+
+/**
+ * Action which is callled when the addRestaurantDataInitAction success
+ */
+const editRestaurantDataSuccessAction = (data) => ({
+    type: EDIT_RESTAURANT_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the addItemDataInitAction failed
+ */
+const editRestaurantDataErrorAction = () => ({
+    type: EDIT_RESTAURANT_DATA_ERROR
+});
+
+/**
+ * Function to add data to Item
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const editRestaurantData = (data, id) => async (dispatch) => {
+    dispatch(editRestaurantDataInitAction());
+    try {
+        const response = await API.editRestaurant(data, id);
+        const responseData = response['data'];
+        dispatch(alertActivateAction({text: 'Restaurant successfully edited', alert: 'success'}));
+        return dispatch(editRestaurantDataSuccessAction(responseData));
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(editRestaurantDataErrorAction({error: error}));
     }
 }

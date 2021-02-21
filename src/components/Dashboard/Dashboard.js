@@ -11,12 +11,40 @@ import RestaurantModal from '../Restaurant/RestaurantModal';
 import CategoryModal from '../Category/CategoryModal';
 import MenuModal from '../Menu/MenuModal';
 import UserModal from '../User/UserModal';
+import EditItemModal from '../Item/EditItemModal';
 
 class Dashboard extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedItem: {
+                id: '',
+                name: '',
+                price: 0,
+                description: '',
+                menu: '',
+                category: ''
+            }
+        }
+    }
+
+    handleChangeItem = (e) => {
+        this.setState({
+            selectedItem: {
+                ...this.state.selectedItem,
+                [e.target.name]: e.target.value
+            }
+        });
+    }
 
     async componentDidMount() {
         const { appActions } = this.props;
         await appActions.getRestaurantDetailInitialData();
+    }
+
+    setSelectedItem(item) {
+        this.setState({selectedItem: item});
     }
 
     render() {
@@ -39,6 +67,7 @@ class Dashboard extends Component {
                         <CategoryModal />
                         <MenuModal />
                         <UserModal />
+                        <EditItemModal item={{...this.state.selectedItem}} handleChangeItem={this.handleChangeItem}/>
                     </div>
                 }
                 {
@@ -73,7 +102,7 @@ class Dashboard extends Component {
                                                                 <img src="https://via.placeholder.com/100C/O" alt=""/>
                                                             </div>
                                                         </div>
-                                                        <button className="btn btn-primary m-3" style={{width: 'fit-content'}}>Edit item</button>
+                                                        <button onClick={() => this.setSelectedItem(item)} className="btn btn-primary m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit item</button>
                                                     </div>
                                                 </div>
                                             )

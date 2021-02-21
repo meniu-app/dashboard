@@ -76,11 +76,17 @@ const api = {
   addRestaurant: (data) => {
     return axios.post(`${baseUrl}/v1/restaurant/`, data)
   },
+  editRestaurant: (data, id) => {
+    return axios.put(`${baseUrl}/v1/restaurant/${id}/`, data)
+  },
   addCategory: (data) => {
     return axios.post(`${baseUrl}/v1/category/`, data)
   },
   addItem: (data) => {
     return axios.post(`${baseUrl}/v1/item/`, data)
+  },
+  editItem: (data, id) => {
+    return axios.put(`${baseUrl}/v1/item/${id}/`, data)
   },
   addMenu: (data) => {
     return axios.post(`${baseUrl}/v1/menu/`, data)

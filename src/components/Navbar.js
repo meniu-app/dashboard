@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { removeTokens, removeUser } from '../api/TokenHandler';
 import { track } from '../mixpanel';
 import config from '../config';
+import EditRestaurantModal from './Restaurant/EditRestaurantModal';
 
 class Navbar extends Component {
 
@@ -20,6 +21,8 @@ class Navbar extends Component {
         this.props.history.push('/');
     }
 
+    handleChangeRestaurant = () => {}
+
     render() {
         const { isLoggedIn, restaurantDetail, restaurantDataReady } = this.props;
         const env = config.env;
@@ -28,12 +31,14 @@ class Navbar extends Component {
                 <div className="container-fluid">
                     {
                      restaurantDataReady ?
-                        <Link className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
+                        <div className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
                             {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
-                        </Link> :
-                        <Link className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
+                            <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit</button>
+                            <EditRestaurantModal restaurantDetail={restaurantDetail} handleChangeRestaurant={this.handleChangeRestaurant} />
+                        </div> :
+                        <div className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
                             Meniu Dashboard {env === 'development' ? ' - Dev' : ''}
-                        </Link>
+                        </div>
                     }
 
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +52,7 @@ class Navbar extends Component {
                                 (
                                 <>
                                     <Link className="nav-link" to="/profile" onClick={() => track('Profile clicked')}>Profile</Link>
-                                    <span onClick={this.logout} className="nav--logout nav-link" href="/auth/logout">Logout</span>
+                                    <span onClick={this.logout} className="nav--logout nav-link">Logout</span>
                                 </>
                                 )}
                         </div>

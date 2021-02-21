@@ -27,6 +27,9 @@ import {
     ADD_MENU_DATA,
     ADD_MENU_DATA_SUCCESS,
     ADD_MENU_DATA_ERROR,
+    EDIT_RESTAURANT_DATA,
+    EDIT_RESTAURANT_DATA_SUCCESS,
+    EDIT_RESTAURANT_DATA_ERROR,
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -127,6 +130,21 @@ export default function(state = initialState.app, action) {
                 restaurants: state.restaurants.concat(action.payload)
             }
         case ADD_RESTAURANT_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case EDIT_RESTAURANT_DATA:
+            return {
+                ...state,
+                formLoading: true,
+            }
+        case EDIT_RESTAURANT_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case EDIT_RESTAURANT_DATA_ERROR:
             return {
                 ...state,
                 formLoading: false
