@@ -54,7 +54,7 @@ class App extends Component {
         {appStarted ?
         <Router>
           <Suspense fallback={<Spinner></Spinner>}>
-            <Navbar restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady}/>
+            <Navbar/>
             <Alert />
             {
             <Switch>

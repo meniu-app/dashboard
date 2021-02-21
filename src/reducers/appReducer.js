@@ -140,9 +140,13 @@ export default function(state = initialState.app, action) {
                 formLoading: true,
             }
         case EDIT_RESTAURANT_DATA_SUCCESS:
+            var newRestaurants = state.restaurants;
+            newRestaurants.splice(state.restaurants.findIndex(restaurant => (restaurant.id === action.payload.id)), 1, action.payload);
             return {
                 ...state,
-                formLoading: false
+                formLoading: false,
+                restaurantDetail: action.payload,
+                restaurants: newRestaurants
             }
         case EDIT_RESTAURANT_DATA_ERROR:
             return {

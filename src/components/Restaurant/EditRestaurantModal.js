@@ -24,9 +24,8 @@ class EditRestaurantModal extends Component {
         this.setState({ color: color.hex });
     }
 
-    handleBackgroudImageChange = (e, newRestaurant) => {
-        console.log(e.target.value)
-        newRestaurant.settings.backgroundImage = e.target.value;
+    handleBackgroudImageChange = (e) => {
+        this.setState({ backgroundImage: e.target.checked });
     }
 
     async handleSubmit (event, props) {
@@ -39,6 +38,11 @@ class EditRestaurantModal extends Component {
             backgroundColor: this.state.background,
             backgroundImage: this.state.backgroundImage
         }
+        if (event.target.banner.value === '')
+            data.delete('banner');
+        if (event.target.logo.value === '')
+            data.delete('logo');
+
         data.append('settings', JSON.stringify(settings));
         const response = await appActions.editRestaurantData(data, props.restaurantDetail.id)
         if (response)
@@ -86,7 +90,7 @@ class EditRestaurantModal extends Component {
                                     <input name="banner" type="file" className="form-control-file" onChange={ handleChangeRestaurant } id="restaurantBannerInput" />
                                 </div>
                                 <div className="form-check form-switch">
-                                    <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" checked={newRestaurant.settings.backgroundImage} onChange={ e => this.handleBackgroudImageChange(e, newRestaurant) } />
+                                    <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={newRestaurant.settings.backgroundImage} onChange={ this.handleBackgroudImageChange } />
                                     <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
                                 </div>
                                 <div className="form-group">

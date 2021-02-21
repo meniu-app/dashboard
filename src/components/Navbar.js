@@ -31,14 +31,14 @@ class Navbar extends Component {
                 <div className="container-fluid">
                     {
                      restaurantDataReady ?
-                        <div className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
+                        <Link className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
                             {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
                             <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit</button>
                             <EditRestaurantModal restaurantDetail={restaurantDetail} handleChangeRestaurant={this.handleChangeRestaurant} />
-                        </div> :
-                        <div className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
+                        </Link> :
+                        <Link className="navbar-brand" to="/" onClick={() => track('Home clicked')}>
                             Meniu Dashboard {env === 'development' ? ' - Dev' : ''}
-                        </div>
+                        </Link>
                     }
 
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,6 +73,8 @@ Navbar.propTypes = {
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.app.isLoggedIn,
+    restaurantDetail: state.app.restaurantDetail,
+    restaurantDataReady: state.app.restaurantDataReady
 });
 
 const mapDispatchToProps = (dispatch) => ({

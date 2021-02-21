@@ -77,7 +77,7 @@ const api = {
     return axios.post(`${baseUrl}/v1/restaurant/`, data)
   },
   editRestaurant: (data, id) => {
-    return axios.put(`${baseUrl}/v1/restaurant/${id}/`, data)
+    return axios.patch(`${baseUrl}/v1/restaurant/${id}/`, data)
   },
   addCategory: (data) => {
     return axios.post(`${baseUrl}/v1/category/`, data)
@@ -86,7 +86,7 @@ const api = {
     return axios.post(`${baseUrl}/v1/item/`, data)
   },
   editItem: (data, id) => {
-    return axios.put(`${baseUrl}/v1/item/${id}/`, data)
+    return axios.patch(`${baseUrl}/v1/item/${id}/`, data)
   },
   addMenu: (data) => {
     return axios.post(`${baseUrl}/v1/menu/`, data)
