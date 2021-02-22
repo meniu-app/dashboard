@@ -115,7 +115,7 @@ Sidenav.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    menuDetail: state.app.menudetail,
+    menuDetail: state.app.menuDetail,
     menuDataReady: state.app.menuDataReady,
     restaurants: state.app.restaurants,
     restaurantsDataReady: state.app.restaurantsDataReady

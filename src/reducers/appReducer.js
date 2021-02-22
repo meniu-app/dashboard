@@ -162,9 +162,24 @@ export default function(state = initialState.app, action) {
                 formLoading: true
             }
         case ADD_ITEM_DATA_SUCCESS:
+            var item = action.payload;
+            var items = [];
+            var newCategories = {...state.menuDetail.categories};
+            var newMenuDetail = {...state.menuDetail};
+            if (!newCategories[item.category]) {
+                newCategories[item.category] = {
+                    name: action.payload.categoryName,
+                    items: [item]
+                }
+            } else {
+                newCategories[item.category].items.push(item);
+            }
+            newMenuDetail.categories = newCategories;
+
             return {
                 ...state,
-                formLoading: false
+                formLoading: false,
+                menuDetail: {...newMenuDetail}
             }
         case ADD_ITEM_DATA_ERROR:
             return {
@@ -177,12 +192,12 @@ export default function(state = initialState.app, action) {
                 formLoading: true
             }
         case EDIT_ITEM_DATA_SUCCESS:
-            var item = action.payload;
-            var items = [...state.menuDetail.categories[item.category].items]
+            item = action.payload;
+            items = [...state.menuDetail.categories[item.category].items]
             items.splice(items.findIndex(i => (i.id === item.id)), 1, item);
-            var newCategories = {...state.menuDetail.categories}
+            newCategories = {...state.menuDetail.categories}
             newCategories[item.category].items = items;
-            var newMenuDetail = {...state.menuDetail};
+            newMenuDetail = {...state.menuDetail};
             newMenuDetail.categories = newCategories;
 
             return {

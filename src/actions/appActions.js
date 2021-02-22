@@ -292,9 +292,8 @@ const getMenuDetailInitialDataSuccessAction = (data) => ({
 /**
  * Action which is callled when the getMenuDetailInitialDataInitAction failed
  */
-const getMenuDetailInitialDataErrorAction = (error) => ({
-    type: GET_MENU_DETAIL_INITIAL_DATA_ERROR,
-    payload: error
+const getMenuDetailInitialDataErrorAction = () => ({
+    type: GET_MENU_DETAIL_INITIAL_DATA_ERROR
 });
 
 /**
@@ -310,7 +309,7 @@ export const getMenuDetailInitialData = (id) => async (dispatch) => {
         const data = response['data'];
         return dispatch(getMenuDetailInitialDataSuccessAction(data));
     } catch (error) {
-        return dispatch(getMenuDetailInitialDataErrorAction({error: error}));
+        return dispatch(getMenuDetailInitialDataErrorAction());
     }
 }
 
@@ -395,15 +394,16 @@ const addItemDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object}
  */
-export const addItemData = (data, imageData) => async (dispatch) => {
+export const addItemData = (data, imageData, categoryName) => async (dispatch) => {
     dispatch(addItemDataInitAction());
     try {
         const response = await API.addItem(data);
         const responseData = response['data'];
         // Making image post after item is created
         imageData.append('item', responseData.id);
-        await API.addImage(imageData);
+        // await API.addImage(imageData);
         dispatch(alertActivateAction({text: 'Item successfully added', alert: 'success'}));
+        responseData['categoryName'] = categoryName;
         return dispatch(addItemDataSuccessAction(responseData));
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
@@ -684,7 +684,6 @@ export const editCategoryData = (data, id) => async (dispatch) => {
         dispatch(alertActivateAction({text: 'Category successfully edited', alert: 'success'}));
         return dispatch(editCategoyDataSuccessAction(responseData));
     } catch (error) {
-        console.log(error)
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(editCategoryDataErrorAction({error: error}));
     }
