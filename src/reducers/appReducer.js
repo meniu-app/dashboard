@@ -33,6 +33,9 @@ import {
     EDIT_ITEM_DATA,
     EDIT_ITEM_DATA_SUCCESS,
     EDIT_ITEM_DATA_ERROR,
+    EDIT_CATEGORY_DATA,
+    EDIT_CATEGORY_DATA_SUCCESS,
+    EDIT_CATEGORY_DATA_ERROR,
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -162,24 +165,10 @@ export default function(state = initialState.app, action) {
                 formLoading: true
             }
         case ADD_ITEM_DATA_SUCCESS:
-            var item = action.payload;
-            var items = [];
-            var newCategories = {...state.menuDetail.categories};
-            var newMenuDetail = {...state.menuDetail};
-            if (!newCategories[item.category]) {
-                newCategories[item.category] = {
-                    name: action.payload.categoryName,
-                    items: [item]
-                }
-            } else {
-                newCategories[item.category].items.push(item);
-            }
-            newMenuDetail.categories = newCategories;
-
             return {
                 ...state,
                 formLoading: false,
-                menuDetail: {...newMenuDetail}
+                menuDetail: action.payload.menuData
             }
         case ADD_ITEM_DATA_ERROR:
             return {
@@ -192,20 +181,28 @@ export default function(state = initialState.app, action) {
                 formLoading: true
             }
         case EDIT_ITEM_DATA_SUCCESS:
-            item = action.payload;
-            items = [...state.menuDetail.categories[item.category].items]
-            items.splice(items.findIndex(i => (i.id === item.id)), 1, item);
-            newCategories = {...state.menuDetail.categories}
-            newCategories[item.category].items = items;
-            newMenuDetail = {...state.menuDetail};
-            newMenuDetail.categories = newCategories;
-
             return {
                 ...state,
                 formLoading: false,
-                menuDetail: {...newMenuDetail}
+                menuDetail: action.payload.menuData
             }
         case EDIT_ITEM_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case EDIT_CATEGORY_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case EDIT_CATEGORY_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false,
+                restaurantDetail: action.payload.restaurantData
+            }
+        case EDIT_CATEGORY_DATA_ERROR:
             return {
                 ...state,
                 formLoading: false

@@ -33,7 +33,7 @@ class ItemModal extends Component {
         let categoryName = document.getElementById('itemCategoryInput');
         categoryName = categoryName.options[categoryName.selectedIndex].innerHTML;
 
-        const response = await appActions.addItemData(data, imageData, categoryName);
+        const response = await appActions.addItemData(data, imageData, categoryName, formData.menu);
         if (response)
             document.getElementById('button-close-modal-item').click();
 

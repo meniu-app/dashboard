@@ -32,7 +32,7 @@ class App extends Component {
         await appActions.getRestaurantDetailInitialData();
         const user = getUser();
         if (user !== undefined) {
-          if (user.role === '1')
+          if (user.role === 'admin')
             await appActions.getRestaurantInitialData();
         }
       }

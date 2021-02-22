@@ -375,9 +375,9 @@ const addItemDataInitAction = () => ({
 /**
  * Action which is callled when the addItemDataInitAction success
  */
-const addItemDataSuccessAction = (data) => ({
+const addItemDataSuccessAction = (data, menuData) => ({
     type: ADD_ITEM_DATA_SUCCESS,
-    payload: data
+    payload: {data, menuData}
 });
 
 /**
@@ -394,7 +394,7 @@ const addItemDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object}
  */
-export const addItemData = (data, imageData, categoryName) => async (dispatch) => {
+export const addItemData = (data, imageData, categoryName, menuId) => async (dispatch) => {
     dispatch(addItemDataInitAction());
     try {
         const response = await API.addItem(data);
@@ -404,7 +404,9 @@ export const addItemData = (data, imageData, categoryName) => async (dispatch) =
         // await API.addImage(imageData);
         dispatch(alertActivateAction({text: 'Item successfully added', alert: 'success'}));
         responseData['categoryName'] = categoryName;
-        return dispatch(addItemDataSuccessAction(responseData));
+        const menu = await API.getMenuDetail(menuId);
+        const menuData = menu['data'];
+        return dispatch(addItemDataSuccessAction(responseData, menuData));
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(addItemDataErrorAction({error: error}));
@@ -571,9 +573,9 @@ const editItemDataInitAction = () => ({
 /**
  * Action which is callled when the editItemDataInitAction success
  */
-const editItemDataSuccessAction = (data) => ({
+const editItemDataSuccessAction = (data, menuData) => ({
     type: EDIT_ITEM_DATA_SUCCESS,
-    payload: data
+    payload: {data, menuData}
 });
 
 /**
@@ -595,12 +597,15 @@ export const editItemData = (data, imageData, id) => async (dispatch) => {
     try {
         const response = await API.editItem(data, id);
         const responseData = response['data'];
+        const menu = await API.getMenuDetail(responseData.menu);
+        const menuData = menu['data'];
         // Making image post after item is created
         // imageData.append('item', responseData.id);
         // await API.addImage(imageData);
         dispatch(alertActivateAction({text: 'Item successfully edited', alert: 'success'}));
-        return dispatch(editItemDataSuccessAction(responseData));
+        return dispatch(editItemDataSuccessAction(responseData, menuData));
     } catch (error) {
+        console.log(error)
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(editItemDataErrorAction({error: error}));
     }
@@ -657,9 +662,9 @@ const editCategoryDataInitAction = () => ({
 /**
  * Action which is callled when the editCategoryDataInitAction success
  */
-const editCategoyDataSuccessAction = (data) => ({
+const editCategoyDataSuccessAction = (data, restaurantData) => ({
     type: EDIT_CATEGORY_DATA_SUCCESS,
-    payload: data
+    payload: {data, restaurantData}
 });
 
 /**
@@ -682,7 +687,9 @@ export const editCategoryData = (data, id) => async (dispatch) => {
         const response = await API.editCategory(data, id);
         const responseData = response['data'];
         dispatch(alertActivateAction({text: 'Category successfully edited', alert: 'success'}));
-        return dispatch(editCategoyDataSuccessAction(responseData));
+        const restaurant = await API.getRestaurantDetail(responseData.restaurant);
+        const restaurantData = restaurant['data'];
+        return dispatch(editCategoyDataSuccessAction(responseData, restaurantData));
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(editCategoryDataErrorAction({error: error}));
