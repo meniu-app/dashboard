@@ -45,6 +45,13 @@ class Sidenav extends Component {
         const { restaurantDetail, restaurantDataReady, restaurants, restaurantsDataReady } = this.props;
         return (
             <nav id="main-sidebar">
+                <div className="row my-4">
+                    <div className="col-12 text-center">
+                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainModal">
+                            Add
+                        </button>
+                    </div>
+                </div>
                 {
                     restaurantsDataReady ?
                     <div className="row">
@@ -63,13 +70,6 @@ class Sidenav extends Component {
                     </div>
                     : <> </>
                 }
-                <div className="row my-4">
-                    <div className="col-12 text-center">
-                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainModal">
-                            Add
-                        </button>
-                    </div>
-                </div>
                 <div className="row">
                     <h5>Menus</h5>
                 {
