@@ -94,6 +94,9 @@ const api = {
   addMenu: (data) => {
     return axios.post(`${baseUrl}/v1/menu/`, data)
   },
+  editMenu: (data, id) => {
+    return axios.patch(`${baseUrl}/v1/menu/${id}/`, data)
+  },
   addImage: (data) => {
     return axios.post(`${baseUrl}/v1/image/`, data)
   },

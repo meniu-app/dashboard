@@ -12,6 +12,7 @@ import CategoryModal from '../Category/CategoryModal';
 import MenuModal from '../Menu/MenuModal';
 import UserModal from '../User/UserModal';
 import EditItemModal from '../Item/EditItemModal';
+import EditMenuModal from '../Menu/EditMenuModal';
 
 class Dashboard extends Component {
 
@@ -38,13 +39,19 @@ class Dashboard extends Component {
         });
     }
 
+    handleChangeMenu = (e) => {
+        console.log(e.target.value)
+        this.setState({
+            selectedMenu: {
+                ...this.state.selectedMenu,
+                [e.target.name]: e.target.value
+            }
+        });
+    }
+
     async componentDidMount() {
         const { appActions } = this.props;
         await appActions.getRestaurantDetailInitialData();
-    }
-
-    setSelectedItem(item) {
-        this.setState({selectedItem: item});
     }
 
     render() {
@@ -73,8 +80,10 @@ class Dashboard extends Component {
                 {
                 menuDetailDataReady &&
                 <div className="px-3">
-                    <div>
-                        <h4>{menuDetail.name}</h4>
+                    <div className="d-flex">
+                        <h4 className="me-3">{menuDetail.name}</h4>
+                        <button className="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit menu</button>
+                        <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
                     </div> 
                     {
                         categories.map(category => {

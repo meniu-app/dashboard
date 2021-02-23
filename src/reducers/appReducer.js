@@ -36,6 +36,9 @@ import {
     EDIT_CATEGORY_DATA,
     EDIT_CATEGORY_DATA_SUCCESS,
     EDIT_CATEGORY_DATA_ERROR,
+    EDIT_MENU_DATA,
+    EDIT_MENU_DATA_SUCCESS,
+    EDIT_MENU_DATA_ERROR,
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -244,7 +247,28 @@ export default function(state = initialState.app, action) {
             return {
                 ...state,
                 formLoading: false
+            }
+        case EDIT_MENU_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case EDIT_MENU_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false,
+                restaurantDetail: action.payload.restaurantData,
+                menuDetail: {
+                    ...state.menuDetail,
+                    name: action.payload.data.name,
+                    description: action.payload.data.description
                 }
+            }
+        case EDIT_MENU_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
         case ALERT_ACTIVATE:
             return {
                 ...state,

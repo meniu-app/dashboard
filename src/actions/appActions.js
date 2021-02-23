@@ -42,6 +42,9 @@ import {
     EDIT_CATEGORY_DATA,
     EDIT_CATEGORY_DATA_SUCCESS,
     EDIT_CATEGORY_DATA_ERROR,
+    EDIT_MENU_DATA,
+    EDIT_MENU_DATA_SUCCESS,
+    EDIT_MENU_DATA_ERROR,
 } from './types';
 import API from '../api/Api';
 import {
@@ -693,5 +696,50 @@ export const editCategoryData = (data, id) => async (dispatch) => {
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(editCategoryDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Action to edit menu
+ */
+const editMenuDataInitAction = () => ({
+    type: EDIT_MENU_DATA
+});
+
+/**
+ * Action which is callled when the editMenuDataInitAction success
+ */
+const editMenuDataSuccessAction = (data, restaurantData) => ({
+    type: EDIT_MENU_DATA_SUCCESS,
+    payload: {data, restaurantData}
+});
+
+/**
+ * Action which is callled when the editMenuDataInitAction failed
+ */
+const editMenuDataErrorAction = (error) => ({
+    type: EDIT_MENU_DATA_ERROR,
+    payload: error
+});
+
+/**
+ * Function to fetch init data from DIsh detail
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains data from dish
+ */
+export const editMenuData = (data, id) => async (dispatch) => {
+    dispatch(editMenuDataInitAction());
+    try {
+        const response = await API.editMenu(data, id);
+        const responseData = response['data'];
+        const restaurant = await API.getRestaurantDetail(responseData.restaurant);
+        const restaurantData = restaurant['data'];
+        dispatch(alertActivateAction({text: 'Menu successfully edited', alert: 'success'}));
+        return dispatch(editMenuDataSuccessAction(responseData, restaurantData));
+    } catch (error) {
+        console.log(error)
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(editMenuDataErrorAction({error: error}));
     }
 }
