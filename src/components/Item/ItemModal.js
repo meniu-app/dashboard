@@ -30,10 +30,7 @@ class ItemModal extends Component {
         data.append('menu', formData.menu);
         data.append('active', formData.active);
 
-        let categoryName = document.getElementById('itemCategoryInput');
-        categoryName = categoryName.options[categoryName.selectedIndex].innerHTML;
-
-        const response = await appActions.addItemData(data, imageData, categoryName, formData.menu);
+        const response = await appActions.addItemData(data, imageData, formData.menu);
         if (response)
             document.getElementById('button-close-modal-item').click();
 
@@ -94,7 +91,7 @@ class ItemModal extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="itemImageInput">Image</label>
-                                    <input name="image" type="file" className="form-control-file" id="itemImageInput" />
+                                    <input name="image" type="file" className="form-control-file" id="itemImageInput" required />
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>

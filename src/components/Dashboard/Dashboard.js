@@ -49,6 +49,10 @@ class Dashboard extends Component {
         });
     }
 
+    setSelectedItem(item) {
+        this.setState({selectedItem: item});
+    }
+
     async componentDidMount() {
         const { appActions } = this.props;
         await appActions.getRestaurantDetailInitialData();
@@ -84,7 +88,12 @@ class Dashboard extends Component {
                         <h4 className="me-3">{menuDetail.name}</h4>
                         <button className="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit menu</button>
                         <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
-                    </div> 
+                    </div>
+                    <div className="row mt-3">
+                        <div className="col-4">
+                            <img className="img-thumbnail" src={menuDetail.qr_code} alt=""/>
+                        </div>
+                    </div>
                     {
                         categories.map(category => {
                             return (
@@ -93,8 +102,9 @@ class Dashboard extends Component {
                                     <div className="row">
                                     {
                                         category.items.map(item => {
+                                            const image = item.images.length > 0 ? `${item.images[0].image_url}` : "https://via.placeholder.com/100C/O";
                                             return (
-                                                <div className="col-4"  key={item.id}>
+                                                <div className="col-12 col-lg-4"  key={item.id}>
                                                     <div className="card my-2">
                                                         <div className="card-body d-flex">
                                                             <div className="me-3 flex-fill">
@@ -103,7 +113,7 @@ class Dashboard extends Component {
                                                                 <p>{item.description}</p>
                                                             </div>
                                                             <div>
-                                                                <img src="https://via.placeholder.com/100C/O" alt=""/>
+                                                                <img className="img-thumbnail" src={image} alt=""/>
                                                             </div>
                                                         </div>
                                                         <button onClick={() => this.setSelectedItem(item)} className="btn btn-primary m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit item</button>

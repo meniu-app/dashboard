@@ -397,16 +397,15 @@ const addItemDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object}
  */
-export const addItemData = (data, imageData, categoryName, menuId) => async (dispatch) => {
+export const addItemData = (data, imageData, menuId) => async (dispatch) => {
     dispatch(addItemDataInitAction());
     try {
         const response = await API.addItem(data);
         const responseData = response['data'];
         // Making image post after item is created
         imageData.append('item', responseData.id);
-        // await API.addImage(imageData);
+        await API.addImage(imageData);
         dispatch(alertActivateAction({text: 'Item successfully added', alert: 'success'}));
-        responseData['categoryName'] = categoryName;
         const menu = await API.getMenuDetail(menuId);
         const menuData = menu['data'];
         return dispatch(addItemDataSuccessAction(responseData, menuData));
@@ -595,16 +594,17 @@ const editItemDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object}
  */
-export const editItemData = (data, imageData, id) => async (dispatch) => {
+export const editItemData = (data, imageData, id, imageId) => async (dispatch) => {
     dispatch(editItemDataInitAction());
     try {
         const response = await API.editItem(data, id);
         const responseData = response['data'];
+        // Making image update after item is created
+        if (imageId !== null)
+            await API.editImage(imageData, imageId);
         const menu = await API.getMenuDetail(responseData.menu);
         const menuData = menu['data'];
-        // Making image post after item is created
-        // imageData.append('item', responseData.id);
-        // await API.addImage(imageData);
+
         dispatch(alertActivateAction({text: 'Item successfully edited', alert: 'success'}));
         return dispatch(editItemDataSuccessAction(responseData, menuData));
     } catch (error) {

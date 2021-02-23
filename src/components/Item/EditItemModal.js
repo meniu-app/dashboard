@@ -14,7 +14,7 @@ class EditItemModal extends Component {
     }
 
     async handleSubmit(event, props) {
-        const { appActions } = props;
+        const { appActions, item } = props;
         event.preventDefault();
         const {name, price, description, category, menu, image} = event.target;
         const formData = {
@@ -35,7 +35,11 @@ class EditItemModal extends Component {
         data.append('menu', formData.menu);
         data.append('active', formData.active);
 
-        const response = await appActions.editItemData(data, imageData, props.item.id);
+        let imageId = item.images.length > 0 ? item.images[0].id : null;
+        if (formData.image.value === '')
+            imageId = null;
+
+        const response = await appActions.editItemData(data, imageData, props.item.id, imageId);
         if (response)
             document.getElementById('button-close-modal-item-edit').click();
     }

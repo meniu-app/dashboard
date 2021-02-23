@@ -100,6 +100,9 @@ const api = {
   addImage: (data) => {
     return axios.post(`${baseUrl}/v1/image/`, data)
   },
+  editImage: (data, id) => {
+    return axios.patch(`${baseUrl}/v1/image/${id}/`, data)
+  },
   addOwner: (data) => {
     return axios.post(`${baseUrl}/v1/owner`, data)
   },
