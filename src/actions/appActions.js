@@ -86,7 +86,6 @@ export const getRestaurantInitialData = () => async (dispatch) => {
     dispatch(getRestaurantsInitialDataInitAction());
     try {
         const response = await API.getRestaurants();
-        
         const data = response['data'];
         return dispatch(getRestaurantsInitialDataSuccessAction(data));
     } catch (error) {
@@ -132,10 +131,12 @@ export const postLoginData = (email, password) => async (dispatch) => {
             setAccessToken(data['access']);
             setRefreshToken(data['refresh']);
             setUser(data['authenticatedUser']);
+            dispatch(alertActivateAction({text: 'successfully logged in', alert: 'success'}));
             return dispatch(postLoginInitSuccessAction(data));
         }
         return dispatch(postLoginInitErrorAction(`Error: Bad credentials`));
     } catch (error) {
+        dispatch(alertActivateAction({text: 'Incorrect email or password', alert: 'danger'}));
         return dispatch(postLoginInitErrorAction(`Error: ${error}`));
     }
 }
@@ -206,10 +207,14 @@ const getRestaurantDetailInitialDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object} This contains data from restaurants
  */
-export const getRestaurantDetailInitialData = (id) => async (dispatch) => {
+export const getRestaurantDetailInitialData = (id, userId) => async (dispatch) => {
     dispatch(getRestaurantDetailInitialDataInitAction());
     try {
-        const response = await API.getRestaurantDetail(id);
+        let response = null;
+        if (userId)
+            response = await API.getRestaurantDetailByUser(userId);
+        else
+            response = await API.getRestaurantDetail(id);
         const data = response['data'];
         return dispatch(getRestaurantDetailInitialDataSuccessAction({data}));
     } catch (error) {

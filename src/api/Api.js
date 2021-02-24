@@ -67,6 +67,10 @@ const api = {
   getRestaurantDetail: (id = '5236b59c-e618-4ae8-bfc7-4e3a242c5fc9') => {
     return axios.get(`${baseUrl}/v1/restaurant/${id}/`);
   },
+  getRestaurantDetailByUser: (id) => {
+    console.log(id)
+    return axios.get(`${baseUrl}/v1/restaurant/user/${id}/`);
+  },
   getMenuDetail: (id) => {
     return axios.get(`${baseUrl}/v1/menu/${id}/`);
   },

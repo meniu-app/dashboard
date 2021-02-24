@@ -39,12 +39,12 @@ class EditCategoryModal extends Component {
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="PATCH" encType="multipart/form-data">
                                 <div className="mb-3">
-                                    <label htmlFor="categoryNameInput" className="form-label">Category name</label>
-                                    <input name="name" type="text" className="form-control" id="categoryNameInput" value={newCategory.name} onChange={handleChangeCategory} placeholder="My category" required/>
+                                    <label htmlFor="categoryNameInputEdit" className="form-label">Category name</label>
+                                    <input name="name" type="text" className="form-control" id="categoryNameInputEdit" value={newCategory.name} onChange={handleChangeCategory} placeholder="My category" required/>
                                 </div>
                                 <div className="mb-3 form-group">
-                                    <label htmlFor="categoryDescriptionInput">Category description</label>
-                                    <textarea name="description" className="form-control" id="categoryDescriptionInput" value={newCategory.description} onChange={handleChangeCategory} rows="3" required></textarea>
+                                    <label htmlFor="categoryDescriptionInputEdit">Category description</label>
+                                    <textarea name="description" className="form-control" id="categoryDescriptionInputEdit" value={newCategory.description} onChange={handleChangeCategory} rows="3" required></textarea>
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>

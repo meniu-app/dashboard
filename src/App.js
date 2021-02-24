@@ -29,11 +29,17 @@ class App extends Component {
     if (refreshToken !== null && refreshToken !== undefined) {
       const init = await Api.refreshToken({refresh: refreshToken}); 
       if (init.status === 200) {
-        await appActions.getRestaurantDetailInitialData();
+        
         const user = getUser();
-        if (user !== undefined) {
-          if (user.role === 'admin')
+        if (user !== undefined && user !== null) {
+          if (user.role === 'admin') {
+            await appActions.getRestaurantDetailInitialData();
             await appActions.getRestaurantInitialData();
+          }
+          else {
+            await appActions.getRestaurantDetailInitialData();
+            // await appActions.getRestaurantDetailInitialData(undefined, user.id);
+          }
         }
       }
       else {

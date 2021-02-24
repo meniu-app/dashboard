@@ -25,8 +25,7 @@ class Login extends Component {
             password
         });
         const response = await appActions.postLoginData(email, password);
-        if (response['type'] === 'POST_LOGIN_SUCCESS')
-        {
+        if (response['type'] === 'POST_LOGIN_SUCCESS') {
             await appActions.getRestaurantInitialData();
             this.props.history.push('/');
         }
@@ -39,11 +38,11 @@ class Login extends Component {
                 <form onSubmit={this.loginSubmit} className="form--login" action="http://auth/login" method="POST">
                     <div className="mb-3">
                         <label htmlFor="loginEmail" className="form-label">Email</label>
-                        <input type="text" name="email" className="form-control" id="loginEmail" placeholder="myuser"></input>
+                        <input type="text" name="email" className="form-control" id="loginEmail" placeholder="email@domain.com" required></input>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="loginPassword" className="form-label">Password</label>
-                        <input type="password" name="password" className="form-control" id="loginPassword"></input>
+                        <input type="password" name="password" className="form-control" id="loginPassword" required></input>
                     </div>
                     <button className="btn btn-primary">Login</button>
                 </form>

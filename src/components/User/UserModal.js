@@ -49,6 +49,10 @@ class UserModal extends Component {
                                     <label htmlFor="userEmailInput">User email</label>
                                     <input name="email" type="email" className="form-control" id="userEmailInput" placeholder="user@email.com" required/>
                                 </div>
+                                <div className="mb-3 form-group">
+                                    <label htmlFor="userPasswordInput">User password</label>
+                                    <input name="password" type="password" className="form-control" id="userPasswordInput" placeholder="" required/>
+                                </div>
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
                                     <button type="submit" className="btn btn-primary">Submit</button>

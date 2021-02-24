@@ -63,20 +63,20 @@ class EditItemModal extends Component {
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="PATCH" encType="multipart/form-data">
                                 <div className="mb-3">
-                                    <label htmlFor="itemNameInput" className="form-label">Item name</label>
-                                    <input name="name" type="text" className="form-control"  id="itemNameInput" value={newItem.name} onChange={ handleChangeItem } placeholder="Sopa de tomate" required/>
+                                    <label htmlFor="itemNameInputEdit" className="form-label">Item name</label>
+                                    <input name="name" type="text" className="form-control"  id="itemNameInputEdit" value={newItem.name} onChange={ handleChangeItem } placeholder="Sopa de tomate" required/>
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="itemPriceInput" className="form-label">Item price</label>
-                                    <input name="price" type="number" className="form-control" id="itemPriceInput" value={newItem.price} onChange={ handleChangeItem } placeholder="12,99" required/>
+                                    <label htmlFor="itemPriceInputEdit" className="form-label">Item price</label>
+                                    <input name="price" type="number" className="form-control" id="itemPriceInputEdit" value={newItem.price} onChange={ handleChangeItem } placeholder="12,99" required/>
                                 </div>
                                 <div className="mb-3 form-group">
-                                    <label htmlFor="itemDescriptionInput">Item description</label>
-                                    <textarea name="description" className="form-control" value={newItem.description} id="itemDescriptionInput" onChange={ handleChangeItem } rows="3" required></textarea>
+                                    <label htmlFor="itemDescriptionInputEdit">Item description</label>
+                                    <textarea name="description" className="form-control" value={newItem.description} id="itemDescriptionInputEdit" onChange={ handleChangeItem } rows="3" required></textarea>
                                 </div>
                                 <div className="mb-3 form-group">
-                                    <label htmlFor="itemMenuInput">Item menu</label>
-                                    <select name="menu" className="form-control" value={newItem.menu} onChange={ handleChangeItem } id="itemMenuInput" required>
+                                    <label htmlFor="itemMenuInputEdit">Item menu</label>
+                                    <select name="menu" className="form-control" value={newItem.menu} onChange={ handleChangeItem } id="itemMenuInputEdit" required>
                                         {
                                             menus.map(menu => {
                                                 return (
@@ -87,8 +87,8 @@ class EditItemModal extends Component {
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="itemCategoryInput">Item category</label>
-                                    <select name="category" className="form-control" value={newItem.category}onChange={ handleChangeItem } id="itemCategoryInput" required>
+                                    <label htmlFor="itemCategoryInputEdit">Item category</label>
+                                    <select name="category" className="form-control" value={newItem.category}onChange={ handleChangeItem } id="itemCategoryInputEdit" required>
                                         {
                                             categories.map(category => {
                                                 return (
@@ -99,8 +99,8 @@ class EditItemModal extends Component {
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="itemImageInput">Image</label>
-                                    <input name="image" type="file" className="form-control-file" id="itemImageInput" />
+                                    <label htmlFor="itemImageInputEdit">Image</label>
+                                    <input name="image" type="file" className="form-control-file" id="itemImageInputEdit" />
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>

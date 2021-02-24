@@ -14,6 +14,7 @@ class EditRestaurantModal extends Component {
             ...props.restaurantDetail.settings
         };
         this.handleChangeRestaurant = this.props.handleChangeRestaurant.bind(this);
+        this.handleBackgroudImageChange = this.handleBackgroudImageChange.bind(this);
     }
     
     handleBackgroundChange = (color) => {
@@ -24,7 +25,8 @@ class EditRestaurantModal extends Component {
         this.setState({ color: color.hex });
     }
 
-    handleBackgroudImageChange = (e) => {
+    handleBackgroudImageChange(e) {
+        e.stopPropagation();
         this.setState({ backgroundImage: e.target.checked });
     }
 
@@ -68,39 +70,39 @@ class EditRestaurantModal extends Component {
                             { !formLoading ?
                             <form id="editRestaurantForm" onSubmit={(e) => this.handleSubmit(e, this.props)} method="PATCH" encType="multipart/form-data">
                                 <div className="mb-3">
-                                    <label htmlFor="restaurantNameInput" className="form-label">Restaurant name</label>
-                                    <input name="name" type="text" className="form-control" id="restaurantNameInput" defaultValue={newRestaurant.name} onChange={ handleChangeRestaurant } placeholder="My Restaurant" required/>
+                                    <label htmlFor="restaurantNameInputEdit" className="form-label">Restaurant name</label>
+                                    <input name="name" type="text" className="form-control" id="restaurantNameInputEdit" defaultValue={newRestaurant.name} onChange={ handleChangeRestaurant } placeholder="My Restaurant" required/>
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="restaurantAddressInput" className="form-label">Restaurant address</label>
-                                    <input name="address" type="address" className="form-control" id="restaurantAddressInput" defaultValue={newRestaurant.address} onChange={ handleChangeRestaurant } placeholder="Street..." required/>
+                                    <label htmlFor="restaurantAddressInputEdit" className="form-label">Restaurant address</label>
+                                    <input name="address" type="address" className="form-control" id="restaurantAddressInputEdit" defaultValue={newRestaurant.address} onChange={ handleChangeRestaurant } placeholder="Street..." required/>
                                 </div>
                                 <div className="mb-3 form-group">
-                                    <label htmlFor="restaurantEmailInput">Restaurant email</label>
-                                    <input name="email" type="email" className="form-control" id="restaurantEmailInput" defaultValue={newRestaurant.email} onChange={ handleChangeRestaurant } placeholder="restaurant@email.com" required/>
+                                    <label htmlFor="restaurantEmailInputEdit">Restaurant email</label>
+                                    <input name="email" type="email" className="form-control" id="restaurantEmailInputEdit" defaultValue={newRestaurant.email} onChange={ handleChangeRestaurant } placeholder="restaurant@email.com" required/>
                                 </div>
                                 <div className="mb-3 form-group">
-                                    <label htmlFor="restaurantPhoneInput">Restaurant phone</label>
-                                    <input name="phone" type="phone" className="form-control" id="restaurantPhoneInput" defaultValue={newRestaurant.phone} onChange={ handleChangeRestaurant } placeholder="3453456" required/>
+                                    <label htmlFor="restaurantPhoneInputEdit">Restaurant phone</label>
+                                    <input name="phone" type="phone" className="form-control" id="restaurantPhoneInputEdit" defaultValue={newRestaurant.phone} onChange={ handleChangeRestaurant } placeholder="3453456" required/>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="restaurantLogoInput">Restaurant logo</label>
-                                    <input name="logo" type="file" className="form-control-file" onChange={ handleChangeRestaurant } id="restaurantLogoInput" />
+                                    <label htmlFor="restaurantLogoInputEdit">Restaurant logo</label>
+                                    <input name="logo" type="file" className="form-control-file" onChange={ handleChangeRestaurant } id="restaurantLogoInputEdit" />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="restaurantBannerInput">Restaurant banner</label>
-                                    <input name="banner" type="file" className="form-control-file" onChange={ handleChangeRestaurant } id="restaurantBannerInput" />
+                                    <label htmlFor="restaurantBannerInputEdit">Restaurant banner</label>
+                                    <input name="banner" type="file" className="form-control-file" onChange={ handleChangeRestaurant } id="restaurantBannerInputEdit" />
                                 </div>
                                 <div className="form-check form-switch">
-                                    <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={newRestaurant.settings.backgroundImage} onChange={ this.handleBackgroudImageChange } />
+                                    <input className="form-check-input" type="checkbox" id="restaurantBackgroundInputEdit" defaultChecked={this.state.backgroundImage} onClick={ this.handleBackgroudImageChange } />
                                     <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="restaurantBannerInput">Restaurant background</label>
+                                    <label htmlFor="restaurantBannerInputEdit">Restaurant background</label>
                                     <TwitterPicker onChange={ this.handleBackgroundChange } value={newRestaurant.settings.background} />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="restaurantBannerInput">Restaurant color</label>
+                                    <label htmlFor="restaurantBannerInputEdit">Restaurant color</label>
                                     <TwitterPicker onChange={ this.handleColorChange } value={newRestaurant.settings.color} />
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
