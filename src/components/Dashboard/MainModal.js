@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { getUserRole } from '../../api/TokenHandler';
-// import { track } from '../mixpanel';
+import PropTypes from 'prop-types';
 
 class MainModal extends Component {
-
     render() {
+        const { restaurantDataReady } = this.props;
         return (
             <div className="modal fade" id="mainModal" tabIndex="-1" aria-labelledby="mainModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
@@ -15,6 +15,7 @@ class MainModal extends Component {
                         </div>
                         <div className="modal-body">
                             <div className="row">
+                                { restaurantDataReady &&
                                 <div className="col-12 d-flex py-2">
                                     <img src="https://via.placeholder.com/100C/O" alt=""/>
                                     <div className="mx-3">
@@ -22,6 +23,8 @@ class MainModal extends Component {
                                         <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#itemModal">Add an item to any category</button>
                                     </div>
                                 </div>
+                                }
+                                { restaurantDataReady &&
                                 <div className="col-12 d-flex py-2">
                                     <img src="https://via.placeholder.com/100C/O" alt=""/>
                                     <div className="mx-3">
@@ -29,6 +32,8 @@ class MainModal extends Component {
                                         <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#categoryModal">Add a category to your menu</button>
                                     </div>
                                 </div>
+                                }
+                                { restaurantDataReady &&
                                 <div className="col-12 d-flex py-2">
                                     <img src="https://via.placeholder.com/100C/O" alt=""/>
                                     <div className="mx-3">
@@ -36,7 +41,8 @@ class MainModal extends Component {
                                         <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#menuModal">Add a menu to your store</button>
                                     </div>
                                 </div>
-                                { (getUserRole() === 'admin' || getUserRole() === 'owner') &&
+                                }
+                                { (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady &&
                                 <div className="col-12 d-flex py-2">
                                     <img src="https://via.placeholder.com/100C/O" alt=""/>
                                     <div className="mx-3">
@@ -65,5 +71,9 @@ class MainModal extends Component {
         );
     }
 }
+
+MainModal.propTypes = {
+    restaurantDataReady: PropTypes.bool.isRequired,
+};
 
 export default MainModal;

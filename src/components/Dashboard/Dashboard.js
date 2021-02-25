@@ -13,6 +13,7 @@ import MenuModal from '../Menu/MenuModal';
 import UserModal from '../User/UserModal';
 import EditItemModal from '../Item/EditItemModal';
 import EditMenuModal from '../Menu/EditMenuModal';
+import DeleteMenuModal from '../Menu/DeleteMenuModal';
 
 class Dashboard extends Component {
 
@@ -63,7 +64,7 @@ class Dashboard extends Component {
 
         return (
             <div id="main-content" className="container px-0">
-                <MainModal />
+                <MainModal restaurantDataReady={restaurantDataReady} />
                 {
                     restaurantDataReady &&
                     <div>
@@ -81,7 +82,9 @@ class Dashboard extends Component {
                     <div className="d-flex">
                         <h4 className="me-3">{menuDetail.name}</h4>
                         <button className="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit menu</button>
+                        <button className="btn btn-danger ms-2"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete menu</button>
                         <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
+                        <DeleteMenuModal menu={{...menuDetail}} />
                     </div>
                     <div className="row mt-3">
                         <div className="col-4">

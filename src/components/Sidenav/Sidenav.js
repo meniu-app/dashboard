@@ -48,7 +48,7 @@ class Sidenav extends Component {
             <nav id="main-sidebar">
                 <div className="row my-4">
                     <div className="col-12 text-center">
-                        <button type="button" disabled={!restaurantDataReady} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainModal">
+                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainModal">
                             Add
                         </button>
                     </div>
@@ -74,8 +74,8 @@ class Sidenav extends Component {
                 <div className="row">
                     <h5>Menus</h5>
                 {
-                    restaurantDataReady &&
-                    restaurantDetail.menus.map(menu => {
+                    restaurantDataReady ?
+                    restaurantDetail?.menus.map(menu => {
                         return (
                             <div className="col-12 text-center mb-2" key={menu.id}>
                                 <button className="btn btn-ligth" onClick={() => this.getMenuDetail(menu.id)}>
@@ -84,13 +84,15 @@ class Sidenav extends Component {
                             </div>
                         )
                     })
+                    :
+                    <></>
                 }
                 </div>
                 <div className="row">
                     <h5>Categories</h5>
                     <EditCategoryModal category={{...this.state.selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
                 {
-                    restaurantDataReady &&
+                    restaurantDataReady ?
                     restaurantDetail.categories.map(category => {
                         return (
                             <div className="col-12 text-center mb-2" key={category.id}>
@@ -100,6 +102,8 @@ class Sidenav extends Component {
                             </div>
                         )
                     })
+                    :
+                    <></>
                 }
                 </div>
             </nav>

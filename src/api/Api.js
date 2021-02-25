@@ -85,6 +85,9 @@ const api = {
   editRestaurant: (data, id) => {
     return axios.patch(`${baseUrl}/v1/restaurant/${id}/`, data)
   },
+  deleteRestaurant: (id) => {
+    return axios.delete(`${baseUrl}/v1/restaurant/${id}/`)
+  },
   addCategory: (data) => {
     return axios.post(`${baseUrl}/v1/category/`, data)
   },
@@ -102,6 +105,9 @@ const api = {
   },
   editMenu: (data, id) => {
     return axios.patch(`${baseUrl}/v1/menu/${id}/`, data)
+  },
+  deleteMenu: (id) => {
+    return axios.delete(`${baseUrl}/v1/menu/${id}/`)
   },
   addImage: (data) => {
     return axios.post(`${baseUrl}/v1/image/`, data)

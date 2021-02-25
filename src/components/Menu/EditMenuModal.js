@@ -39,12 +39,12 @@ class EditMenuModal extends Component {
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="PATCH" encType="multipart/form-data">
                                 <div className="mb-3">
-                                    <label htmlFor="menuNameInput" className="form-label">Menu name</label>
-                                    <input name="name" type="text" className="form-control" id="menuNameInput" defaultValue={newMenu.name} placeholder="My menu" required/>
+                                    <label htmlFor="menuNameInputEdit" className="form-label">Menu name</label>
+                                    <input name="name" type="text" className="form-control" id="menuNameInputEdit" defaultValue={newMenu.name} placeholder="My menu" required/>
                                 </div>
                                 <div className="mb-3 form-group">
-                                    <label htmlFor="menuDescriptionInput">Menu description</label>
-                                    <textarea name="description" className="form-control" id="menuDescriptionInput" defaultValue={newMenu.description} rows="3" required></textarea>
+                                    <label htmlFor="menuDescriptionInputEdit">Menu description</label>
+                                    <textarea name="description" className="form-control" id="menuDescriptionInputEdit" defaultValue={newMenu.description} rows="3" required></textarea>
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>

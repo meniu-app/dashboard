@@ -41,6 +41,12 @@ import {
     EDIT_MENU_DATA_ERROR,
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_ERROR,
+    DELETE_MENU_DATA_ERROR,
+    DELETE_MENU_DATA_SUCCESS,
+    DELETE_MENU_DATA,
+    DELETE_RESTAURANT_DATA,
+    DELETE_RESTAURANT_DATA_SUCCESS,
+    DELETE_RESTAURANT_DATA_ERROR
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -173,6 +179,26 @@ export default function(state = initialState.app, action) {
                 ...state,
                 formLoading: false
             }
+        case DELETE_RESTAURANT_DATA:
+            return {
+                ...state,
+                formLoading: true,
+            }
+        case DELETE_RESTAURANT_DATA_SUCCESS:
+            newRestaurants = state.restaurants;
+            newRestaurants.splice(state.restaurants.findIndex(restaurant => (restaurant.id === action.payload)), 1);
+            return {
+                ...state,
+                formLoading: false,
+                restaurantDetail: {},
+                restaurantDataReady: false,
+                restaurants: newRestaurants
+            }
+        case DELETE_RESTAURANT_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
         case ADD_ITEM_DATA:
             return {
                 ...state,
@@ -276,6 +302,22 @@ export default function(state = initialState.app, action) {
                 }
             }
         case EDIT_MENU_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case DELETE_MENU_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case DELETE_MENU_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false,
+                restaurantDetail: action.payload
+            }
+        case DELETE_MENU_DATA_ERROR:
             return {
                 ...state,
                 formLoading: false

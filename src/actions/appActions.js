@@ -47,6 +47,11 @@ import {
     EDIT_MENU_DATA_ERROR,
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_ERROR,
+    DELETE_MENU_DATA_SUCCESS,
+    DELETE_MENU_DATA_ERROR,
+    DELETE_RESTAURANT_DATA,
+    DELETE_RESTAURANT_DATA_SUCCESS,
+    DELETE_RESTAURANT_DATA_ERROR,
 } from './types';
 import API from '../api/Api';
 import {
@@ -779,5 +784,80 @@ export const isAuthenticatedData = () => async (dispatch) => {
     } catch (error) {
         dispatch(alertActivateAction({text: 'Your session expired', alert: 'danger'}));
         return dispatch(isAuthenticatedInitErrorAction());
+    }
+}
+
+/**
+ * Action which is callled when the deleteMenuDataInitAction success
+ */
+const deleteMenuDataSuccessAction = (restaurantData) => ({
+    type: DELETE_MENU_DATA_SUCCESS,
+    payload: restaurantData
+});
+
+/**
+ * Action which is callled when the editMenuDataInitAction failed
+ */
+const deleteMenuDataErrorAction = (error) => ({
+    type: DELETE_MENU_DATA_ERROR,
+    payload: error
+});
+
+/**
+ * Function to fetch init data from DIsh detail
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains data from dish
+ */
+export const deleteMenuData = (menuId, restaurantId) => async (dispatch) => {
+    try {
+        await API.deleteMenu(menuId);
+        const restaurant = await API.getRestaurantDetail(restaurantId);
+        const restaurantData = restaurant['data'];
+        dispatch(alertActivateAction({text: 'Menu successfully deleted', alert: 'success'}));
+        return dispatch(deleteMenuDataSuccessAction(restaurantData));
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(deleteMenuDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Action to delete restaurant
+ */
+const deleteRestaurantDataInitAction = () => ({
+    type: DELETE_RESTAURANT_DATA
+});
+
+/**
+ * Action which is callled when the deleteRestaurantDataInitAction success
+ */
+const deleteRestaurantDataSuccessAction = (id) => ({
+    type: DELETE_RESTAURANT_DATA_SUCCESS,
+    payload: id
+});
+
+/**
+ * Action which is callled when the addItemDataInitAction failed
+ */
+const deleteRestaurantDataErrorAction = () => ({
+    type: DELETE_RESTAURANT_DATA_ERROR
+});
+
+/**
+ * Function to add data to Item
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const deleteRestaurantData = (id) => async (dispatch) => {
+    dispatch(deleteRestaurantDataInitAction());
+    try {
+        await API.deleteRestaurant(id);
+        dispatch(alertActivateAction({text: 'Restaurant successfully deleted', alert: 'success'}));
+        return dispatch(deleteRestaurantDataSuccessAction(id));
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(deleteRestaurantDataErrorAction({error: error}));
     }
 }

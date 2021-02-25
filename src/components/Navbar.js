@@ -9,6 +9,7 @@ import { removeTokens, removeUser } from '../api/TokenHandler';
 import { track } from '../mixpanel';
 import config from '../config';
 import EditRestaurantModal from './Restaurant/EditRestaurantModal';
+import DeleteRestaurantModal from './Restaurant/DeleteRestaurantModal';
 
 class Navbar extends Component {
 
@@ -33,13 +34,14 @@ class Navbar extends Component {
                         <Link className="navbar-brand" to="/">
                             {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
                             <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit</button>
+                            <button className="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete</button>
                             <EditRestaurantModal restaurantDetail={restaurantDetail} handleChangeRestaurant={this.handleChangeRestaurant} />
                         </Link> :
                         <Link className="navbar-brand" to="/">
                             Meniu Dashboard {env === 'development' ? ' - Dev' : ''}
                         </Link>
                     }
-
+                    <DeleteRestaurantModal restaurantDetail={restaurantDetail}/>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>

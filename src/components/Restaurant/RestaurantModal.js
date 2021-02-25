@@ -77,11 +77,11 @@ class RestaurantModal extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="restaurantLogoInput">Restaurant logo</label>
-                                    <input name="logo" type="file" className="form-control-file" id="restaurantLogoInput" />
+                                    <input name="logo" type="file" className="form-control-file" id="restaurantLogoInput" required/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="restaurantBannerInput">Restaurant banner</label>
-                                    <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" />
+                                    <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" required/>
                                 </div>
                                 <div className="form-check form-switch">
                                     <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={this.state.backgroundImage} onChange={ this.handleBackgroudImageChange } />
