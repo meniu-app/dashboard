@@ -94,11 +94,17 @@ const api = {
   editCategory: (data, id) => {
     return axios.patch(`${baseUrl}/v1/category/${id}/`, data)
   },
+  deleteCategory: (id) => {
+    return axios.delete(`${baseUrl}/v1/category/${id}/`)
+  },
   addItem: (data) => {
     return axios.post(`${baseUrl}/v1/item/`, data)
   },
   editItem: (data, id) => {
     return axios.patch(`${baseUrl}/v1/item/${id}/`, data)
+  },
+  deleteItem: (id) => {
+    return axios.delete(`${baseUrl}/v1/item/${id}/`)
   },
   addMenu: (data) => {
     return axios.post(`${baseUrl}/v1/menu/`, data)

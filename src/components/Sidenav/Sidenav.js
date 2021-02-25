@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import EditCategoryModal from '../Category/EditCategoryModal';
 import { getUserRole } from '../../api/TokenHandler';
+import DeleteCategoryModal from '../Category/DeleteCategoryModal';
 
 class Sidenav extends Component {
 
@@ -91,14 +92,21 @@ class Sidenav extends Component {
                 <div className="row">
                     <h5 className="mt-3">Categories</h5>
                     <EditCategoryModal category={{...this.state.selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
+                    <DeleteCategoryModal category={{...this.state.selectedCategory}}/>
                 {
                     restaurantDataReady ?
                     restaurantDetail.categories.map(category => {
                         return (
                             <div className="col-12 text-center mb-2" key={category.id}>
-                                <button className="btn btn-ligth" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
-                                    {category.name}
+                                {category.name}
+                                <br/>
+                                <button className="btn btn-primary" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
+                                    Edit
                                 </button>
+                                <button className="btn btn-danger" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">
+                                    Delete
+                                </button>
+                                <hr />
                             </div>
                         )
                     })

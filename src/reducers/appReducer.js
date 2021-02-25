@@ -46,7 +46,13 @@ import {
     DELETE_MENU_DATA,
     DELETE_RESTAURANT_DATA,
     DELETE_RESTAURANT_DATA_SUCCESS,
-    DELETE_RESTAURANT_DATA_ERROR
+    DELETE_RESTAURANT_DATA_ERROR,
+    DELETE_ITEM_DATA_SUCCESS,
+    DELETE_ITEM_DATA_ERROR,
+    DELETE_ITEM_DATA,
+    DELETE_CATEGORY_DATA,
+    DELETE_CATEGORY_DATA_SUCCESS,
+    DELETE_CATEGORY_DATA_ERROR
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -231,6 +237,22 @@ export default function(state = initialState.app, action) {
                 ...state,
                 formLoading: false
             }
+        case DELETE_ITEM_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case DELETE_ITEM_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false,
+                menuDetail: action.payload
+            }
+        case DELETE_ITEM_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
         case EDIT_CATEGORY_DATA:
             return {
                 ...state,
@@ -243,6 +265,22 @@ export default function(state = initialState.app, action) {
                 restaurantDetail: action.payload.restaurantData
             }
         case EDIT_CATEGORY_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case DELETE_CATEGORY_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case DELETE_CATEGORY_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false,
+                restaurantDetail: action.payload
+            }
+        case DELETE_CATEGORY_DATA_ERROR:
             return {
                 ...state,
                 formLoading: false
