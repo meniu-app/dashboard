@@ -48,7 +48,7 @@ class Sidenav extends Component {
             <nav id="main-sidebar">
                 <div className="row my-4">
                     <div className="col-12 text-center">
-                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainModal">
+                        <button type="button" disabled={!restaurantDataReady} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainModal">
                             Add
                         </button>
                     </div>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as appAction from '../../actions/appActions';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { getUser, getUserRole } from '../../api/TokenHandler';
 class Login extends Component {
 
     constructor(props) {
@@ -26,6 +27,16 @@ class Login extends Component {
         });
         const response = await appActions.postLoginData(email, password);
         if (response['type'] === 'POST_LOGIN_SUCCESS') {
+            const user = getUser();
+            if (user !== undefined && user !== null) {
+              await appActions.isAuthenticatedData();
+              if (getUserRole() === 'admin') {
+                await appActions.getRestaurantInitialData();
+              }
+              else {
+                await appActions.getRestaurantDetailInitialData(undefined, user.id);
+              }
+            }
             this.props.history.push('/');
         }
     }
