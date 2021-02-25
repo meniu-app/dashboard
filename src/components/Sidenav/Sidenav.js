@@ -56,7 +56,7 @@ class Sidenav extends Component {
                 {
                     restaurantsDataReady && getUserRole() === 'admin' ?
                     <div className="row">
-                        <h5>Restaurants</h5>
+                        <h5 className="mt-3">Restaurants</h5>
                         {
                             restaurants.map(restaurant => {
                                 return (
@@ -72,7 +72,7 @@ class Sidenav extends Component {
                     : <> </>
                 }
                 <div className="row">
-                    <h5>Menus</h5>
+                    <h5 className="mt-3">Menus</h5>
                 {
                     restaurantDataReady ?
                     restaurantDetail?.menus.map(menu => {
@@ -89,7 +89,7 @@ class Sidenav extends Component {
                 }
                 </div>
                 <div className="row">
-                    <h5>Categories</h5>
+                    <h5 className="mt-3">Categories</h5>
                     <EditCategoryModal category={{...this.state.selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
                 {
                     restaurantDataReady ?

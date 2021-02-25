@@ -14,6 +14,7 @@ import UserModal from '../User/UserModal';
 import EditItemModal from '../Item/EditItemModal';
 import EditMenuModal from '../Menu/EditMenuModal';
 import DeleteMenuModal from '../Menu/DeleteMenuModal';
+import DeleteItemModal from '../Item/DeleteItemModal';
 
 class Dashboard extends Component {
 
@@ -74,6 +75,7 @@ class Dashboard extends Component {
                         <MenuModal />
                         <UserModal />
                         <EditItemModal item={{...this.state.selectedItem}} handleChangeItem={this.handleChangeItem}/>
+                        <DeleteItemModal item={{...this.state.selectedItem}}/>
                     </div>
                 }
                 {
@@ -114,6 +116,7 @@ class Dashboard extends Component {
                                                             </div>
                                                         </div>
                                                         <button onClick={() => this.setSelectedItem(item)} className="btn btn-primary m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit item</button>
+                                                        <button onClick={() => this.setSelectedItem(item)} className="btn btn-danger m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete item</button>
                                                     </div>
                                                 </div>
                                             )
