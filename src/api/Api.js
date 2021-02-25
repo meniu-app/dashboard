@@ -55,6 +55,9 @@ axios.interceptors.response.use(
 
 //functions to make api calls
 const api = {
+  isAuthenticated: () => {
+    return axios.get(`${baseUrl}/v1/authenticated `);
+  },
   login: (body) => {
     return axios.post(`${baseUrl}/v1/login`, body);
   },
@@ -68,7 +71,6 @@ const api = {
     return axios.get(`${baseUrl}/v1/restaurant/${id}/`);
   },
   getRestaurantDetailByUser: (id) => {
-    console.log(id)
     return axios.get(`${baseUrl}/v1/restaurant/user/${id}/`);
   },
   getMenuDetail: (id) => {
@@ -111,7 +113,7 @@ const api = {
     return axios.post(`${baseUrl}/v1/owner`, data)
   },
   addBusinessManager: (data) => {
-    return axios.post(`${baseUrl}/v1/business-manager`, data)
+    return axios.post(`${baseUrl}/v1/manager  `, data)
   },
 };
 

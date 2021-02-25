@@ -45,6 +45,8 @@ import {
     EDIT_MENU_DATA,
     EDIT_MENU_DATA_SUCCESS,
     EDIT_MENU_DATA_ERROR,
+    AUTHENTICATED_SUCCESS,
+    AUTHENTICATED_ERROR,
 } from './types';
 import API from '../api/Api';
 import {
@@ -613,7 +615,6 @@ export const editItemData = (data, imageData, id, imageId) => async (dispatch) =
         dispatch(alertActivateAction({text: 'Item successfully edited', alert: 'success'}));
         return dispatch(editItemDataSuccessAction(responseData, menuData));
     } catch (error) {
-        console.log(error)
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(editItemDataErrorAction({error: error}));
     }
@@ -743,8 +744,40 @@ export const editMenuData = (data, id) => async (dispatch) => {
         dispatch(alertActivateAction({text: 'Menu successfully edited', alert: 'success'}));
         return dispatch(editMenuDataSuccessAction(responseData, restaurantData));
     } catch (error) {
-        console.log(error)
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(editMenuDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Action which is callled when the isAuthenticatedInitAction success
+ */
+const isAuthenticatedInitSuccessAction = (data) => ({
+    type: AUTHENTICATED_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the isAuthenticatedInitAction failed
+ */
+const isAuthenticatedInitErrorAction = (error) => ({
+    type: AUTHENTICATED_ERROR,
+    payload: error
+});
+
+/**
+ * Function to fetch init data from Auth user
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains data from restaurants
+ */
+export const isAuthenticatedData = () => async (dispatch) => {
+    dispatch(postLoginInitAction());
+    try {
+        await API.isAuthenticated();
+        return dispatch(isAuthenticatedInitSuccessAction());
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'Your session expired', alert: 'danger'}));
+        return dispatch(isAuthenticatedInitErrorAction());
     }
 }

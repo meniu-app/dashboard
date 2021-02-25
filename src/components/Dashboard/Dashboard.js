@@ -40,7 +40,6 @@ class Dashboard extends Component {
     }
 
     handleChangeMenu = (e) => {
-        console.log(e.target.value)
         this.setState({
             selectedMenu: {
                 ...this.state.selectedMenu,
@@ -51,11 +50,6 @@ class Dashboard extends Component {
 
     setSelectedItem(item) {
         this.setState({selectedItem: item});
-    }
-
-    async componentDidMount() {
-        const { appActions } = this.props;
-        await appActions.getRestaurantDetailInitialData();
     }
 
     render() {

@@ -65,3 +65,19 @@ export const removeUser = () => {
         console.error(error);
     }
 }
+
+export const getUserRole = () => {
+    const user = getUser();
+    if (user === null || user === undefined)
+        return '';
+    switch (user.role) {
+        case 'admin':
+            return 'admin';
+        case 'owner':
+            return 'owner';
+        case 'business-manager':
+            return 'business-manager'
+        default:
+            return '';
+    }
+}

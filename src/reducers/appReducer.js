@@ -39,6 +39,8 @@ import {
     EDIT_MENU_DATA,
     EDIT_MENU_DATA_SUCCESS,
     EDIT_MENU_DATA_ERROR,
+    AUTHENTICATED_SUCCESS,
+    AUTHENTICATED_ERROR,
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -49,6 +51,16 @@ export default function(state = initialState.app, action) {
                 ...state,
                 appStarted: true
             };
+        case AUTHENTICATED_SUCCESS:
+            return {
+                ...state,
+                isLoggedIn: true,
+            }
+        case AUTHENTICATED_ERROR:
+            return {
+                ...state,
+                isLoggedIn: false,
+            }
         case GET_RESTAURANTS_INITIAL_DATA:
             return {
                 ...state,
@@ -77,7 +89,6 @@ export default function(state = initialState.app, action) {
             return {
                 ...state,
                 restaurantDetail: action.payload.data,
-                isLoggedIn: true,
                 restaurantDataReady: true,
                 menuDetail: {},
                 menuDetailDataReady: false,

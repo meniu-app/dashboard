@@ -19,33 +19,35 @@ const Sidenav = lazy(() => import('./components/Sidenav/Sidenav'));
 const Profile = lazy(() => import('./components/Profile/Profile'));
 const ProfileEdit = lazy(() => import('./components/Profile/ProfileEdit'));
 import Spinner from './components/Spinner';
-import { getRefreshToken, getUser, removeTokens, removeUser } from './api/TokenHandler';
+import { getRefreshToken, getUser, getUserRole, removeTokens, removeUser } from './api/TokenHandler';
 import Alert from './components/Alert';
 
 class App extends Component {
   async componentDidMount() {
     const { appActions } = this.props;
-    const refreshToken = getRefreshToken();
-    if (refreshToken !== null && refreshToken !== undefined) {
-      const init = await Api.refreshToken({refresh: refreshToken}); 
-      if (init.status === 200) {
-        
-        const user = getUser();
-        if (user !== undefined && user !== null) {
-          if (user.role === 'admin') {
-            await appActions.getRestaurantDetailInitialData();
-            await appActions.getRestaurantInitialData();
-          }
-          else {
-            await appActions.getRestaurantDetailInitialData();
-            // await appActions.getRestaurantDetailInitialData(undefined, user.id);
+    try {
+      const refreshToken = getRefreshToken();
+      if (refreshToken !== null && refreshToken !== undefined) {
+        const init = await Api.refreshToken({refresh: refreshToken}); 
+        if (init.status === 200) {
+          const user = getUser();
+          if (user !== undefined && user !== null) {
+            await appActions.isAuthenticatedData();
+            if (getUserRole() === 'admin') {
+              await appActions.getRestaurantInitialData();
+            }
+            else {
+              await appActions.getRestaurantDetailInitialData(undefined, user.id);
+            }
           }
         }
+        else {
+          removeTokens();
+          removeUser();
+        }
       }
-      else {
-        removeTokens();
-        removeUser();
-      }
+    } catch (error) {
+      throw new Error(error);
     }
     await appActions.appStart();
   }

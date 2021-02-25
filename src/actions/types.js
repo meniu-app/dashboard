@@ -13,6 +13,12 @@ export const POST_LOGIN_SUCCESS = 'POST_LOGIN_SUCCESS';
 export const POST_LOGIN_ERROR = 'POST_LOGIN_ERROR';
 
 /**
+ * Types for authhenticated
+ */
+export const AUTHENTICATED_SUCCESS = 'AUTHENTICATED_SUCCESS';
+export const AUTHENTICATED_ERROR = 'AUTHENTICATED_ERROR';
+
+/**
  * Types for Logout
  */
 export const POST_LOGOUT = 'POST_LOGOUT';

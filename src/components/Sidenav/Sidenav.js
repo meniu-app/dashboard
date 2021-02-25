@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import EditCategoryModal from '../Category/EditCategoryModal';
+import { getUserRole } from '../../api/TokenHandler';
 
 class Sidenav extends Component {
 
@@ -53,7 +54,7 @@ class Sidenav extends Component {
                     </div>
                 </div>
                 {
-                    restaurantsDataReady ?
+                    restaurantsDataReady && getUserRole() === 'admin' ?
                     <div className="row">
                         <h5>Restaurants</h5>
                         {

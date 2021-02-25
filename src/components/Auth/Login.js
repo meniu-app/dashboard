@@ -26,7 +26,6 @@ class Login extends Component {
         });
         const response = await appActions.postLoginData(email, password);
         if (response['type'] === 'POST_LOGIN_SUCCESS') {
-            await appActions.getRestaurantInitialData();
             this.props.history.push('/');
         }
     }
