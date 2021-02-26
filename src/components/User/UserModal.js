@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
+import { getUserRole } from '../../api/TokenHandler';
 
 class UserModal extends Component {
 
@@ -12,15 +13,20 @@ class UserModal extends Component {
         const { role } = event.target;
 
         event.preventDefault();
-        const data = new FormData(event.target)
-        data.append('restaurant', restaurantDetail.id)
+        const data = new FormData(event.target);
+        if (event.target.restaurantChecked?.checked || getUserRole() === 'owner')
+            data.append('restaurant', restaurantDetail.id)
+
         const response = await appActions.addUserData(data, role.value)
-        if (response)
+        if (response) {
+            event.target.email.value = '';
+            event.target.password.value = '';
             document.getElementById('button-close-modal-user').click();
+        }
     }
 
     render () {
-        const { formLoading } = this.props;
+        const { formLoading, restaurantDetail } = this.props;
 
         return (
             <div className="modal fade" id="userModal" tabIndex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
@@ -53,6 +59,14 @@ class UserModal extends Component {
                                     <label htmlFor="userPasswordInput">User password</label>
                                     <input name="password" type="password" className="form-control" id="userPasswordInput" placeholder="" required/>
                                 </div>
+                                {
+                                    getUserRole() === 'admin' && restaurantDetail.id &&
+                                    <div className="form-check form-switch">
+                                        <input name="restaurantChecked" className="form-check-input" type="checkbox" id="userRestaurantDefault" defaultChecked={true}/>
+                                        <label className="form-check-label" htmlFor="userRestaurantDefault">Link user to {restaurantDetail.name}? </label>
+                                    </div>
+                                }
+
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
                                     <button type="submit" className="btn btn-primary">Submit</button>

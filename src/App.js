@@ -47,7 +47,7 @@ class App extends Component {
         }
       }
     } catch (error) {
-      throw new Error(error);
+      console.error(error);
     }
     await appActions.appStart();
   }

@@ -69,15 +69,15 @@ class Dashboard extends Component {
                 {
                     restaurantDataReady &&
                     <div>
-                        <RestaurantModal />
                         <ItemModal />
                         <CategoryModal />
                         <MenuModal />
-                        <UserModal />
                         <EditItemModal item={{...this.state.selectedItem}} handleChangeItem={this.handleChangeItem}/>
                         <DeleteItemModal item={{...this.state.selectedItem}}/>
                     </div>
                 }
+                <RestaurantModal />
+                <UserModal />
                 {
                 menuDetailDataReady &&
                 <div className="px-3">

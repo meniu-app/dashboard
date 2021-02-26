@@ -42,7 +42,7 @@ class MainModal extends Component {
                                     </div>
                                 </div>
                                 }
-                                { (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady &&
+                                { (getUserRole() === 'admin' || getUserRole() === 'owner') &&
                                 <div className="col-12 d-flex py-2">
                                     <img src="https://via.placeholder.com/100C/O" alt=""/>
                                     <div className="mx-3">
