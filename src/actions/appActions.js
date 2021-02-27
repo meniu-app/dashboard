@@ -59,6 +59,7 @@ import {
 } from './types';
 import API from '../api/Api';
 import {
+    getUser,
     setAccessToken,
     setRefreshToken,
     setUser,
@@ -459,14 +460,23 @@ const addRestaurantDataErrorAction = () => ({
  * update the store about the content of the app
  * @returns {Object}
  */
-export const addRestaurantData = (data) => async (dispatch) => {
+export const addRestaurantData = (data, hasNoRestaurant) => async (dispatch) => {
     dispatch(addRestaurantDataInitAction());
     try {
         const response = await API.addRestaurant(data);
         const responseData = response['data'];
+
+        if (hasNoRestaurant) {
+            const user = getUser();
+            const data = {
+                restaurant: responseData['id']
+            }
+            await API.editOwner(data, user.id);
+        }
         dispatch(alertActivateAction({text: 'Restaurant successfully added', alert: 'success'}));
         return dispatch(addRestaurantDataSuccessAction(responseData));
     } catch (error) {
+        console.log(error)
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(addRestaurantDataErrorAction({error: error}));
     }

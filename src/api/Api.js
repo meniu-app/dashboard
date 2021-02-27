@@ -127,6 +127,9 @@ const api = {
   addBusinessManager: (data) => {
     return axios.post(`${baseUrl}/v1/manager  `, data)
   },
+  editOwner: (data, id) => {
+    return axios.patch(`${baseUrl}/v1/owner/${id}/`, data);
+  }
 };
 
 export default api;

@@ -5,6 +5,7 @@ import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
 import { SwatchesPicker } from 'react-color';
+import { getUserRole } from '../../api/TokenHandler';
 
 class RestaurantModal extends Component {
 
@@ -30,7 +31,7 @@ class RestaurantModal extends Component {
     }
 
     async handleSubmit (event, props) {
-        const { appActions } = props;
+        const { appActions, menuDetailDataReady } = props;
 
         event.preventDefault();
         const data = new FormData(event.target);
@@ -40,7 +41,11 @@ class RestaurantModal extends Component {
             backgroundImage: this.state.backgroundImage
         }
         data.append('settings', JSON.stringify(settings));
-        const response = await appActions.addRestaurantData(data)
+        let response = null;
+        if (getUserRole() === 'owner' && !menuDetailDataReady)
+            response = await appActions.addRestaurantData(data, true)
+        else
+            response = await appActions.addRestaurantData(data, false)
         if (response)
             document.getElementById('button-close-modal-restaurant').click();
     }
