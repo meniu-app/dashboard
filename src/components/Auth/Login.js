@@ -54,7 +54,9 @@ class Login extends Component {
                         <label htmlFor="loginPassword" className="form-label">Password</label>
                         <input type="password" name="password" className="form-control" id="loginPassword" required></input>
                     </div>
-                    <button className="btn btn-primary">Login</button>
+                    <button className="btn btn-primary me-2">Login</button>
+                    <button type="button" className="btn btn-primary"> Forget Password</button>
+
                 </form>
             </div>
         );
