@@ -39,14 +39,17 @@ class App extends Component {
             else {
               await appActions.getRestaurantDetailInitialData(undefined, user.id);
             }
+          } else {
+            throw new Error('Session expired');
           }
         }
         else {
-          removeTokens();
-          removeUser();
+          throw new Error('Session expired');
         }
       }
     } catch (error) {
+      removeTokens();
+      removeUser();
       console.error(error);
     }
     await appActions.appStart();

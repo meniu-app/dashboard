@@ -55,7 +55,8 @@ import {
     DELETE_CATEGORY_DATA_ERROR,
     ADD_USER_DATA,
     ADD_USER_DATA_SUCCESS,
-    ADD_USER_DATA_ERROR
+    ADD_USER_DATA_ERROR,
+    ADD_RESTAURANT_DATA_OWNER_SUCCESS
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -163,6 +164,13 @@ export default function(state = initialState.app, action) {
                 ...state,
                 formLoading: false,
                 restaurants: state.restaurants.concat(action.payload)
+            }
+        case ADD_RESTAURANT_DATA_OWNER_SUCCESS:
+            return {
+                ...state,
+                formLoading: false,
+                restaurantDetail: action.payload,
+                restaurantDataReady: true
             }
         case ADD_RESTAURANT_DATA_ERROR:
             return {

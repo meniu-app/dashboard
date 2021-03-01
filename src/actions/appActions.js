@@ -56,10 +56,13 @@ import {
     DELETE_CATEGORY_DATA_ERROR,
     DELETE_CATEGORY_DATA_SUCCESS,
     DELETE_CATEGORY_DATA,
+    ADD_RESTAURANT_DATA_OWNER_SUCCESS,
 } from './types';
 import API from '../api/Api';
 import {
     getUser,
+    removeTokens,
+    removeUser,
     setAccessToken,
     setRefreshToken,
     setUser,
@@ -448,6 +451,14 @@ const addRestaurantDataSuccessAction = (data) => ({
 });
 
 /**
+ * Action which is callled when the addRestaurantDataInitAction success
+ */
+const addRestaurantDataOwnerSuccessAction = (data) => ({
+    type: ADD_RESTAURANT_DATA_OWNER_SUCCESS,
+    payload: data
+});
+
+/**
  * Action which is callled when the addItemDataInitAction failed
  */
 const addRestaurantDataErrorAction = () => ({
@@ -472,11 +483,12 @@ export const addRestaurantData = (data, hasNoRestaurant) => async (dispatch) => 
                 restaurant: responseData['id']
             }
             await API.editOwner(data, user.id);
+            dispatch(alertActivateAction({text: 'Restaurant successfully added', alert: 'success'}));
+            return dispatch(addRestaurantDataOwnerSuccessAction(responseData));
         }
         dispatch(alertActivateAction({text: 'Restaurant successfully added', alert: 'success'}));
         return dispatch(addRestaurantDataSuccessAction(responseData));
     } catch (error) {
-        console.log(error)
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(addRestaurantDataErrorAction({error: error}));
     }
@@ -797,6 +809,8 @@ export const isAuthenticatedData = () => async (dispatch) => {
         return dispatch(isAuthenticatedInitSuccessAction());
     } catch (error) {
         dispatch(alertActivateAction({text: 'Your session expired', alert: 'danger'}));
+        removeUser();
+        removeTokens();
         return dispatch(isAuthenticatedInitErrorAction());
     }
 }

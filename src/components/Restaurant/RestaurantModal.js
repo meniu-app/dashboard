@@ -35,6 +35,7 @@ class RestaurantModal extends Component {
 
         event.preventDefault();
         const data = new FormData(event.target);
+        data.append('active', true);
         const settings = {
             color: this.state.color,
             backgroundColor: this.state.background,
