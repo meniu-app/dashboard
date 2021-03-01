@@ -6,6 +6,7 @@ import * as appAction from '../../actions/appActions';
 import EditCategoryModal from '../Category/EditCategoryModal';
 import { getUserRole } from '../../api/TokenHandler';
 import DeleteCategoryModal from '../Category/DeleteCategoryModal';
+import DeleteUserModal from '../User/DeleteUserModal';
 
 class Sidenav extends Component {
 
@@ -16,6 +17,11 @@ class Sidenav extends Component {
                 id: '',
                 name: '',
                 description: ''
+            },
+            selectedUser: {
+                id: '',
+                email: '',
+                restaurant: ''
             }
         }
     }
@@ -41,6 +47,10 @@ class Sidenav extends Component {
 
     setSelectedCategory(item) {
         this.setState({selectedCategory: item});
+    }
+
+    setSelectedUser(user) {
+        this.setState({selectedUser: user})
     }
 
     render() {
@@ -106,13 +116,57 @@ class Sidenav extends Component {
                                 <button className="btn btn-danger" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">
                                     Delete
                                 </button>
-                                <hr />
                             </div>
                         )
                     })
                     :
                     <></>
                 }
+                </div>
+                <div className="row">
+                    <h5 className="mt-3">Users</h5>
+                    { restaurantDataReady && getUserRole() === 'admin'  ? <h6 className="mt-2">Owners</h6> : <></>}
+                    {
+                    restaurantDataReady && getUserRole() === 'admin' ?
+                    restaurantDetail.owner.map(owner => {
+                        return (
+                            <div className="col-12 text-center mb-2" key={owner.id}>
+                                {owner.email}
+                                <br/>
+                                <button className="btn btn-primary" onClick={() => this.setSelectedUser(owner)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
+                                    Edit
+                                </button>
+                                <button className="btn btn-danger" onClick={() => this.setSelectedUser(owner)} data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                    Delete
+                                </button>
+                            </div>
+                        )
+                    })
+                    :
+                    <></>
+                    }
+                    { restaurantDataReady && (getUserRole() === 'admin' || getUserRole() === 'owner') ? 
+                    <div> <h6 className="mt-2">Managers</h6> <DeleteUserModal /> </div>
+                    : <></>}
+                    {
+                    restaurantDataReady && (getUserRole() === 'admin' || getUserRole() === 'owner') ?
+                    restaurantDetail.business_manager.map(manager => {
+                        return (
+                            <div className="col-12 text-center mb-2" key={manager.id}>
+                                {manager.email}
+                                <br/>
+                                <button className="btn btn-primary" onClick={() => this.setSelectedUser(manager)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
+                                    Edit
+                                </button>
+                                <button className="btn btn-danger" onClick={() => this.setSelectedUser(manager)} data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                    Delete
+                                </button>
+                            </div>
+                        )
+                    })
+                    :
+                    <></>
+                    }
                 </div>
             </nav>
         );

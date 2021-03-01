@@ -595,6 +595,11 @@ export const addUserData = (data, role) => async (dispatch) => {
         else
             response = await API.addBusinessManager(data);
         const responseData = response['data'];
+
+        const restaurant = await API.getRestaurantDetail(responseData.restaurant);
+        const restaurantData = restaurant['data'];
+        dispatch(addRestaurantDataSuccessAction(restaurantData));
+        
         dispatch(alertActivateAction({text: 'User successfully added', alert: 'success'}));
         return dispatch(addUserDataSuccessAction(responseData));
     } catch (error) {
