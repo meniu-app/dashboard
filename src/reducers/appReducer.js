@@ -244,7 +244,7 @@ export default function(state = initialState.app, action) {
             return {
                 ...state,
                 formLoading: false,
-                menuDetail: action.payload.menuData
+                // menuDetail: action.payload.menuData
             }
         case EDIT_ITEM_DATA_ERROR:
             return {
@@ -260,7 +260,7 @@ export default function(state = initialState.app, action) {
             return {
                 ...state,
                 formLoading: false,
-                menuDetail: action.payload
+                // menuDetail: action.payload
             }
         case DELETE_ITEM_DATA_ERROR:
             return {
