@@ -86,9 +86,9 @@ class Sidenav extends Component {
                     <h5 className="mt-3">Menus</h5>
                 {
                     restaurantDataReady ?
-                    restaurantDetail?.menus.map(menu => {
+                    restaurantDetail?.menus.map((menu, index) => {
                         return (
-                            <div className="col-12 text-center mb-2" key={menu.id}>
+                            <div className="col-12 text-center mb-2" key={menu.id+index}>
                                 <button className="btn btn-ligth" onClick={() => this.getMenuDetail(menu.id)}>
                                     {menu.name}
                                 </button>

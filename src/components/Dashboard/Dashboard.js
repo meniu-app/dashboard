@@ -65,13 +65,9 @@ class Dashboard extends Component {
 
         if (menuDetailDataReady) {
             categories = Object.keys(menuDetail.categories).map(key => {return {id: key, ...menuDetail.categories[key]}})
-            if (restaurantDetail.items_no_category.length > 0) {
-                categories.push({id: '', name: 'No category', items: restaurantDetail.items_no_category});
+            if (restaurantDetail.items_no_category?.length > 0) {
+                categories.push({id: '1', name: 'No category', items: restaurantDetail.items_no_category});
             }
-            console.log(categories)
-            setTimeout(() => {
-                console.log(categories)   
-            }, 2000);
         }
 
         return (
@@ -105,16 +101,16 @@ class Dashboard extends Component {
                         </div>
                     </div>
                     {
-                        categories.map(category => {
+                        categories.map((category, index) => {
                             return (
-                                <div key={category.id}>
+                                <div key={category.id + index} id={category.id + index}>
                                     <h5 className="text-center my-3">{category.name}</h5>
                                     <div className="row">
                                     {
-                                        category.items.map(item => {
+                                        category.items.map((item, indexItem) => {
                                             const image = item.images.length > 0 ? `${item.images[0].image_url}` : "https://via.placeholder.com/100C/O";
                                             return (
-                                                <div className="col-12 col-lg-4"  key={item.id}>
+                                                <div className="col-12 col-lg-4"  key={item.id + indexItem}>
                                                     <div className="card my-2">
                                                         <div className="card-body d-flex">
                                                             <div className="me-3 flex-fill">

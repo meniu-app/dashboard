@@ -50,7 +50,6 @@ class EditItemModal extends Component {
         const categories = restaurantDetail.categories;
         const menus = restaurantDetail.menus;
         const newItem = {...item};
-        console.log(item)
 
         return (
             <div className="modal fade" id="editItemModal" tabIndex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
@@ -89,14 +88,15 @@ class EditItemModal extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="itemCategoryInputEdit">Item category</label>
-                                    <select name="category" className="form-control" value={newItem.category !== '' ? newItem.category : categories[0].id} onChange={ handleChangeItem } id="itemCategoryInputEdit" required>
+                                    <select name="category" className="form-control" value={newItem.category} onChange={ handleChangeItem } id="itemCategoryInputEdit" required>
                                         {
-                                            categories.map(category => {
+                                            categories.map((category, index) => {
                                                 return (
-                                                    <option value={category.id} key={category.id}>{ category.name }</option>
+                                                    <option value={category.id} key={category.id+index}>{ category.name }</option>
                                                 )
                                             })
                                         }
+                                        <option value='' >No category</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
