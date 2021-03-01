@@ -50,6 +50,7 @@ class EditItemModal extends Component {
         const categories = restaurantDetail.categories;
         const menus = restaurantDetail.menus;
         const newItem = {...item};
+        console.log(item)
 
         return (
             <div className="modal fade" id="editItemModal" tabIndex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">

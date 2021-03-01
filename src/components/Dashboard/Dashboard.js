@@ -51,7 +51,11 @@ class Dashboard extends Component {
     }
 
     setSelectedItem(item) {
-        this.setState({selectedItem: item});
+        if (item.category === null) {
+            this.setState({selectedItem: {...item, category: ''}});
+        }else {
+            this.setState({selectedItem: item});
+        }
     }
 
     render() {
@@ -64,6 +68,10 @@ class Dashboard extends Component {
             if (restaurantDetail.items_no_category.length > 0) {
                 categories.push({id: '', name: 'No category', items: restaurantDetail.items_no_category});
             }
+            console.log(categories)
+            setTimeout(() => {
+                console.log(categories)   
+            }, 2000);
         }
 
         return (
@@ -118,7 +126,7 @@ class Dashboard extends Component {
                                                                 <img className="img-thumbnail" src={image} alt=""/>
                                                             </div>
                                                         </div>
-                                                        <button onClick={() => this.setSelectedItem({...item, category: ''})} className="btn btn-primary m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit item</button>
+                                                        <button onClick={() => this.setSelectedItem(item)} className="btn btn-primary m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit item</button>
                                                         <button onClick={() => this.setSelectedItem(item)} className="btn btn-danger m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete item</button>
                                                     </div>
                                                 </div>
