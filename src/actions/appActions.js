@@ -57,6 +57,9 @@ import {
     DELETE_CATEGORY_DATA_SUCCESS,
     DELETE_CATEGORY_DATA,
     ADD_RESTAURANT_DATA_OWNER_SUCCESS,
+    DELETE_USER_DATA,
+    DELETE_USER_DATA_SUCCESS,
+    DELETE_USER_DATA_ERROR,
 } from './types';
 import API from '../api/Api';
 import {
@@ -598,7 +601,7 @@ export const addUserData = (data, role) => async (dispatch) => {
 
         const restaurant = await API.getRestaurantDetail(responseData.restaurant);
         const restaurantData = restaurant['data'];
-        dispatch(addRestaurantDataSuccessAction(restaurantData));
+        dispatch(addRestaurantDataOwnerSuccessAction(restaurantData));
         
         dispatch(alertActivateAction({text: 'User successfully added', alert: 'success'}));
         return dispatch(addUserDataSuccessAction(responseData));
@@ -981,5 +984,56 @@ export const deleteCategoryData = (id, restaurantId) => async (dispatch) => {
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(deleteCategoryDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Action to add new user
+ */
+const deleteUserDataInitAction = () => ({
+    type: DELETE_USER_DATA
+});
+
+/**
+ * Action which is callled when the deleteUserDataInitAction success
+ */
+const deleteUserDataSuccessAction = (data) => ({
+    type: DELETE_USER_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the deleteUserDataInitAction failed
+ */
+const deleteUserDataErrorAction = () => ({
+    type: DELETE_USER_DATA_ERROR
+});
+
+/**
+ * Function to add data to Item
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const deleteUserData = (userId, restaurantId, userRole) => async (dispatch) => {
+    dispatch(deleteUserDataInitAction());
+    try {
+        let response = undefined;
+        console.log(userRole)
+        // if (userRole === '2')
+        response = await API.deleteOwner(userId);
+        // else
+        // response = await API.deleteBusinessManager(userId);
+        const responseData = response['data'];
+
+        const restaurant = await API.getRestaurantDetail(restaurantId);
+        const restaurantData = restaurant['data'];
+        dispatch(addRestaurantDataOwnerSuccessAction(restaurantData));
+        
+        dispatch(alertActivateAction({text: 'User successfully deleted', alert: 'success'}));
+        return dispatch(deleteUserDataSuccessAction(responseData));
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(deleteUserDataErrorAction({error: error}));
     }
 }

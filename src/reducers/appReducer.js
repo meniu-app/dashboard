@@ -56,7 +56,10 @@ import {
     ADD_USER_DATA,
     ADD_USER_DATA_SUCCESS,
     ADD_USER_DATA_ERROR,
-    ADD_RESTAURANT_DATA_OWNER_SUCCESS
+    ADD_RESTAURANT_DATA_OWNER_SUCCESS,
+    DELETE_USER_DATA,
+    DELETE_USER_DATA_SUCCESS,
+    DELETE_USER_DATA_ERROR
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -382,6 +385,21 @@ export default function(state = initialState.app, action) {
                 formLoading: false
             }
         case ADD_USER_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case DELETE_USER_DATA:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case DELETE_USER_DATA_SUCCESS:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case DELETE_USER_DATA_ERROR:
             return {
                 ...state,
                 formLoading: false

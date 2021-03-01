@@ -4,29 +4,21 @@ import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
-import { getUserRole } from '../../api/TokenHandler';
 
 class DeleteUserModal extends Component {
 
     async handleSubmit (event, props) {
-        const { appActions, restaurantDetail } = props;
-        const { role } = event.target;
-
+        const { appActions, restaurantDetail, user } = props;
         event.preventDefault();
-        const data = new FormData(event.target);
-        if (event.target.restaurantChecked?.checked || getUserRole() === 'owner')
-            data.append('restaurant', restaurantDetail.id)
 
-        const response = await appActions.deleteUserData(data, role.value)
+        const response = await appActions.deleteUserData(user.id, restaurantDetail.id)
         if (response) {
-            event.target.email.value = '';
-            event.target.password.value = '';
-            document.getElementById('button-close-modal-user').click();
+            document.getElementById('button-close-modal-user-delete').click();
         }
     }
 
     render () {
-        const { formLoading } = this.props;
+        const { formLoading, user } = this.props;
 
         return (
             <div className="modal fade" id="deleteUserModal" tabIndex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
@@ -34,9 +26,10 @@ class DeleteUserModal extends Component {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="deleteUserModalLabel">Are you sure?</h5>
-                            <button id="button-close-modal-user" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button id="button-close-modal-user-delete" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
+                            You are going to delete the user <b>{user.email}</b>
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="DELETE" encType="multipart/form-data">
                                 <div className="mt-3 d-flex justify-content-end">
@@ -57,7 +50,8 @@ class DeleteUserModal extends Component {
 DeleteUserModal.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
     restaurantDetail: PropTypes.object.isRequired,
-    formLoading: PropTypes.bool.isRequired
+    formLoading: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

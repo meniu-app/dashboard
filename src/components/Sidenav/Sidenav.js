@@ -133,9 +133,9 @@ class Sidenav extends Component {
                             <div className="col-12 text-center mb-2" key={owner.id}>
                                 {owner.email}
                                 <br/>
-                                <button className="btn btn-primary" onClick={() => this.setSelectedUser(owner)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
+                                {/* <button className="btn btn-primary" onClick={() => this.setSelectedUser(owner)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
                                     Edit
-                                </button>
+                                </button> */}
                                 <button className="btn btn-danger" onClick={() => this.setSelectedUser(owner)} data-bs-toggle="modal" data-bs-target="#deleteUserModal">
                                     Delete
                                 </button>
@@ -146,7 +146,7 @@ class Sidenav extends Component {
                     <></>
                     }
                     { restaurantDataReady && (getUserRole() === 'admin' || getUserRole() === 'owner') ? 
-                    <div> <h6 className="mt-2">Managers</h6> <DeleteUserModal /> </div>
+                    <div> <h6 className="mt-2">Managers</h6> <DeleteUserModal user={this.state.selectedUser} /> </div>
                     : <></>}
                     {
                     restaurantDataReady && (getUserRole() === 'admin' || getUserRole() === 'owner') ?
@@ -155,9 +155,9 @@ class Sidenav extends Component {
                             <div className="col-12 text-center mb-2" key={manager.id}>
                                 {manager.email}
                                 <br/>
-                                <button className="btn btn-primary" onClick={() => this.setSelectedUser(manager)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
+                                {/* <button className="btn btn-primary" onClick={() => this.setSelectedUser(manager)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
                                     Edit
-                                </button>
+                                </button> */}
                                 <button className="btn btn-danger" onClick={() => this.setSelectedUser(manager)} data-bs-toggle="modal" data-bs-target="#deleteUserModal">
                                     Delete
                                 </button>

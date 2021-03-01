@@ -124,8 +124,14 @@ const api = {
   addOwner: (data) => {
     return axios.post(`${baseUrl}/v1/owner`, data)
   },
+  deleteOwner: (id) => {
+    return axios.delete(`${baseUrl}/v1/owner/${id}`)
+  },
   addBusinessManager: (data) => {
-    return axios.post(`${baseUrl}/v1/manager  `, data)
+    return axios.post(`${baseUrl}/v1/manager`, data)
+  },
+  deleteBusinessManager: (id) => {
+    return axios.delete(`${baseUrl}/v1/manager/${id}`,)
   },
   editOwner: (data, id) => {
     return axios.patch(`${baseUrl}/v1/owner/${id}/`, data);
