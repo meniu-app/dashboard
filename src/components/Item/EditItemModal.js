@@ -88,7 +88,7 @@ class EditItemModal extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="itemCategoryInputEdit">Item category</label>
-                                    <select name="category" className="form-control" value={newItem.category}onChange={ handleChangeItem } id="itemCategoryInputEdit" required>
+                                    <select name="category" className="form-control" value={newItem.category !== '' ? newItem.category : categories[0].id} onChange={ handleChangeItem } id="itemCategoryInputEdit" required>
                                         {
                                             categories.map(category => {
                                                 return (

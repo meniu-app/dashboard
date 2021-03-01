@@ -56,11 +56,14 @@ class Dashboard extends Component {
 
     render() {
 
-        const { menuDetail, menuDetailDataReady, restaurantDataReady } = this.props;
+        const { menuDetail, menuDetailDataReady, restaurantDataReady, restaurantDetail } = this.props;
         let categories = []
 
         if (menuDetailDataReady) {
             categories = Object.keys(menuDetail.categories).map(key => {return {id: key, ...menuDetail.categories[key]}})
+            if (restaurantDetail.items_no_category.length > 0) {
+                categories.push({id: '', name: 'No category', items: restaurantDetail.items_no_category});
+            }
         }
 
         return (
@@ -115,7 +118,7 @@ class Dashboard extends Component {
                                                                 <img className="img-thumbnail" src={image} alt=""/>
                                                             </div>
                                                         </div>
-                                                        <button onClick={() => this.setSelectedItem(item)} className="btn btn-primary m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit item</button>
+                                                        <button onClick={() => this.setSelectedItem({...item, category: ''})} className="btn btn-primary m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit item</button>
                                                         <button onClick={() => this.setSelectedItem(item)} className="btn btn-danger m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete item</button>
                                                     </div>
                                                 </div>
@@ -138,13 +141,15 @@ Dashboard.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
     menuDetail: PropTypes.object.isRequired,
     menuDetailDataReady: PropTypes.bool.isRequired,
-    restaurantDataReady: PropTypes.bool.isRequired
+    restaurantDataReady: PropTypes.bool.isRequired,
+    restaurantDetail: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
     menuDetail: state.app.menuDetail,
     menuDetailDataReady: state.app.menuDetailDataReady,
-    restaurantDataReady: state.app.restaurantDataReady
+    restaurantDataReady: state.app.restaurantDataReady,
+    restaurantDetail: state.app.restaurantDetail
 });
 
 const mapDispatchToProps = (dispatch) => ({
