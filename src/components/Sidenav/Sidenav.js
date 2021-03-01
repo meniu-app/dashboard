@@ -124,7 +124,11 @@ class Sidenav extends Component {
                 }
                 </div>
                 <div className="row">
+                    { (getUserRole() === 'admin' || getUserRole() === 'owner') ?
                     <h5 className="mt-3">Users</h5>
+                    :
+                    <></>
+                    }
                     { restaurantDataReady && getUserRole() === 'admin'  ? <h6 className="mt-2">Owners</h6> : <></>}
                     {
                     restaurantDataReady && getUserRole() === 'admin' ?
