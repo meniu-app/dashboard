@@ -16,7 +16,6 @@ class DeleteItemModal extends Component {
     }
 
     render () {
-
         const { formLoading } = this.props;
 
         return (

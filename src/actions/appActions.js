@@ -60,6 +60,8 @@ import {
     DELETE_USER_DATA,
     DELETE_USER_DATA_SUCCESS,
     DELETE_USER_DATA_ERROR,
+    DELETE_ITEM_DATA_SUCCESS,
+    DELETE_ITEM_DATA_ERROR,
 } from './types';
 import API from '../api/Api';
 import {
@@ -918,16 +920,16 @@ const deleteItemDataInitAction = () => ({
 /**
  * Action which is callled when the deleteItemDataInitAction success
  */
-const deleteItemDataSuccessAction = (menuData) => ({
-    type: EDIT_ITEM_DATA_SUCCESS,
-    payload: menuData
+const deleteItemDataSuccessAction = (menuData, restaurantData) => ({
+    type: DELETE_ITEM_DATA_SUCCESS,
+    payload: {menuData, restaurantData}
 });
 
 /**
  * Action which is callled when the deleteItemDataInitAction failed
  */
 const deleteItemDataErrorAction = (error) => ({
-    type: EDIT_ITEM_DATA_ERROR,
+    type: DELETE_ITEM_DATA_ERROR,
     payload: error
 });
 
@@ -937,18 +939,21 @@ const deleteItemDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object}
  */
-export const deleteItemData = (itemId, restaurantId) => async (dispatch) => {
+export const deleteItemData = (itemId, menuId) => async (dispatch) => {
     dispatch(deleteItemDataInitAction());
     try {
         await API.deleteItem(itemId);
-        const menu = await API.getMenuDetail(restaurantId);
+        const menu = await API.getMenuDetail(menuId);
         const menuData = menu['data'];
 
+        const restaurantDetail = await API.getRestaurantDetail(menuData.restaurant);
+        const restaurantData = restaurantDetail['data'];
+
         dispatch(alertActivateAction({text: 'Item successfully deleted', alert: 'success'}));
-        return dispatch(deleteItemDataSuccessAction(menuData));
+        return dispatch(deleteItemDataSuccessAction(menuData, restaurantData));
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
-        return dispatch(deleteItemDataErrorAction({error: error}));
+        return dispatch(deleteItemDataErrorAction({error}));
     }
 }
 

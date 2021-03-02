@@ -261,7 +261,8 @@ export default function(state = initialState.app, action) {
             return {
                 ...state,
                 formLoading: false,
-                menuDetail: action.payload
+                menuDetail: action.payload.menuData,
+                restaurantDetail: action.payload.restaurantData
             }
         case DELETE_ITEM_DATA_ERROR:
             return {
