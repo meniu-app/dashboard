@@ -53,12 +53,14 @@ DeleteMenuModal.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
     restaurantDetail: PropTypes.object.isRequired,
     formLoading: PropTypes.bool.isRequired,
-    menu: PropTypes.object.isRequired
+    menu: PropTypes.object.isRequired,
+    menuDetailDataReady: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
     restaurantDetail: state.app.restaurantDetail,
     formLoading: state.app.formLoading,
+    menuDetailDataReady: state.app.menuDetailDataReady
 });
 
 const mapDispatchToProps = (dispatch) => ({

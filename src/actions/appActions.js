@@ -864,6 +864,7 @@ export const deleteMenuData = (menuId, restaurantId) => async (dispatch) => {
         dispatch(alertActivateAction({text: 'Menu successfully deleted', alert: 'success'}));
         return dispatch(deleteMenuDataSuccessAction(restaurantData));
     } catch (error) {
+        console.log(error)
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(deleteMenuDataErrorAction({error: error}));
     }
@@ -968,9 +969,9 @@ const deleteCategoryDataInitAction = () => ({
 /**
  * Action which is callled when the deleteCategoryDataInitAction success
  */
-const deleteCategoyDataSuccessAction = (restaurantData) => ({
+const deleteCategoyDataSuccessAction = (restaurantData, menuData) => ({
     type: DELETE_CATEGORY_DATA_SUCCESS,
-    payload: restaurantData
+    payload: {restaurantData, menuData}
 });
 
 /**
@@ -987,14 +988,18 @@ const deleteCategoryDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object} This contains data from dish
  */
-export const deleteCategoryData = (id, restaurantId) => async (dispatch) => {
+export const deleteCategoryData = (id, restaurantId, menuId) => async (dispatch) => {
     dispatch(deleteCategoryDataInitAction());
     try {
         await API.deleteCategory(id);
         const restaurant = await API.getRestaurantDetail(restaurantId);
         const restaurantData = restaurant['data'];
+
+        const menu = await API.getMenuDetail(menuId);
+        const menuData = menu['data'];
+
         dispatch(alertActivateAction({text: 'Category successfully deleted', alert: 'success'}));
-        return dispatch(deleteCategoyDataSuccessAction(restaurantData));
+        return dispatch(deleteCategoyDataSuccessAction(restaurantData, menuData));
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(deleteCategoryDataErrorAction({error: error}));

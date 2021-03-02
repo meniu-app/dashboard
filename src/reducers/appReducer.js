@@ -294,7 +294,8 @@ export default function(state = initialState.app, action) {
             return {
                 ...state,
                 formLoading: false,
-                restaurantDetail: action.payload
+                restaurantDetail: action.payload.restaurantData,
+                menuDetail: action.payload.menuData
             }
         case DELETE_CATEGORY_DATA_ERROR:
             return {
@@ -369,7 +370,9 @@ export default function(state = initialState.app, action) {
             return {
                 ...state,
                 formLoading: false,
-                restaurantDetail: action.payload
+                restaurantDetail: action.payload,
+                menuDetailDataReady: false,
+                menuDetail: {},
             }
         case DELETE_MENU_DATA_ERROR:
             return {

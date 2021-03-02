@@ -85,15 +85,15 @@ class Dashboard extends Component {
                 }
                 <RestaurantModal />
                 <UserModal />
+                <DeleteMenuModal menu={{...menuDetail}} />
                 {
-                menuDetailDataReady &&
+                menuDetailDataReady ?
                 <div className="px-3">
                     <div className="d-flex">
                         <h4 className="me-3">{menuDetail.name}</h4>
                         <button className="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit menu</button>
                         <button className="btn btn-danger ms-2"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete menu</button>
                         <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
-                        <DeleteMenuModal menu={{...menuDetail}} />
                     </div>
                     <div className="row mt-3">
                         <div className="col-4">
@@ -134,7 +134,7 @@ class Dashboard extends Component {
                             )
                         })
                     }
-                </div>
+                </div> : <></>
                 }
             </div>
         )

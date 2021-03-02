@@ -76,6 +76,7 @@ class ItemModal extends Component {
                                             })
                                         }
                                     </select>
+                                    {menus.length === 0 ? <p className="text-danger"><b>Please create a menu</b></p> : <></>}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="itemCategoryInput">Item category</label>
@@ -88,6 +89,7 @@ class ItemModal extends Component {
                                             })
                                         }
                                     </select>
+                                    {categories.length === 0 ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="itemImageInput">Image</label>
