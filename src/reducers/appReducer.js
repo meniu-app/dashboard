@@ -295,7 +295,8 @@ export default function(state = initialState.app, action) {
                 ...state,
                 formLoading: false,
                 restaurantDetail: action.payload.restaurantData,
-                menuDetail: action.payload.menuData
+                menuDetail: action.payload.menuData !== null ? action.payload.menuData : {},
+                menuDetailDataReady: action.payload.menuData !== null ? true : false
             }
         case DELETE_CATEGORY_DATA_ERROR:
             return {

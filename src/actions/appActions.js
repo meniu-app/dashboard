@@ -1005,8 +1005,12 @@ export const deleteCategoryData = (id, restaurantId, menuId) => async (dispatch)
         const restaurant = await API.getRestaurantDetail(restaurantId);
         const restaurantData = restaurant['data'];
 
-        const menu = await API.getMenuDetail(menuId);
-        const menuData = menu['data'];
+        let menuData = null;
+
+        if (menuId !== undefined) {
+            const menu = await API.getMenuDetail(menuId);
+            menuData = menu['data'];
+        }
 
         dispatch(alertActivateAction({text: 'Category successfully deleted', alert: 'success'}));
         return dispatch(deleteCategoyDataSuccessAction(restaurantData, menuData));
