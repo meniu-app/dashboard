@@ -599,14 +599,19 @@ export const addUserData = (data, role) => async (dispatch) => {
             response = await API.addBusinessManager(data);
         const responseData = response['data'];
 
-        const restaurant = await API.getRestaurantDetail(responseData.restaurant);
-        const restaurantData = restaurant['data'];
-        dispatch(addRestaurantDataOwnerSuccessAction(restaurantData));
-        
+        if (responseData.restaurant !== null) {
+            const restaurant = await API.getRestaurantDetail(responseData.restaurant);
+            const restaurantData = restaurant['data'];
+            dispatch(addRestaurantDataOwnerSuccessAction(restaurantData));
+        }
+
         dispatch(alertActivateAction({text: 'User successfully added', alert: 'success'}));
         return dispatch(addUserDataSuccessAction(responseData));
     } catch (error) {
-        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        if (error.response.data.email) {
+            dispatch(alertActivateAction({text: error.response.data.email, alert: 'danger'}));
+        } else
+            dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(addUserDataErrorAction({error: error}));
     }
 }
@@ -621,9 +626,9 @@ const editItemDataInitAction = () => ({
 /**
  * Action which is callled when the editItemDataInitAction success
  */
-const editItemDataSuccessAction = (data, menuData) => ({
+const editItemDataSuccessAction = (data, menuData, restaurantData) => ({
     type: EDIT_ITEM_DATA_SUCCESS,
-    payload: {data, menuData}
+    payload: {data, menuData, restaurantData}
 });
 
 /**
@@ -640,7 +645,7 @@ const editItemDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object}
  */
-export const editItemData = (data, imageData, id, imageId) => async (dispatch) => {
+export const editItemData = (data, imageData, id, imageId, ) => async (dispatch) => {
     dispatch(editItemDataInitAction());
     try {
         const response = await API.editItem(data, id);
@@ -648,11 +653,15 @@ export const editItemData = (data, imageData, id, imageId) => async (dispatch) =
         // Making image update after item is created
         if (imageId !== null)
             await API.editImage(imageData, imageId);
+
         const menu = await API.getMenuDetail(responseData.menu);
         const menuData = menu['data'];
 
+        const restaurantDetail = await API.getRestaurantDetail(menuData.restaurant);
+        const restaurantData = restaurantDetail['data'];
+
         dispatch(alertActivateAction({text: 'Item successfully edited', alert: 'success'}));
-        return dispatch(editItemDataSuccessAction(responseData, menuData));
+        return dispatch(editItemDataSuccessAction(responseData, menuData, restaurantData));
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(editItemDataErrorAction({error: error}));

@@ -26,6 +26,9 @@ class EditItemModal extends Component {
             active: true,
             image: image
         }
+        if (formData.category === '') {
+            formData.category = null;
+        }
         const data = new FormData();
         const imageData = new FormData(event.target);
         data.append('name', formData.name);
@@ -96,7 +99,6 @@ class EditItemModal extends Component {
                                                 )
                                             })
                                         }
-                                        <option value='' >No category</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
@@ -123,12 +125,14 @@ EditItemModal.propTypes = {
     restaurantDetail: PropTypes.object.isRequired,
     formLoading: PropTypes.bool.isRequired,
     item: PropTypes.object.isRequired,
-    handleChangeItem: PropTypes.func
+    handleChangeItem: PropTypes.func,
+    menuDetail: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
     restaurantDetail: state.app.restaurantDetail,
     formLoading: state.app.formLoading,
+    menuDetail: state.app.menuDetail
 });
 
 const mapDispatchToProps = (dispatch) => ({
