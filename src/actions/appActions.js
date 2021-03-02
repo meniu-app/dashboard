@@ -62,6 +62,7 @@ import {
     DELETE_USER_DATA_ERROR,
     DELETE_ITEM_DATA_SUCCESS,
     DELETE_ITEM_DATA_ERROR,
+    DELETE_MENU_DATA,
 } from './types';
 import API from '../api/Api';
 import {
@@ -835,7 +836,15 @@ export const isAuthenticatedData = () => async (dispatch) => {
 }
 
 /**
- * Action which is callled when the deleteMenuDataInitAction success
+ * Action which is callled when deleteMenuDataAction
+ */
+const deleteMenuDataAction = (restaurantData) => ({
+    type: DELETE_MENU_DATA,
+    payload: restaurantData
+});
+
+/**
+ * Action which is callled when the deleteMenuDataAction success
  */
 const deleteMenuDataSuccessAction = (restaurantData) => ({
     type: DELETE_MENU_DATA_SUCCESS,
@@ -843,7 +852,7 @@ const deleteMenuDataSuccessAction = (restaurantData) => ({
 });
 
 /**
- * Action which is callled when the editMenuDataInitAction failed
+ * Action which is callled when the deleteMenuDataAction failed
  */
 const deleteMenuDataErrorAction = (error) => ({
     type: DELETE_MENU_DATA_ERROR,
@@ -857,6 +866,7 @@ const deleteMenuDataErrorAction = (error) => ({
  * @returns {Object} This contains data from dish
  */
 export const deleteMenuData = (menuId, restaurantId) => async (dispatch) => {
+    dispatch(deleteMenuDataAction())
     try {
         await API.deleteMenu(menuId);
         const restaurant = await API.getRestaurantDetail(restaurantId);
