@@ -9,9 +9,9 @@ import { withRouter } from 'react-router-dom';
 class DeleteCategoryModal extends Component {
 
     async handleSubmit (event, props) {
-        const { appActions, category } = props;
+        const { appActions, category, restaurantDetail } = props;
         event.preventDefault();
-        const response = await appActions.deleteCategoryData(category.id, category.restaurant);
+        const response = await appActions.deleteCategoryData(category.id, restaurantDetail.id);
         if (response)
             document.getElementById('button-close-modal-category-delete').click();
     }
