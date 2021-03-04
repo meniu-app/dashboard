@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as appAction from '../../actions/appActions';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { getUser, getUserRole } from '../../api/TokenHandler';
 class Login extends Component {
 
@@ -55,8 +55,7 @@ class Login extends Component {
                         <input type="password" name="password" className="form-control" id="loginPassword" required></input>
                     </div>
                     <button className="btn btn-primary me-2">Login</button>
-                    <button type="button" className="btn btn-primary"> Forget Password</button>
-
+                    <Link to="/auth/reset_password" type="button" className="btn btn-primary"> Forget Password</Link>
                 </form>
             </div>
         );

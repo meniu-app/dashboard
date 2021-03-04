@@ -61,6 +61,12 @@ const api = {
   login: (body) => {
     return axios.post(`${baseUrl}/v1/login`, body);
   },
+  resetPassword: (body) => {
+    return axios.post(`${baseUrl}/v1/password_reset`, body);
+  },
+  resetPasswordConfirm: (body) => {
+    return axios.post(`${baseUrl}/v1/password_resetconfirm`, body);
+  },
   refreshToken: (body) => {
     return axios.post(`${baseUrl}/v1/token/refresh/`, body);
   },

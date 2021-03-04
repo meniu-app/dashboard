@@ -21,6 +21,7 @@ const ProfileEdit = lazy(() => import('./components/Profile/ProfileEdit'));
 import Spinner from './components/Spinner';
 import { getRefreshToken, getUser, getUserRole, removeTokens, removeUser } from './api/TokenHandler';
 import Alert from './components/Alert';
+import ResetPassword from './components/Auth/ResetPassword';
 
 class App extends Component {
   async componentDidMount() {
@@ -87,6 +88,11 @@ class App extends Component {
               <Route exact path="/auth/login">
                 <UnAuthenticatedRoute>
                   <Login />
+                </UnAuthenticatedRoute>
+              </Route>
+              <Route exact path="/auth/reset_password">
+                <UnAuthenticatedRoute>
+                  <ResetPassword />
                 </UnAuthenticatedRoute>
               </Route>
               <Route path="*">

@@ -59,7 +59,13 @@ import {
     ADD_RESTAURANT_DATA_OWNER_SUCCESS,
     DELETE_USER_DATA,
     DELETE_USER_DATA_SUCCESS,
-    DELETE_USER_DATA_ERROR
+    DELETE_USER_DATA_ERROR,
+    RESET_PASSWORD,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_ERROR,
+    RESET_PASSWORD_CONFIRM,
+    RESET_PASSWORD_CONFIRM_SUCCESS,
+    RESET_PASSWORD_CONFIRM_ERROR
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -151,6 +157,30 @@ export default function(state = initialState.app, action) {
             return {
                 ...state,
                 isLoggedIn: false
+            };
+        case RESET_PASSWORD:
+            return {
+                ...state
+            };
+        case RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+            };
+        case RESET_PASSWORD_ERROR:
+            return {
+                ...state,
+            };
+        case RESET_PASSWORD_CONFIRM:
+            return {
+                ...state
+            };
+        case RESET_PASSWORD_CONFIRM_SUCCESS:
+            return {
+                ...state,
+            };
+        case RESET_PASSWORD_CONFIRM_ERROR:
+            return {
+                ...state,
             };
         case POST_LOGOUT:
             return {

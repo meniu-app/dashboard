@@ -63,6 +63,12 @@ import {
     DELETE_ITEM_DATA_SUCCESS,
     DELETE_ITEM_DATA_ERROR,
     DELETE_MENU_DATA,
+    RESET_PASSWORD,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_ERROR,
+    RESET_PASSWORD_CONFIRM,
+    RESET_PASSWORD_CONFIRM_SUCCESS,
+    RESET_PASSWORD_CONFIRM_ERROR
 } from './types';
 import API from '../api/Api';
 import {
@@ -159,6 +165,91 @@ export const postLoginData = (email, password) => async (dispatch) => {
     } catch (error) {
         dispatch(alertActivateAction({text: 'Incorrect email or password', alert: 'danger'}));
         return dispatch(postLoginInitErrorAction(`Error: ${error}`));
+    }
+}
+
+/**
+ * Action to reset password
+ */
+const resetPasswordInitAction = () => ({
+    type: RESET_PASSWORD
+});
+
+/**
+ * Action which is callled when the resetPasswordInitAction success
+ */
+const resetPasswordInitSuccessAction = (data) => ({
+    type: RESET_PASSWORD_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the resetPasswordInitAction failed
+ */
+const resetPasswordInitErrorAction = (error) => ({
+    type: RESET_PASSWORD_ERROR,
+    payload: error
+});
+
+/**
+ * Function to fetch init data from Auth user
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains data from restaurants
+ */
+export const resetPasswordData = (email) => async (dispatch) => {
+    dispatch(resetPasswordInitAction());
+    try {
+        const response = await API.resetPassword({'email': email});
+        const data = response['data'];
+        dispatch(alertActivateAction({text: 'Please check your email', alert: 'success'}));
+        return dispatch(resetPasswordInitSuccessAction(data));
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'Incorrect email', alert: 'danger'}));
+        return dispatch(resetPasswordInitErrorAction(`Error: ${error}`));
+    }
+}
+
+
+/**
+ * Action to reset password cnfirm
+ */
+const resetPasswordConfirmInitAction = () => ({
+    type: RESET_PASSWORD_CONFIRM
+});
+
+/**
+ * Action which is callled when the resetPasswordConfirmInitAction success
+ */
+const resetPasswordConfirmInitSuccessAction = (data) => ({
+    type: RESET_PASSWORD_CONFIRM_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the resetPasswordConfirmInitAction failed
+ */
+const resetPasswordConfirmInitErrorAction = (error) => ({
+    type: RESET_PASSWORD_CONFIRM_ERROR,
+    payload: error
+});
+
+/**
+ * Function to fetch init data from Auth user
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains data from restaurants
+ */
+export const resetPasswordConfirmData = (password, token) => async (dispatch) => {
+    dispatch(resetPasswordConfirmInitAction());
+    try {
+        const response = await API.resetPasswordConfirm({password, token});
+        const data = response['data'];
+        dispatch(alertActivateAction({text: 'Password succesfully updated', alert: 'success'}));
+        return dispatch(resetPasswordConfirmInitSuccessAction(data));
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(resetPasswordConfirmInitErrorAction(`Error: ${error}`));
     }
 }
 
@@ -874,7 +965,6 @@ export const deleteMenuData = (menuId, restaurantId) => async (dispatch) => {
         dispatch(alertActivateAction({text: 'Menu successfully deleted', alert: 'success'}));
         return dispatch(deleteMenuDataSuccessAction(restaurantData));
     } catch (error) {
-        console.log(error)
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(deleteMenuDataErrorAction({error: error}));
     }
@@ -1052,7 +1142,6 @@ export const deleteUserData = (userId, restaurantId, userRole) => async (dispatc
     dispatch(deleteUserDataInitAction());
     try {
         let response = undefined;
-        console.log(userRole)
         // if (userRole === '2')
         response = await API.deleteOwner(userId);
         // else
@@ -1061,7 +1150,7 @@ export const deleteUserData = (userId, restaurantId, userRole) => async (dispatc
 
         const restaurant = await API.getRestaurantDetail(restaurantId);
         const restaurantData = restaurant['data'];
-        dispatch(addRestaurantDataOwnerSuccessAction(restaurantData));
+        dispatch(addRestaurantDataOwnerSuccessAction(restaurantData, userRole));
         
         dispatch(alertActivateAction({text: 'User successfully deleted', alert: 'success'}));
         return dispatch(deleteUserDataSuccessAction(responseData));
