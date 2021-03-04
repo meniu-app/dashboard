@@ -22,6 +22,7 @@ import Spinner from './components/Spinner';
 import { getRefreshToken, getUser, getUserRole, removeTokens, removeUser } from './api/TokenHandler';
 import Alert from './components/Alert';
 import ResetPassword from './components/Auth/ResetPassword';
+import ProfileChangePassword from './components/Profile/ProfileChangePassword';
 
 class App extends Component {
   async componentDidMount() {
@@ -83,6 +84,11 @@ class App extends Component {
               <Route exact path="/profile/edit">
                 <AuthenticatedRoute>
                   <ProfileEdit />
+                </AuthenticatedRoute>
+              </Route>
+              <Route exact path="/profile/change_password">
+                <AuthenticatedRoute>
+                  <ProfileChangePassword />
                 </AuthenticatedRoute>
               </Route>
               <Route exact path="/auth/login">

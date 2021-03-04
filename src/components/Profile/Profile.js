@@ -7,7 +7,9 @@ class Profile extends Component {
       <div className="container">
           <h3>This is my profile</h3>
           <h5>Name: David Hincapie</h5>
-          <Link to="/profile/edit" className="btn btn-primary">Edit</Link>
+          <Link to="/profile/edit" className="btn btn-primary">Edit profile</Link>
+          <br />
+          <Link to="/profile/change_password" className="btn btn-primary mt-3">Change password</Link>
       </div>
     );
   }

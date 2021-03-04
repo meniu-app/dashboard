@@ -68,7 +68,10 @@ import {
     RESET_PASSWORD_ERROR,
     RESET_PASSWORD_CONFIRM,
     RESET_PASSWORD_CONFIRM_SUCCESS,
-    RESET_PASSWORD_CONFIRM_ERROR
+    RESET_PASSWORD_CONFIRM_ERROR,
+    EDIT_USER_DATA,
+    EDIT_USER_DATA_SUCCESS,
+    EDIT_USER_DATA_ERROR
 } from './types';
 import API from '../api/Api';
 import {
@@ -1157,5 +1160,48 @@ export const deleteUserData = (userId, restaurantId, userRole) => async (dispatc
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(deleteUserDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Edit user
+ */
+const editUserDataAction = (data) => ({
+    type: EDIT_USER_DATA,
+    payload: data
+});
+
+/**
+ * Action which is callled when the editUserDataAction success
+ */
+const editUserDataSuccessAction = (data, menuData, restaurantData) => ({
+    type: EDIT_USER_DATA_SUCCESS,
+    payload: {data, menuData, restaurantData}
+});
+
+/**
+ * Action which is callled when the editUserDataAction failed
+ */
+const editUserDataErrorAction = (error) => ({
+    type: EDIT_USER_DATA_ERROR,
+    payload: error
+});
+
+/**
+ * Function to add data to Item
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const editUserData = (data, id) => async (dispatch) => {
+    dispatch(editUserDataAction());
+    try {
+        const response = await API.editOwner(data, id);
+        const responseData = response['data'];
+        dispatch(alertActivateAction({text: 'User successfully edited', alert: 'success'}));
+        return dispatch(editUserDataSuccessAction(responseData));
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(editUserDataErrorAction({error: error}));
     }
 }
