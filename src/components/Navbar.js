@@ -30,7 +30,7 @@ class Navbar extends Component {
                 <div className="container-fluid">
                     {
                      restaurantDataReady ?
-                        <Link className="navbar-brand d-flex" to="/">
+                        <div className="navbar-brand d-flex" to="/">
                             {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
                             {
                             (getUserRole() === 'admin' || getUserRole() === 'owner') ?
@@ -40,10 +40,10 @@ class Navbar extends Component {
                                 <EditRestaurantModal restaurantDetail={restaurantDetail} handleChangeRestaurant={this.handleChangeRestaurant} />
                             </div> : <></>
                             }
-                        </Link> :
-                        <Link className="navbar-brand" to="/">
+                        </div> :
+                        <div className="navbar-brand" to="/">
                             Meniu Dashboard {env === 'development' ? ' - Dev' : ''}
-                        </Link>
+                        </div>
                     }
                     {
                         (getUserRole() === 'admin' || getUserRole() === 'owner') &&
