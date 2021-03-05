@@ -256,8 +256,9 @@ export const resetPasswordConfirmData = (password, token) => async (dispatch) =>
     } catch (error) {
         if (error.response.data?.email) {
             dispatch(alertActivateAction({text: 'Please create a strong password', alert: 'danger'}));
+        } else {
+            dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         }
-        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(resetPasswordConfirmInitErrorAction(`Error: ${error}`));
     }
 }
@@ -1248,11 +1249,14 @@ export const changePasswordData = (data, id) => async (dispatch) => {
         dispatch(alertActivateAction({text: 'Password succesfully updated', alert: 'success'}));
         return dispatch(changePasswordInitSuccessAction(responseData));
     } catch (error) {
-        console.log(error)
-        // if (error.response.data?.email) {
-        //     dispatch(alertActivateAction({text: 'Please create a strong password', alert: 'danger'}));
-        // }
-        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        console.log("PAILAS")
+        if (error.response.data.old_password) {
+            dispatch(alertActivateAction({text: 'Incorrect old password', alert: 'danger'}));
+        } else if (error.response.data.password) {
+            dispatch(alertActivateAction({text: 'Please create a strong password', alert: 'danger'}));
+        } else {
+            dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        }
         return dispatch(changePasswordInitErrorAction(`Error: ${error}`));
     }
 }
