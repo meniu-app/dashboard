@@ -1249,7 +1249,6 @@ export const changePasswordData = (data, id) => async (dispatch) => {
         dispatch(alertActivateAction({text: 'Password succesfully updated', alert: 'success'}));
         return dispatch(changePasswordInitSuccessAction(responseData));
     } catch (error) {
-        console.log("PAILAS")
         if (error.response.data.old_password) {
             dispatch(alertActivateAction({text: 'Incorrect old password', alert: 'danger'}));
         } else if (error.response.data.password) {
