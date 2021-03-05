@@ -12,6 +12,9 @@ export default {
         restaurantDetail: {},
         restaurantDataReady: false,
 
+        restaurantTreeViewData: [],
+        restaurantTreeViewDataReady: false,
+
         menuDetail: {},
         menuDetailDataReady: false,
 

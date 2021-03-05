@@ -90,3 +90,19 @@ $dark-text-shadow: #191919;
 .modal {
     overflow-y: auto !important;
 }
+
+/**
+    Tree view styles
+ */
+.rstm-tree-item-group {
+    padding-left: 0;
+
+    .rstm-tree-item {
+        list-style: none;
+
+        .rstm-toggle-icon {
+            display: inline-block;
+            margin: 0 5px;
+        }
+    }
+}

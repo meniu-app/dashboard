@@ -30,16 +30,18 @@ class App extends Component {
     try {
       const refreshToken = getRefreshToken();
       if (refreshToken !== null && refreshToken !== undefined) {
-        const init = await Api.refreshToken({refresh: refreshToken}); 
+        const init = await Api.refreshToken({refresh: refreshToken});
         if (init.status === 200) {
           const user = getUser();
           if (user !== undefined && user !== null) {
             await appActions.isAuthenticatedData();
             if (getUserRole() === 'admin') {
               await appActions.getRestaurantInitialData();
+              await appActions.getRestaurantTreeViewDetailData();
             }
             else {
               await appActions.getRestaurantDetailInitialData(undefined, user.id);
+              await appActions.getRestaurantTreeViewDetailData();
             }
           } else {
             throw new Error('Session expired');
@@ -58,7 +60,7 @@ class App extends Component {
   }
 
   render() {
-    const { appStarted, restaurantDetail, restaurantDataReady } = this.props;
+    const { appStarted, restaurantDetail, restaurantDataReady, restaurantTreeViewData, restaurantTreeViewDataReady } = this.props;
     return (
       <div>
         {appStarted ?
@@ -71,7 +73,7 @@ class App extends Component {
               <Route exact path="/">
                 <AuthenticatedRoute>
                   <div className="main-wrapper d-flex">
-                    <Sidenav restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} />
+                    <Sidenav restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} restaurantTreeViewData={restaurantTreeViewData} restaurantTreeViewDataReady={restaurantTreeViewDataReady} />
                     <Dashboard restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} />
                   </div>
                 </AuthenticatedRoute>
@@ -120,13 +122,17 @@ App.propTypes = {
   appActions: PropTypes.objectOf(PropTypes.func).isRequired,
   appStarted: PropTypes.bool.isRequired,
   restaurantDetail: PropTypes.object.isRequired,
+  restaurantTreeViewData: PropTypes.array.isRequired,
   restaurantDataReady: PropTypes.bool.isRequired,
+  restaurantTreeViewDataReady: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   appStarted: state.app.appStarted,
   restaurantDetail: state.app.restaurantDetail,
+  restaurantTreeViewData: state.app.restaurantTreeViewData,
   restaurantDataReady: state.app.restaurantDataReady,
+  restaurantTreeViewDataReady: state.app.restaurantTreeViewDataReady,
 });
 
 const mapDispatchToProps = (dispatch) => ({

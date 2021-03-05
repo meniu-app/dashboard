@@ -82,6 +82,9 @@ const api = {
   getRestaurantDetailByUser: (id) => {
     return axios.get(`${baseUrl}/v1/restaurant/user/${id}/`);
   },
+  getRestaurantTreeViewDetails: () => {
+    return axios.get(`${baseUrl}/v1/restaurant/treeview`);
+  },
   getMenuDetail: (id) => {
     return axios.get(`${baseUrl}/v1/menu/${id}/`);
   },
