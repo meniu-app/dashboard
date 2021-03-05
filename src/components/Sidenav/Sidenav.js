@@ -7,6 +7,15 @@ import EditCategoryModal from '../Category/EditCategoryModal';
 import { getUserRole } from '../../api/TokenHandler';
 import DeleteCategoryModal from '../Category/DeleteCategoryModal';
 import DeleteUserModal from '../User/DeleteUserModal';
+import TreeMenu from 'react-simple-tree-menu';
+
+const DATA_TYPES = {
+    restaurant: 'restaurant',
+    menu: 'menu',
+    category: 'category',
+    item: 'item',
+    user: 'user'
+};
 
 class Sidenav extends Component {
 
@@ -22,7 +31,8 @@ class Sidenav extends Component {
                 id: '',
                 email: '',
                 restaurant: ''
-            }
+            },
+            treeData: this.convertRestaurantDataToTreeView(props.restaurantTreeViewData)
         }
     }
 
@@ -34,6 +44,25 @@ class Sidenav extends Component {
     async getRestaurantDetail(id) {
         const { appActions } = this.props;
         await appActions.getRestaurantDetailInitialData(id)
+    }
+
+    handleTreeOnToggle = (data) => {
+        switch (data.type) {
+            case DATA_TYPES.restaurant:
+                this.getRestaurantDetail(data.id);
+                break;
+            case DATA_TYPES.menu:
+                this.getMenuDetail(data.id);
+                break;
+            case DATA_TYPES.category:
+                break;
+            case DATA_TYPES.item:
+                break;
+            case DATA_TYPES.user:
+                break;
+            default:
+                break;
+        }
     }
 
     handleChangeCategory = (e) => {
@@ -53,8 +82,41 @@ class Sidenav extends Component {
         this.setState({selectedUser: user})
     }
 
+    getUserListData(user) {
+        return { key: user.id, id: user.id, type: DATA_TYPES.user, label: user.email };
+    }
+
+    getCategoriesData(categoriesObj) {
+        return Object.keys(categoriesObj).map((categoryId) => {
+            return { key: categoryId, id: categoryId, label: categoriesObj[categoryId].name, type: DATA_TYPES.category, nodes: categoriesObj[categoryId].items
+                  .map((item) => { return { key: item.id, id: item.id, label: item.name, type: DATA_TYPES.item }; }) }
+        })
+    }
+
+    populateRestaurantNodes(restaurant) {
+        const menus = restaurant.menus.map((menu) => {
+            return { key: menu.id, id: menu.id, type: DATA_TYPES.menu, label: menu.name, nodes: this.getCategoriesData(menu.categories) };
+        });
+        const menusRoot = { key: 'menus_root', label: 'Menus', nodes: menus };
+        const usersOwnerRoot = { key: 'users_owner_root', label: 'Owner', nodes: restaurant.owner.map(this.getUserListData) };
+        const usersBusinessManagerRoot = { key: 'users_business_manager_root', label: 'Business Manager', nodes: restaurant.business_manager.map(this.getUserListData) };
+        const usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersOwnerRoot, usersBusinessManagerRoot ] };
+
+        return [ menusRoot, usersRoot ];
+    }
+
+    convertRestaurantDataToTreeView = (data) => {
+        const restaurants = data.map((restaurant) => {
+            return { key: restaurant.id, id: restaurant.id, type: DATA_TYPES.restaurant, label: restaurant.name, nodes: this.populateRestaurantNodes(restaurant) };
+        });
+        const restaurantsRoot = { key: 'restaurants_root', label: 'Restaurants', nodes: restaurants };
+
+        return [ restaurantsRoot ];
+    }
+
     render() {
         const { restaurantDetail, restaurantDataReady, restaurants, restaurantsDataReady } = this.props;
+
         return (
             <nav id="main-sidebar">
                 <div className="row my-4">
@@ -64,6 +126,7 @@ class Sidenav extends Component {
                         </button>
                     </div>
                 </div>
+                <TreeMenu data={this.state.treeData} onClickItem={this.handleTreeOnToggle} />
                 {
                     restaurantsDataReady && getUserRole() === 'admin' ?
                     <div className="row">
@@ -149,7 +212,7 @@ class Sidenav extends Component {
                     :
                     <></>
                     }
-                    { restaurantDataReady && (getUserRole() === 'admin' || getUserRole() === 'owner') ? 
+                    { restaurantDataReady && (getUserRole() === 'admin' || getUserRole() === 'owner') ?
                     <div> <h6 className="mt-2">Managers</h6> <DeleteUserModal user={this.state.selectedUser} /> </div>
                     : <></>}
                     {
@@ -182,14 +245,18 @@ Sidenav.propTypes = {
     restaurantDetail: PropTypes.object.isRequired,
     restaurantDataReady: PropTypes.bool.isRequired,
     restaurants: PropTypes.array.isRequired,
-    restaurantsDataReady: PropTypes.bool.isRequired
+    restaurantsDataReady: PropTypes.bool.isRequired,
+    restaurantTreeViewData: PropTypes.array.isRequired,
+    restaurantTreeViewDataReady: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
     menuDetail: state.app.menuDetail,
     menuDataReady: state.app.menuDataReady,
     restaurants: state.app.restaurants,
-    restaurantsDataReady: state.app.restaurantsDataReady
+    restaurantsDataReady: state.app.restaurantsDataReady,
+    restaurantTreeViewData: state.app.restaurantTreeViewData,
+    restaurantTreeViewDataReady: state.app.restaurantTreeViewDataReady,
 });
 
 const mapDispatchToProps = (dispatch) => ({

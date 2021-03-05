@@ -8,6 +8,9 @@ import {
     GET_RESTAURANT_DETAIL_INITIAL_DATA,
     GET_RESTAURANT_DETAIL_INITIAL_DATA_SUCCESS,
     GET_RESTAURANT_DETAIL_INITIAL_DATA_ERROR,
+    GET_RESTAURANT_TREE_VIEW_DETAIL_DATA,
+    GET_RESTAURANT_TREE_VIEW_DETAIL_DATA_SUCCESS,
+    GET_RESTAURANT_TREE_VIEW_DETAIL_DATA_ERROR,
     POST_LOGOUT,
     GET_DISH_DETAIL_INITIAL_DATA,
     GET_DISH_DETAIL_INITIAL_DATA_SUCCESS,
@@ -267,7 +270,7 @@ export const resetPasswordConfirmData = (password, token) => async (dispatch) =>
  * Action which is callled when the user logout
  */
 const postLogoutAction = () => ({
-    type: 
+    type:
     POST_LOGOUT
 });
 
@@ -285,7 +288,7 @@ export const postLogout = () => async (dispatch) => {
  * Action which is callled when the app starts
  */
 const appStartAction = () => ({
-    type: 
+    type:
     APP_START
 });
 
@@ -323,6 +326,29 @@ const getRestaurantDetailInitialDataErrorAction = (error) => ({
 });
 
 /**
+ * Action to get restaurant tree view details
+ */
+const getRestaurantTreeViewDetailDataAction = () => ({
+    type: GET_RESTAURANT_TREE_VIEW_DETAIL_DATA
+});
+
+/**
+ * Action which is called when the getRestaurantTreeViewDetailDataAction success
+ */
+const getRestaurantTreeViewDetailDataSuccessAction = (data) => ({
+    type: GET_RESTAURANT_TREE_VIEW_DETAIL_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is called when the getRestaurantTreeViewDetailDataAction failed
+ */
+const getRestaurantTreeViewDetailDataErrorAction = (error) => ({
+    type: GET_RESTAURANT_TREE_VIEW_DETAIL_DATA_ERROR,
+    payload: error
+});
+
+/**
  * Function to fetch init data from Restaurants
  * @param {function} dispatch it is a function to dispatch actions to
  * update the store about the content of the app
@@ -340,6 +366,23 @@ export const getRestaurantDetailInitialData = (id, userId) => async (dispatch) =
         return dispatch(getRestaurantDetailInitialDataSuccessAction({data}));
     } catch (error) {
         return dispatch(getRestaurantDetailInitialDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Function to fetch Restaurants tree view data
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains tree view data from restaurants
+ */
+export const getRestaurantTreeViewDetailData = () => async (dispatch) => {
+    dispatch(getRestaurantTreeViewDetailDataAction());
+    try {
+        let response = await API.getRestaurantTreeViewDetails();
+        const data = response['data'];
+        return dispatch(getRestaurantTreeViewDetailDataSuccessAction({data}));
+    } catch (error) {
+        return dispatch(getRestaurantTreeViewDetailDataErrorAction({error: error}));
     }
 }
 
@@ -1160,7 +1203,7 @@ export const deleteUserData = (userId, restaurantId, userRole) => async (dispatc
         const restaurant = await API.getRestaurantDetail(restaurantId);
         const restaurantData = restaurant['data'];
         dispatch(addRestaurantDataOwnerSuccessAction(restaurantData, userRole));
-        
+
         dispatch(alertActivateAction({text: 'User successfully deleted', alert: 'success'}));
         return dispatch(deleteUserDataSuccessAction(responseData));
     } catch (error) {

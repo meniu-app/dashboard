@@ -10,6 +10,9 @@ import {
     GET_RESTAURANT_DETAIL_INITIAL_DATA,
     GET_RESTAURANT_DETAIL_INITIAL_DATA_SUCCESS,
     GET_RESTAURANT_DETAIL_INITIAL_DATA_ERROR,
+    GET_RESTAURANT_TREE_VIEW_DETAIL_DATA,
+    GET_RESTAURANT_TREE_VIEW_DETAIL_DATA_SUCCESS,
+    GET_RESTAURANT_TREE_VIEW_DETAIL_DATA_ERROR,
     GET_MENU_DETAIL_INITIAL_DATA,
     GET_MENU_DETAIL_INITIAL_DATA_SUCCESS,
     GET_MENU_DETAIL_INITIAL_DATA_ERROR,
@@ -131,6 +134,24 @@ export default function(state = initialState.app, action) {
                 restaurantDataReady: false,
                 menuDetail: {},
                 menuDetailDataReady: false,
+            };
+        case GET_RESTAURANT_TREE_VIEW_DETAIL_DATA:
+            return {
+                ...state,
+                restaurantTreeViewDataReady: false,
+                restaurantTreeViewData: []
+            };
+        case GET_RESTAURANT_TREE_VIEW_DETAIL_DATA_SUCCESS:
+            return {
+                ...state,
+                restaurantTreeViewData: action.payload.data,
+                restaurantTreeViewDataReady: true,
+            };
+        case GET_RESTAURANT_TREE_VIEW_DETAIL_DATA_ERROR:
+            return {
+                ...state,
+                restaurantTreeViewData: [],
+                restaurantTreeViewDataReady: false,
             };
         case GET_MENU_DETAIL_INITIAL_DATA:
             return {

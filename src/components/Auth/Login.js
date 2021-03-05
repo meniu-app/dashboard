@@ -32,6 +32,7 @@ class Login extends Component {
               await appActions.isAuthenticatedData();
               if (getUserRole() === 'admin') {
                 await appActions.getRestaurantInitialData();
+                await appActions.getRestaurantTreeViewDetailData();
               }
               else {
                 await appActions.getRestaurantDetailInitialData(undefined, user.id);
