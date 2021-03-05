@@ -87,7 +87,7 @@ class RestaurantModal extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="restaurantBannerInput">Restaurant banner</label>
-                                    <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" required/>
+                                    <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" required={!this.state.backgroundImage}/>
                                 </div>
                                 <div className="form-check form-switch">
                                     <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={this.state.backgroundImage} onChange={ this.handleBackgroudImageChange } />
