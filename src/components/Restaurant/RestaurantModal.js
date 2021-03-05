@@ -13,7 +13,7 @@ class RestaurantModal extends Component {
         super(props);
         this.state = {
             background: '#fff',
-            color: '#fff',
+            color: '#000',
             backgroundImage: false
         };
     }

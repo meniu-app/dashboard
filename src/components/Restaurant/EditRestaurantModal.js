@@ -96,6 +96,11 @@ class EditRestaurantModal extends Component {
                                 <div className="form-check form-switch">
                                     <input className="form-check-input" type="checkbox" id="restaurantBackgroundInputEdit" defaultChecked={this.state.backgroundImage} onClick={ this.handleBackgroudImageChange } />
                                     <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
+                                    {
+                                        restaurantDetail.banner === '' &&  this.state.backgroundImage ?
+                                        <p className="text-danger"><b>Add a banner image</b></p> :
+                                        <></>
+                                    }
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="restaurantBannerInputEdit">Restaurant background</label>
@@ -107,7 +112,7 @@ class EditRestaurantModal extends Component {
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <input type="submit" className="btn btn-primary" onClick={e => this.handleSubmit(e, this.props)} value="Submit" />
+                                    <input type="submit" className="btn btn-primary" onClick={e => this.handleSubmit(e, this.props)} value="Submit" disabled={restaurantDetail.banner === '' && this.state.backgroundImage} />
                                 </div>
                             </form>
                             : <Spinner />
