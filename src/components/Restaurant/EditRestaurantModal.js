@@ -11,7 +11,8 @@ class EditRestaurantModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ...props.restaurantDetail.settings
+            ...props.restaurantDetail.settings,
+            changedBanner: false
         };
         this.handleChangeRestaurant = this.props.handleChangeRestaurant.bind(this);
         this.handleBackgroudImageChange = this.handleBackgroudImageChange.bind(this);
@@ -53,6 +54,10 @@ class EditRestaurantModal extends Component {
             document.getElementById('button-close-modal-restaurant-edit').click();
     }
 
+    handleChangeBanner = () => {
+        this.setState({changedBanner: true})
+    }
+
     render () {
         const { formLoading, restaurantDetail, handleChangeRestaurant } = this.props;
 
@@ -91,13 +96,13 @@ class EditRestaurantModal extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="restaurantBannerInputEdit">Restaurant banner</label>
-                                    <input name="banner" type="file" className="form-control-file" onChange={ handleChangeRestaurant } id="restaurantBannerInputEdit" />
+                                    <input name="banner" type="file" className="form-control-file" onChange={ this.handleChangeBanner } id="restaurantBannerInputEdit" />
                                 </div>
                                 <div className="form-check form-switch">
                                     <input className="form-check-input" type="checkbox" id="restaurantBackgroundInputEdit" defaultChecked={this.state.backgroundImage} onClick={ this.handleBackgroudImageChange } />
                                     <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
                                     {
-                                        restaurantDetail.banner === '' &&  this.state.backgroundImage ?
+                                        restaurantDetail.banner === '' && this.state.backgroundImage && !this.state.changedBanner ?
                                         <p className="text-danger"><b>Add a banner image</b></p> :
                                         <></>
                                     }
@@ -112,7 +117,7 @@ class EditRestaurantModal extends Component {
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <input type="submit" className="btn btn-primary" onClick={e => this.handleSubmit(e, this.props)} value="Submit" disabled={restaurantDetail.banner === '' && this.state.backgroundImage} />
+                                    <input type="submit" className="btn btn-primary" onClick={e => this.handleSubmit(e, this.props)} value="Submit" disabled={restaurantDetail.banner === '' && this.state.backgroundImage && !this.state.changedBanner} />
                                 </div>
                             </form>
                             : <Spinner />
