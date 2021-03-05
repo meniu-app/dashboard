@@ -33,12 +33,12 @@ class Navbar extends Component {
                         <Link className="navbar-brand d-flex" to="/">
                             {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
                             {
-                            (getUserRole() === 'admin' || getUserRole() === 'owner') &&
+                            (getUserRole() === 'admin' || getUserRole() === 'owner') ?
                             <div className="d-flex">
                                 <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit restaurant</button>
                                 <button className="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete restaurant</button>
                                 <EditRestaurantModal restaurantDetail={restaurantDetail} handleChangeRestaurant={this.handleChangeRestaurant} />
-                            </div>
+                            </div> : <></>
                             }
                         </Link> :
                         <Link className="navbar-brand" to="/">
