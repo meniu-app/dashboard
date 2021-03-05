@@ -30,24 +30,29 @@ class Navbar extends Component {
                 <div className="container-fluid">
                     {
                      restaurantDataReady ?
-                        <div className="navbar-brand d-flex" to="/">
+                        <Link className="navbar-brand d-flex" to="/">
                             {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
                             {
                             (getUserRole() === 'admin' || getUserRole() === 'owner') ?
                             <div className="d-flex">
                                 <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit restaurant</button>
                                 <button className="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete restaurant</button>
-                                <EditRestaurantModal restaurantDetail={restaurantDetail} handleChangeRestaurant={this.handleChangeRestaurant} />
                             </div> : <></>
                             }
-                        </div> :
-                        <div className="navbar-brand" to="/">
+                        </Link> :
+                        <Link className="navbar-brand" to="/">
                             Meniu Dashboard {env === 'development' ? ' - Dev' : ''}
-                        </div>
+                        </Link>
                     }
                     {
                         (getUserRole() === 'admin' || getUserRole() === 'owner') &&
-                        <DeleteRestaurantModal restaurantDetail={restaurantDetail}/>
+                        <div>
+                            <DeleteRestaurantModal restaurantDetail={restaurantDetail}/>
+                            {restaurantDataReady ?
+                                <EditRestaurantModal restaurantDetail={restaurantDetail} handleChangeRestaurant={this.handleChangeRestaurant} />
+                                : <></>
+                            }
+                        </div>
                     }
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
