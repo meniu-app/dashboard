@@ -68,7 +68,10 @@ import {
     RESET_PASSWORD_CONFIRM_ERROR,
     EDIT_USER_DATA,
     EDIT_USER_DATA_SUCCESS,
-    EDIT_USER_DATA_ERROR
+    EDIT_USER_DATA_ERROR,
+    CHANGE_PASSWORD,
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_ERROR
 } from '../actions/types';
 import initialState from './initialState';
 
@@ -439,6 +442,21 @@ export default function(state = initialState.app, action) {
                 formLoading: false
             }
         case DELETE_USER_DATA_ERROR:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case CHANGE_PASSWORD:
+            return {
+                ...state,
+                formLoading: true
+            }
+        case CHANGE_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                formLoading: false
+            }
+        case CHANGE_PASSWORD_ERROR:
             return {
                 ...state,
                 formLoading: false

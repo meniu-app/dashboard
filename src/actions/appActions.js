@@ -71,7 +71,10 @@ import {
     RESET_PASSWORD_CONFIRM_ERROR,
     EDIT_USER_DATA,
     EDIT_USER_DATA_SUCCESS,
-    EDIT_USER_DATA_ERROR
+    EDIT_USER_DATA_ERROR,
+    CHANGE_PASSWORD,
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_ERROR
 } from './types';
 import API from '../api/Api';
 import {
@@ -251,6 +254,9 @@ export const resetPasswordConfirmData = (password, token) => async (dispatch) =>
         dispatch(alertActivateAction({text: 'Password succesfully updated', alert: 'success'}));
         return dispatch(resetPasswordConfirmInitSuccessAction(data));
     } catch (error) {
+        if (error.response.data?.email) {
+            dispatch(alertActivateAction({text: 'Please create a strong password', alert: 'danger'}));
+        }
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(resetPasswordConfirmInitErrorAction(`Error: ${error}`));
     }
@@ -263,7 +269,6 @@ const postLogoutAction = () => ({
     type: 
     POST_LOGOUT
 });
-
 
 /**
  * Function to fetch init data from Auth user
@@ -1203,5 +1208,51 @@ export const editUserData = (data, id) => async (dispatch) => {
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         return dispatch(editUserDataErrorAction({error: error}));
+    }
+}
+
+/**
+ * Action to reset password cnfirm
+ */
+const changePasswordInitAction = () => ({
+    type: CHANGE_PASSWORD
+});
+
+/**
+ * Action which is callled when the changePasswordInitAction success
+ */
+const changePasswordInitSuccessAction = (data) => ({
+    type: CHANGE_PASSWORD_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action which is callled when the changePasswordInitAction failed
+ */
+const changePasswordInitErrorAction = (error) => ({
+    type: CHANGE_PASSWORD_ERROR,
+    payload: error
+});
+
+/**
+ * Function to fetch init data from Auth user
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains data from restaurants
+ */
+export const changePasswordData = (data, id) => async (dispatch) => {
+    dispatch(changePasswordInitAction());
+    try {
+        const response = await API.changePassword(data, id);
+        const responseData = response['data'];
+        dispatch(alertActivateAction({text: 'Password succesfully updated', alert: 'success'}));
+        return dispatch(changePasswordInitSuccessAction(responseData));
+    } catch (error) {
+        console.log(error)
+        // if (error.response.data?.email) {
+        //     dispatch(alertActivateAction({text: 'Please create a strong password', alert: 'danger'}));
+        // }
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(changePasswordInitErrorAction(`Error: ${error}`));
     }
 }

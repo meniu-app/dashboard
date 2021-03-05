@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
-import { getUser } from '../../api/TokenHandler';
+import { getUser, setUser } from '../../api/TokenHandler';
 
 class ProfileEdit extends Component {
 
@@ -16,13 +16,24 @@ class ProfileEdit extends Component {
     }
   }
 
+  componentDidMount() {
+    const user = getUser();
+    if (user) {
+      this.setState({firstName: user.first_name, lastName: user.last_name})
+    }
+  }
+
   changeProfile = async (e) => {
-    const { appActions } = this.props;
+    const { appActions, history } = this.props;
     e.preventDefault();
     const user = getUser();
-    const response = await appActions.editUserData({firstName: this.state.firstName, lastName: this.state.lastName}, user.id);
+    const response = await appActions.editUserData({first_name: this.state.firstName, last_name: this.state.lastName}, user.id);
     if (response.type === 'EDIT_USER_DATA_SUCCESS') {
-      this.setState({firstName: '', lastName: ''});
+      const user = getUser();
+      user.first_name = this.state.firstName;
+      user.last_name = this.state.lastName;
+      setUser(user);
+      history.push('/profile');
     }
   }
 
