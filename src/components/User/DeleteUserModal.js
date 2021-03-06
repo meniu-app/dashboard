@@ -25,11 +25,11 @@ class DeleteUserModal extends Component {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="deleteUserModalLabel">Are you sure?</h5>
+                            <h5 className="modal-title" id="deleteUserModalLabel">Delete User</h5>
                             <button id="button-close-modal-user-delete" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            You are going to delete the user <b>{user.email}</b>
+                            <p>Are you sure you want to delete <b>{user.email}</b>? The user will be permanently deleted.</p>
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="DELETE" encType="multipart/form-data">
                                 <div className="mt-3 d-flex justify-content-end">

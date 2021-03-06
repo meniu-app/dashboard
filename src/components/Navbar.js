@@ -30,16 +30,19 @@ class Navbar extends Component {
                 <div className="container-fluid">
                     {
                      restaurantDataReady ?
-                        <Link className="navbar-brand d-flex" to="/">
-                            {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
+                        <div className="navbar-brand d-flex">
+                            <Link className="navbar-brand" to="/">
+                                {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
+                            </Link>
                             {
-                            (getUserRole() === 'admin' || getUserRole() === 'owner') ?
-                            <div className="d-flex">
-                                <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit restaurant</button>
-                                <button className="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete restaurant</button>
-                            </div> : <></>
+                                (getUserRole() === 'admin' || getUserRole() === 'owner') ?
+                                <div className="d-flex">
+                                    <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit restaurant</button>
+                                    <button className="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete restaurant</button>
+                                </div> : <></>
                             }
-                        </Link> :
+                        </div>
+                        :
                         <Link className="navbar-brand" to="/">
                             Meniu Dashboard {env === 'development' ? ' - Dev' : ''}
                         </Link>
@@ -65,7 +68,7 @@ class Navbar extends Component {
                                 (
                                 <>
                                     <Link className="nav-link" to="/profile" >Profile</Link>
-                                    <span onClick={this.logout} className="nav--logout nav-link">Logout</span>
+                                    <span onClick={this.logout} className="nav--logout nav-link">Sign out</span>
                                 </>
                                 )}
                         </div>

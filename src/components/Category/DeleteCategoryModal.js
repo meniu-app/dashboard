@@ -17,17 +17,18 @@ class DeleteCategoryModal extends Component {
     }
 
     render () {
-        const { formLoading } = this.props;
+        const { formLoading, category } = this.props;
 
         return (
             <div className="modal fade" id="deleteCategoryModal" tabIndex="-1" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="deleteCategoryModalLabel">Are you sure?</h5>
+                            <h5 className="modal-title" id="deleteCategoryModalLabel">Delete Category</h5>
                             <button id="button-close-modal-category-delete" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
+                            <p>Are you sure you want to delete <b>{category.name}</b>? It will be permanently deleted.</p>
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="DELETE" encType="multipart/form-data">
                                 <div className="mt-3 d-flex justify-content-end">

@@ -21,17 +21,18 @@ class DeleteMenuModal extends Component {
     }
 
     render () {
-        const { formLoading } = this.props;
+        const { formLoading, menu } = this.props;
 
         return (
             <div className="modal fade" id="deleteMenuModal" tabIndex="-1" aria-labelledby="deleteMenuModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="deleteMenuModalLabel">Are you sure?</h5>
+                            <h5 className="modal-title" id="deleteMenuModalLabel">Delete Menu</h5>
                             <button id="button-close-modal-menu-delete" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
+                            <p>Are you sure you want to delete <b>{menu.name}</b>? It will be permanently deleted.</p>
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="DELETE" encType="multipart/form-data">
                                 <div className="mt-3 d-flex justify-content-end">
