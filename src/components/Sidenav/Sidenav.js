@@ -100,24 +100,39 @@ class Sidenav extends Component {
         this.setState({selectedUser: user})
     }
 
-    getUserListData(user) {
-        return { key: user.id, id: user.id, type: DATA_TYPES.user, label: user.email };
+    getUserListData(user, restaurant) {
+        return { key: user.id, id: user.id, type: DATA_TYPES.user, label: user.email, parents: { restaurant } };
     }
 
-    getCategoriesData(categoriesObj) {
+    getCategoriesData(categoriesObj, restaurant, menu) {
         return Object.keys(categoriesObj).map((categoryId) => {
-            return { category: categoriesObj[categoryId], key: categoryId, id: categoryId, label: categoriesObj[categoryId].name, type: DATA_TYPES.category, nodes: categoriesObj[categoryId].items
-                  .map((item) => { return { key: item.id, id: item.id, label: item.name, type: DATA_TYPES.item }; }) }
+            return {
+                category: categoriesObj[categoryId],
+                key: categoryId,
+                id: categoryId,
+                label: categoriesObj[categoryId].name,
+                type: DATA_TYPES.category,
+                nodes: categoriesObj[categoryId].items.map((item) => {
+                    return {
+                        key: item.id,
+                        id: item.id,
+                        label: item.name,
+                        type: DATA_TYPES.item,
+                        parents: { restaurant, menu, category: categoriesObj[categoryId] }
+                    };
+                }),
+                parents: { restaurant, menu }
+            }
         })
     }
 
     populateRestaurantNodes(restaurant) {
         const menus = restaurant.menus.map((menu) => {
-            return { key: menu.id, id: menu.id, type: DATA_TYPES.menu, label: menu.name, nodes: this.getCategoriesData(menu.categories) };
+            return { key: menu.id, id: menu.id, type: DATA_TYPES.menu, label: menu.name, nodes: this.getCategoriesData(menu.categories, restaurant, menu), parents: { restaurant } };
         });
         const menusRoot = { key: 'menus_root', label: 'Menus', nodes: menus };
-        const usersOwnerRoot = { key: 'users_owner_root', label: 'Owner', nodes: restaurant.owner.map(this.getUserListData) };
-        const usersBusinessManagerRoot = { key: 'users_business_manager_root', label: 'Business Manager', nodes: restaurant.business_manager.map(this.getUserListData) };
+        const usersOwnerRoot = { key: 'users_owner_root', label: 'Owner', nodes: restaurant.owner.map((owner) => this.getUserListData(owner, restaurant)) };
+        const usersBusinessManagerRoot = { key: 'users_business_manager_root', label: 'Business Manager', nodes: restaurant.business_manager.map((manager) => this.getUserListData(manager, restaurant)) };
         let usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersOwnerRoot, usersBusinessManagerRoot ] };
         const userRole = getUserRole();
         if (userRole === 'owner') {
