@@ -43,8 +43,10 @@ class EditItemModal extends Component {
             imageId = null;
 
         const response = await appActions.editItemData(data, imageData, props.item.id, imageId);
-        if (response)
+        if (response) {
             document.getElementById('button-close-modal-item-edit').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
     }
 
     render () {

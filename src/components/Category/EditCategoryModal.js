@@ -18,8 +18,10 @@ class EditCategoryModal extends Component {
         event.preventDefault();
         const data = new FormData(event.target)
         const response = await appActions.editCategoryData(data, category.id);
-        if (response)
+        if (response) {
             document.getElementById('button-close-modal-category-edit').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
     }
 
     render () {
@@ -47,6 +49,7 @@ class EditCategoryModal extends Component {
                                     <textarea name="description" className="form-control" id="categoryDescriptionInputEdit" value={newCategory.description} onChange={handleChangeCategory} rows="3" required></textarea>
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
+                                    <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal"  data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">Delete</button>
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
                                     <button type="submit" className="btn btn-primary">Submit</button>
                                 </div>

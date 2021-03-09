@@ -12,8 +12,10 @@ class DeleteRestaurantModal extends Component {
         const { appActions } = props;
 
         const response = await appActions.deleteRestaurantData(props.restaurantDetail.id);
-        if (response)
+        if (response) {
             document.getElementById('button-close-modal-restaurant-delete').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
         
     }
 

@@ -18,8 +18,10 @@ class EditMenuModal extends Component {
         event.preventDefault();
         const data = new FormData(event.target)
         const response = await appActions.editMenuData(data, menu.id);
-        if (response)
+        if (response){
             document.getElementById('button-close-modal-menu-edit').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
     }
 
     render () {

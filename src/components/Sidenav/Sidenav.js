@@ -31,8 +31,7 @@ class Sidenav extends Component {
                 id: '',
                 email: '',
                 restaurant: ''
-            },
-            treeData: this.convertRestaurantDataToTreeView(props.restaurantTreeViewData)
+            }
         }
     }
 
@@ -47,6 +46,17 @@ class Sidenav extends Component {
     }
 
     handleTreeOnToggle = (data) => {
+        const bootstrap = window.bootstrap;
+        let categoryModal = null;
+        let userModal = null;
+        const editCategoryId = document.getElementById('editCategoryModal');
+        if (editCategoryId)
+            categoryModal = new bootstrap.Modal(editCategoryId);
+
+        const editUserId = document.getElementById('deleteUserModal');
+        if (editUserId)
+            userModal = new bootstrap.Modal(editUserId);
+
         switch (data.type) {
             case DATA_TYPES.restaurant:
                 this.getRestaurantDetail(data.id);
@@ -55,10 +65,18 @@ class Sidenav extends Component {
                 this.getMenuDetail(data.id);
                 break;
             case DATA_TYPES.category:
+                this.setSelectedCategory({id: data.id, name: data.label})
+                if (userModal !== null) {
+                    categoryModal.toggle()
+                }
                 break;
             case DATA_TYPES.item:
                 break;
             case DATA_TYPES.user:
+                this.setSelectedUser({email: data.label, id: data.id})
+                if (userModal !== null) {
+                    userModal.toggle()
+                }
                 break;
             default:
                 break;
@@ -88,7 +106,7 @@ class Sidenav extends Component {
 
     getCategoriesData(categoriesObj) {
         return Object.keys(categoriesObj).map((categoryId) => {
-            return { key: categoryId, id: categoryId, label: categoriesObj[categoryId].name, type: DATA_TYPES.category, nodes: categoriesObj[categoryId].items
+            return { category: categoriesObj[categoryId], key: categoryId, id: categoryId, label: categoriesObj[categoryId].name, type: DATA_TYPES.category, nodes: categoriesObj[categoryId].items
                   .map((item) => { return { key: item.id, id: item.id, label: item.name, type: DATA_TYPES.item }; }) }
         })
     }
@@ -107,7 +125,7 @@ class Sidenav extends Component {
 
     convertRestaurantDataToTreeView = (data) => {
         const restaurants = data.map((restaurant) => {
-            return { key: restaurant.id, id: restaurant.id, type: DATA_TYPES.restaurant, label: restaurant.name, nodes: this.populateRestaurantNodes(restaurant) };
+            return { key: restaurant.id, id: restaurant.id, type: DATA_TYPES.restaurant, label: restaurant.name, nodes: this.populateRestaurantNodes(restaurant), restaurant };
         });
         const restaurantsRoot = { key: 'restaurants_root', label: 'Restaurants', nodes: restaurants };
 
@@ -115,7 +133,9 @@ class Sidenav extends Component {
     }
 
     render() {
-        const { restaurantDetail, restaurantDataReady, restaurants, restaurantsDataReady } = this.props;
+        const { restaurantDetail, restaurantDataReady, restaurants, restaurantsDataReady, restaurantTreeViewData } = this.props;
+
+        const treeData = this.convertRestaurantDataToTreeView(restaurantTreeViewData)
 
         return (
             <nav id="main-sidebar">
@@ -126,7 +146,7 @@ class Sidenav extends Component {
                         </button>
                     </div>
                 </div>
-                <TreeMenu data={this.state.treeData} onClickItem={this.handleTreeOnToggle} />
+                <TreeMenu data={treeData} onClickItem={this.handleTreeOnToggle} />
                 {
                     restaurantsDataReady && getUserRole() === 'admin' ?
                     <div className="row">

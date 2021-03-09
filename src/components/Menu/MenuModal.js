@@ -15,8 +15,10 @@ class MenuModal extends Component {
         const data = new FormData(event.target)
         data.append('restaurant', restaurantDetail.id)
         const response = await appActions.addMenuData(data)
-        if (response)
+        if (response){
             document.getElementById('button-close-modal-menu').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
     }
 
     render () {

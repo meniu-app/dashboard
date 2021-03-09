@@ -11,8 +11,10 @@ class DeleteItemModal extends Component {
     async handleSubmit(event, props) {
         const { appActions, item } = props;
         const response = await appActions.deleteItemData(item.id, item.menu);
-        if (response)
+        if (response) {
             document.getElementById('button-close-modal-item-delete').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
     }
 
     render () {
