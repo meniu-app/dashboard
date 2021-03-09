@@ -66,7 +66,7 @@ class Sidenav extends Component {
                 break;
             case DATA_TYPES.category:
                 this.setSelectedCategory({id: data.id, name: data.label})
-                if (userModal !== null) {
+                if (categoryModal !== null) {
                     categoryModal.toggle()
                 }
                 break;
@@ -118,7 +118,13 @@ class Sidenav extends Component {
         const menusRoot = { key: 'menus_root', label: 'Menus', nodes: menus };
         const usersOwnerRoot = { key: 'users_owner_root', label: 'Owner', nodes: restaurant.owner.map(this.getUserListData) };
         const usersBusinessManagerRoot = { key: 'users_business_manager_root', label: 'Business Manager', nodes: restaurant.business_manager.map(this.getUserListData) };
-        const usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersOwnerRoot, usersBusinessManagerRoot ] };
+        let usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersOwnerRoot, usersBusinessManagerRoot ] };
+        const userRole = getUserRole();
+        if (userRole === 'owner') {
+            usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersBusinessManagerRoot ] };
+        } else {
+            return [ menusRoot ];
+        }
 
         return [ menusRoot, usersRoot ];
     }
