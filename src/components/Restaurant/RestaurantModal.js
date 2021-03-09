@@ -47,8 +47,10 @@ class RestaurantModal extends Component {
             response = await appActions.addRestaurantData(data, true)
         else
             response = await appActions.addRestaurantData(data, false)
-        if (response)
+        if (response) {
             document.getElementById('button-close-modal-restaurant').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
     }
 
     render () {

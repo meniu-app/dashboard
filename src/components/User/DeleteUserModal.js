@@ -14,6 +14,7 @@ class DeleteUserModal extends Component {
         const response = await appActions.deleteUserData(user.id, restaurantDetail.id)
         if (response) {
             document.getElementById('button-close-modal-user-delete').click();
+            await appActions.getRestaurantTreeViewDetailData();
         }
     }
 

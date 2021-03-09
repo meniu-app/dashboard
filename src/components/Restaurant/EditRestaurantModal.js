@@ -50,8 +50,10 @@ class EditRestaurantModal extends Component {
 
         data.append('settings', JSON.stringify(settings));
         const response = await appActions.editRestaurantData(data, props.restaurantDetail.id)
-        if (response)
+        if (response) {
             document.getElementById('button-close-modal-restaurant-edit').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
     }
 
     handleChangeBanner = () => {

@@ -16,8 +16,10 @@ class DeleteMenuModal extends Component {
         const { appActions, menu } = props;
         event.preventDefault();
         const response = await appActions.deleteMenuData(menu.id, menu.restaurant);
-        if (response)
+        if (response){
             document.getElementById('button-close-modal-menu-delete').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
     }
 
     render () {

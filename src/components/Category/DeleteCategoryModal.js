@@ -12,8 +12,10 @@ class DeleteCategoryModal extends Component {
         const { appActions, category, restaurantDetail, menuDetail } = props;
         event.preventDefault();
         const response = await appActions.deleteCategoryData(category.id, restaurantDetail.id, menuDetail.id);
-        if (response)
+        if (response) {
             document.getElementById('button-close-modal-category-delete').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
     }
 
     render () {

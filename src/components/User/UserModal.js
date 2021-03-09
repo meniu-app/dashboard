@@ -22,6 +22,7 @@ class UserModal extends Component {
             event.target.email.value = '';
             event.target.password.value = '';
             document.getElementById('button-close-modal-user').click();
+            await appActions.getRestaurantTreeViewDetailData();
         }
     }
 

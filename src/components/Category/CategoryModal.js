@@ -15,8 +15,10 @@ class CategoryModal extends Component {
         const data = new FormData(event.target)
         data.append('restaurant', restaurantDetail.id)
         const response = await appActions.addCategoryData(data);
-        if (response)
+        if (response) {
             document.getElementById('button-close-modal-category').click();
+            await appActions.getRestaurantTreeViewDetailData();
+        }
     }
 
     render () {
