@@ -5,7 +5,7 @@ import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
 import { SwatchesPicker } from 'react-color';
-import { getUserRole } from '../../api/TokenHandler';
+import { getUser, getUserRole } from '../../api/TokenHandler';
 
 class RestaurantModal extends Component {
 
@@ -31,7 +31,7 @@ class RestaurantModal extends Component {
     }
 
     async handleSubmit (event, props) {
-        const { appActions, menuDetailDataReady } = props;
+        const { appActions } = props;
 
         event.preventDefault();
         const data = new FormData(event.target);
@@ -43,7 +43,8 @@ class RestaurantModal extends Component {
         }
         data.append('settings', JSON.stringify(settings));
         let response = null;
-        if (getUserRole() === 'owner' && !menuDetailDataReady)
+        const user = getUser();
+        if (getUserRole() === 'owner' && user.restaurant === null)
             response = await appActions.addRestaurantData(data, true)
         else
             response = await appActions.addRestaurantData(data, false)

@@ -642,6 +642,8 @@ export const addRestaurantData = (data, hasNoRestaurant) => async (dispatch) => 
                 restaurant: responseData['id']
             }
             await API.editOwner(data, user.id);
+            user.restaurant = data.restaurant;
+            setUser(user);
             dispatch(alertActivateAction({text: 'Restaurant successfully added', alert: 'success'}));
             return dispatch(addRestaurantDataOwnerSuccessAction(responseData));
         }
@@ -1065,6 +1067,11 @@ export const deleteRestaurantData = (id) => async (dispatch) => {
     try {
         await API.deleteRestaurant(id);
         dispatch(alertActivateAction({text: 'Restaurant successfully deleted', alert: 'success'}));
+        const user = getUser();
+        if (user.role === 'owner') {
+            user.restaurant = null;
+            setUser(user);
+        }
         return dispatch(deleteRestaurantDataSuccessAction(id));
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
