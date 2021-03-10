@@ -66,7 +66,7 @@ class Sidenav extends Component {
                 await this.getMenuDetail(data.id);
                 break;
             case DATA_TYPES.category:
-                this.setSelectedCategory({id: data.id, name: data.label})
+                this.setSelectedCategory({id: data.id, name: data.category.name, description: data.category.description})
                 if (categoryModal !== null) {
                     categoryModal.toggle()
                 }
