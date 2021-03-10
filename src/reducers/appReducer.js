@@ -332,10 +332,19 @@ export default function(state = initialState.app, action) {
                 formLoading: true
             }
         case EDIT_CATEGORY_DATA_SUCCESS:
+            var updatedCategory = action.payload.data;
+            var newMenuDetail = {...state.menuDetail};
+            if (newMenuDetail?.categories) {
+                if (newMenuDetail?.categories[updatedCategory.id]) {
+                    newMenuDetail.categories[updatedCategory.id].name = updatedCategory.name
+                    newMenuDetail.categories[updatedCategory.id].description = updatedCategory.description
+                }
+            }
             return {
                 ...state,
                 formLoading: false,
-                restaurantDetail: action.payload.restaurantData
+                restaurantDetail: action.payload.restaurantData,
+                menuDetail: newMenuDetail
             }
         case EDIT_CATEGORY_DATA_ERROR:
             return {

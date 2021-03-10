@@ -901,9 +901,9 @@ export const editCategoryData = (data, id) => async (dispatch) => {
     try {
         const response = await API.editCategory(data, id);
         const responseData = response['data'];
-        dispatch(alertActivateAction({text: 'Category successfully edited', alert: 'success'}));
         const restaurant = await API.getRestaurantDetail(responseData.restaurant);
         const restaurantData = restaurant['data'];
+        dispatch(alertActivateAction({text: 'Category successfully edited', alert: 'success'}));
         return dispatch(editCategoyDataSuccessAction(responseData, restaurantData));
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
