@@ -370,6 +370,16 @@ export const getRestaurantDetailInitialData = (id, userId) => async (dispatch) =
 }
 
 /**
+ * Function to fetch init data from Restaurants
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains data from restaurants
+ */
+export const setRestaurantDetailInitialData = (restaurant) => async (dispatch) => {
+    return dispatch(getRestaurantDetailInitialDataSuccessAction({restaurant}));
+}
+
+/**
  * Function to fetch Restaurants tree view data
  * @param {function} dispatch it is a function to dispatch actions to
  * update the store about the content of the app

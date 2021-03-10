@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import EditCategoryModal from '../Category/EditCategoryModal';
-import { getUserRole } from '../../api/TokenHandler';
+import { getUser, getUserRole } from '../../api/TokenHandler';
 import DeleteCategoryModal from '../Category/DeleteCategoryModal';
 import DeleteUserModal from '../User/DeleteUserModal';
 import TreeMenu from 'react-simple-tree-menu';
@@ -45,7 +45,7 @@ class Sidenav extends Component {
         await appActions.getRestaurantDetailInitialData(id)
     }
 
-    handleTreeOnToggle = (data) => {
+    handleTreeOnToggle = async (data) => {
         const bootstrap = window.bootstrap;
         let categoryModal = null;
         let userModal = null;
@@ -62,7 +62,8 @@ class Sidenav extends Component {
                 this.getRestaurantDetail(data.id);
                 break;
             case DATA_TYPES.menu:
-                this.getMenuDetail(data.id);
+                await this.getRestaurantDetail(data.parents.restaurant.id);
+                await this.getMenuDetail(data.id);
                 break;
             case DATA_TYPES.category:
                 this.setSelectedCategory({id: data.id, name: data.label})
@@ -145,6 +146,12 @@ class Sidenav extends Component {
     }
 
     convertRestaurantDataToTreeView = (data) => {
+        const userRole = getUserRole();
+        if (userRole !== 'admin') {
+            const user = getUser();
+            data = data.filter(restaurant => restaurant.id === user.restaurant)
+        }
+
         const restaurants = data.map((restaurant) => {
             return { key: restaurant.id, id: restaurant.id, type: DATA_TYPES.restaurant, label: restaurant.name, nodes: this.populateRestaurantNodes(restaurant), restaurant };
         });

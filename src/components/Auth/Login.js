@@ -36,6 +36,7 @@ class Login extends Component {
               }
               else {
                 await appActions.getRestaurantDetailInitialData(undefined, user.id);
+                await appActions.getRestaurantTreeViewDetailData();
               }
             }
             this.props.history.push('/');
