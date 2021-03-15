@@ -54,7 +54,6 @@ class EditItemModal extends Component {
         var key = theEvent.keyCode || theEvent.which;
         key = String.fromCharCode( key );
         var value = evt.target.value + key;
-        console.log(value)
         var regex = /^\d+(.\d{0,2})?$/;
         if( !regex.test(value) ) {
           theEvent.returnValue = false;
@@ -86,7 +85,7 @@ class EditItemModal extends Component {
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="itemPriceInputEdit" className="form-label">Item price</label>
-                                    <input name="price" type="number" min="0" className="form-control" id="itemPriceInputEdit" value={newItem.price} onChange={ handleChangeItem } onKeyPress={this.validate} placeholder="12,99" required/>
+                                    <input name="price" type="text" min="0" className="form-control" id="itemPriceInputEdit" value={newItem.price} onChange={ handleChangeItem } onKeyPress={this.validate} placeholder="12,99" required/>
                                 </div>
                                 <div className="mb-3 form-group">
                                     <label htmlFor="itemDescriptionInputEdit">Item description</label>

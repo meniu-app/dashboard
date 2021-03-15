@@ -43,7 +43,6 @@ class ItemModal extends Component {
         var key = theEvent.keyCode || theEvent.which;
         key = String.fromCharCode( key );
         var value = evt.target.value + key;
-        console.log(value)
         var regex = /^\d+(.\d{0,2})?$/;
         if( !regex.test(value) ) {
           theEvent.returnValue = false;
@@ -74,7 +73,7 @@ class ItemModal extends Component {
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="itemPriceInput" className="form-label">Item price</label>
-                                    <input name="price" type="number" min="0" className="form-control" id="itemPriceInput" placeholder="12.99" onKeyPress={this.validate} required/>
+                                    <input name="price" type="text" min="0" className="form-control" id="itemPriceInput" placeholder="12.99" onKeyPress={this.validate} required/>
                                 </div>
                                 <div className="mb-3 form-group">
                                     <label htmlFor="itemDescriptionInput">Item description</label>
