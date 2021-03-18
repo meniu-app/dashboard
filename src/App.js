@@ -66,6 +66,7 @@ class App extends Component {
         {appStarted ?
         <Router>
           <Suspense fallback={<Spinner></Spinner>}>
+            {/* #TODO don't show the navbar on login page (Exact path /) */}
             <Navbar/>
             <Alert />
             {
