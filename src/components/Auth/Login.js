@@ -62,6 +62,7 @@ class Login extends Component {
                         <label htmlFor="loginPassword" className="form-label fw-bolder">Password</label>
                         <Link to="/auth/reset_password" type="link" className="float-end fw-bolder">Forgot your password?</Link>
                         <div className="field-group"><input type="password" name="password" className="form-control" id="loginPassword" required></input>
+                            {/* #TODO: Show hide password feature on React https://codesandbox.io/s/showhide-password-on-toggle-in-react-hooks-95qcz?file=/src/App.js:314-471 */}
                             <label className="form-label fw-bolder">Show</label>{" "}
                         </div>
                     </div>
