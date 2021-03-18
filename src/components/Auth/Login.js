@@ -47,17 +47,32 @@ class Login extends Component {
 
         return (
             <div className="container mb-5">
+                <div className="intro row m-3">
+                    <div className="col text-center">
+                        <h1>LULO PARTNER</h1>
+                        <h3>Understand your business like never before</h3>
+                    </div>
+                </div>
                 <form onSubmit={this.loginSubmit} className="form--login" action="http://auth/login" method="POST">
                     <div className="mb-3">
-                        <label htmlFor="loginEmail" className="form-label">Email</label>
+                        <label htmlFor="loginEmail" className="form-label fw-bolder">Email</label>
                         <input type="text" name="email" className="form-control" id="loginEmail" placeholder="email@domain.com" required></input>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="loginPassword" className="form-label">Password</label>
+                        <label htmlFor="loginPassword" className="form-label fw-bolder">Password</label>
+                        <Link to="/auth/reset_password" type="link" className="float-end fw-bolder">Forgot your password?</Link>
                         <input type="password" name="password" className="form-control" id="loginPassword" required></input>
                     </div>
-                    <button className="btn btn-primary me-2">Login</button>
-                    <Link to="/auth/reset_password" type="button" className="btn btn-primary"> Forget Password</Link>
+                    <div clasName="d-grid gap-2">
+                       {/* #BUG: Don't recognize the block button tag B5 */}
+                        <p className="text-center"><button className="btn btn-success btn-lg" type="button">Sign in</button></p>
+                    </div>
+                    <div className="mb-1 text-center">
+                        <p>No account? <a href="#"><strong>partner with Lulo!</strong></a><br/>
+                            Need more login help?<br/>
+                            Please contact support via <a href="#"><strong>WhatsApp HERE</strong></a>
+                        </p>
+                    </div>
                 </form>
             </div>
         );
