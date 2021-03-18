@@ -49,7 +49,7 @@ class Login extends Component {
             <div className="container mb-5">
                 <div className="intro row m-3">
                     <div className="col text-center">
-                        <h1>LULO PARTNER</h1>
+                        <h1>LULO Partner</h1>
                         <h3>Understand your business like never before</h3>
                     </div>
                 </div>
@@ -61,7 +61,9 @@ class Login extends Component {
                     <div className="mb-3">
                         <label htmlFor="loginPassword" className="form-label fw-bolder">Password</label>
                         <Link to="/auth/reset_password" type="link" className="float-end fw-bolder">Forgot your password?</Link>
-                        <input type="password" name="password" className="form-control" id="loginPassword" required></input>
+                        <div className="field-group"><input type="password" name="password" className="form-control" id="loginPassword" required></input>
+                            <label className="form-label fw-bolder">Show</label>{" "}
+                        </div>
                     </div>
                     <div clasName="d-grid gap-2">
                        {/* #BUG: Don't recognize the block button tag B5 */}
