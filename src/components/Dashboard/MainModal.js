@@ -17,7 +17,7 @@ class MainModal extends Component {
                             <div className="row">
                                 { restaurantDataReady &&
                                 <div className="col-12 d-flex py-2">
-                                    <img src="https://via.placeholder.com/100C/O" alt=""/>
+                                    <img src="https://via.placeholder.com/80C/O" alt=""/>
                                     <div className="mx-3">
                                         <h4>Item</h4>
                                         <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#itemModal">Add an item to any category</button>
@@ -26,7 +26,7 @@ class MainModal extends Component {
                                 }
                                 { restaurantDataReady &&
                                 <div className="col-12 d-flex py-2">
-                                    <img src="https://via.placeholder.com/100C/O" alt=""/>
+                                    <img src="https://via.placeholder.com/80C/O" alt=""/>
                                     <div className="mx-3">
                                         <h4>Category</h4>
                                         <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#categoryModal">Add a category to your menu</button>
@@ -35,7 +35,7 @@ class MainModal extends Component {
                                 }
                                 { restaurantDataReady &&
                                 <div className="col-12 d-flex py-2">
-                                    <img src="https://via.placeholder.com/100C/O" alt=""/>
+                                    <img src="https://via.placeholder.com/80C/O" alt=""/>
                                     <div className="mx-3">
                                         <h4>Menu</h4>
                                         <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#menuModal">Add a menu to your store</button>
@@ -44,7 +44,7 @@ class MainModal extends Component {
                                 }
                                 { (getUserRole() === 'admin' || (getUserRole() === 'owner' && restaurantDataReady)) &&
                                 <div className="col-12 d-flex py-2">
-                                    <img src="https://via.placeholder.com/100C/O" alt=""/>
+                                    <img src="https://via.placeholder.com/80C/O" alt=""/>
                                     <div className="mx-3">
                                         <h4>New store user</h4>
                                         <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#userModal">Add new store user</button>
@@ -53,7 +53,7 @@ class MainModal extends Component {
                                 }
                                 { (getUserRole() === 'admin' || (getUserRole() === 'owner' && !restaurantDataReady)) && 
                                 <div className="col-12 d-flex py-2">
-                                    <img src="https://via.placeholder.com/100C/O" alt=""/>
+                                    <img src="https://via.placeholder.com/80C/O" alt=""/>
                                     <div className="mx-3">
                                         <h4>Restaurant</h4>
                                         <button className="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#restaurantModal">Add a new restaurant</button>

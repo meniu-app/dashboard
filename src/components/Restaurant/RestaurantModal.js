@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
-import { SwatchesPicker } from 'react-color';
+import { TwitterPicker } from 'react-color';
 import { getUser, getUserRole } from '../../api/TokenHandler';
 
 class RestaurantModal extends Component {
@@ -98,11 +98,11 @@ class RestaurantModal extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="restaurantBannerInput">Restaurant background</label>
-                                    <SwatchesPicker onChange={ this.handleBackgroundChange } />
+                                    <TwitterPicker onChange={ this.handleBackgroundChange } />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="restaurantBannerInput">Restaurant color</label>
-                                    <SwatchesPicker onChange={ this.handleColorChange } />
+                                    <TwitterPicker onChange={ this.handleColorChange } />
                                 </div>
                                 
                                 <div className="mt-3 d-flex justify-content-end">
