@@ -9,6 +9,7 @@ import DeleteCategoryModal from '../Category/DeleteCategoryModal';
 import DeleteUserModal from '../User/DeleteUserModal';
 import TreeMenu from 'react-simple-tree-menu';
 
+
 const DATA_TYPES = {
     restaurant: 'restaurant',
     menu: 'menu',
@@ -172,71 +173,15 @@ class Sidenav extends Component {
             <nav id="main-sidebar">
                 <div className="row my-4">
                     <div className="col-12 text-center">
-                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainModal">
-                            Add
+                        <button type="button" className="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#mainModal">
+                            <b>+</b> ADD
                         </button>
                     </div>
                 </div>
                 <TreeMenu data={treeData} onClickItem={this.handleTreeOnToggle} />
-                {/* {
-                    restaurantsDataReady && getUserRole() === 'admin' ?
-                    <div className="row">
-                        <h5 className="mt-3">Restaurants</h5>
-                        {
-                            restaurants.map(restaurant => {
-                                return (
-                                    <div className="col-12 text-center mb-2" key={restaurant.id}>
-                                         <button className="btn btn-ligth" onClick={() => this.getRestaurantDetail(restaurant.id)}>
-                                            {restaurant.name}
-                                        </button>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
-                    : <> </>
-                } */}
-                {/* <div className="row">
-                    <h5 className="mt-3">Menus</h5>
-                {
-                    restaurantDataReady ?
-                    restaurantDetail?.menus.map((menu, index) => {
-                        return (
-                            <div className="col-12 text-center mb-2" key={menu.id+index}>
-                                <button className="btn btn-ligth" onClick={() => this.getMenuDetail(menu.id)}>
-                                    {menu.name}
-                                </button>
-                            </div>
-                        )
-                    })
-                    :
-                    <></>
-                }
-                </div> */}
-                {/* <div className="row">
-                    <h5 className="mt-3">Categories</h5> */}
-                    <EditCategoryModal category={{...this.state.selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
-                    <DeleteCategoryModal category={{...this.state.selectedCategory}}/>
-                    <DeleteUserModal user={this.state.selectedUser} />
-                {/* {
-                    restaurantDataReady ?
-                    restaurantDetail.categories.map(category => {
-                        return (
-                            <div className="col-12 text-center mb-2" key={category.id}>
-                                {category.name}
-                                <br/>
-                                <button className="btn btn-primary" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
-                                    Edit
-                                </button>
-                                <button className="btn btn-danger" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">
-                                    Delete
-                                </button>
-                            </div>
-                        )
-                    })
-                    :
-                    <></>
-                } */}
+                <EditCategoryModal category={{...this.state.selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
+                <DeleteCategoryModal category={{...this.state.selectedCategory}}/>
+                <DeleteUserModal user={this.state.selectedUser} />
             </nav>
         );
     }

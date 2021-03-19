@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import * as appAction from '../actions/appActions';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { getUserRole, removeTokens, removeUser } from '../api/TokenHandler';
-import config from '../config';
+import { getUser, getUserRole, removeTokens, removeUser } from '../api/TokenHandler';
 import EditRestaurantModal from './Restaurant/EditRestaurantModal';
 import DeleteRestaurantModal from './Restaurant/DeleteRestaurantModal';
 
@@ -24,29 +23,23 @@ class Navbar extends Component {
 
     render() {
         const { isLoggedIn, restaurantDetail, restaurantDataReady } = this.props;
-        const env = config.env;
+        const user = getUser();
+
         return (
             <nav className="navbar navbar-expand-md navbar-light bg-light">
                 <div className="container-fluid">
-                    {
-                     restaurantDataReady ?
-                        <div className="navbar-brand d-flex">
-                            <Link className="navbar-brand" to="/">
-                                {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
-                            </Link>
-                            {
-                                (getUserRole() === 'admin' || getUserRole() === 'owner') ?
-                                <div className="d-flex">
-                                    <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit restaurant</button>
-                                    <button className="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete restaurant</button>
-                                </div> : <></>
-                            }
-                        </div>
-                        :
+                    <div className="navbar-brand d-flex">
                         <Link className="navbar-brand" to="/">
-                            Meniu Dashboard {env === 'development' ? ' - Dev' : ''}
+                            Welcome, <b>{user.first_name} {user.last_name}</b>
                         </Link>
-                    }
+                        {
+                            (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady?
+                            <div className="d-flex">
+                                <button className="btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit restaurant</button>
+                                <button className="btn btn-outline-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete restaurant</button>
+                            </div> : <></>
+                        }
+                    </div>
                     {
                         (getUserRole() === 'admin' || getUserRole() === 'owner') &&
                         <div>
@@ -67,8 +60,9 @@ class Navbar extends Component {
                             {isLoggedIn &&
                                 (
                                 <>
-                                    <Link className="nav-link" to="/profile" >Profile</Link>
-                                    <span onClick={this.logout} className="nav--logout nav-link">Sign out</span>
+                                    <Link className="nav-link" to="/profile" >Settings</Link>
+                                    <Link className="nav-link" to="/profile" >Help</Link>
+                                    <span onClick={this.logout} className="nav--logout nav-link">Sign Out</span>
                                 </>
                                 )}
                         </div>

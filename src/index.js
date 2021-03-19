@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "./assets/scss/styles.scss";
-import 'bootstrap/dist/js/bootstrap.bundle.min';
 import appStore from './store';
 import { Provider } from 'react-redux';
 

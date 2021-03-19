@@ -12,7 +12,7 @@ import Api from './api/Api';
 const AuthenticatedRoute = lazy(() => import('./components/AuthenticatedRoute'));
 const UnAuthenticatedRoute = lazy(() => import('./components/UnAuthenticatedRoute'));
 const Navbar = lazy(() => import('./components/Navbar'));
-// const Footer = lazy(() => import('./components/Footer'));
+const Footer = lazy(() => import('./components/Footer'));
 const Login = lazy(() => import('./components/Auth/Login'));
 const Dashboard = lazy(() => import('./components/Dashboard/Dashboard'));
 const Sidenav = lazy(() => import('./components/Sidenav/Sidenav'));
@@ -66,12 +66,11 @@ class App extends Component {
         {appStarted ?
         <Router>
           <Suspense fallback={<Spinner></Spinner>}>
-            {/* #TODO don't show the navbar on login page (Exact path /) */}
-            <Navbar/>
-            <Alert />
             {
             <Switch>
               <Route exact path="/">
+                <Navbar/>
+                <Alert />
                 <AuthenticatedRoute>
                   <div className="main-wrapper d-flex">
                     <Sidenav restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} restaurantTreeViewData={restaurantTreeViewData} restaurantTreeViewDataReady={restaurantTreeViewDataReady} />
@@ -80,26 +79,34 @@ class App extends Component {
                 </AuthenticatedRoute>
               </Route>
               <Route exact path="/profile">
+                <Navbar/>
+                <Alert />
                 <AuthenticatedRoute>
                   <Profile />
                 </AuthenticatedRoute>
               </Route>
               <Route exact path="/profile/edit">
+                <Navbar/>
+                <Alert />
                 <AuthenticatedRoute>
                   <ProfileEdit />
                 </AuthenticatedRoute>
               </Route>
               <Route exact path="/profile/change_password">
+                <Navbar/>
+                <Alert />
                 <AuthenticatedRoute>
                   <ProfileChangePassword />
                 </AuthenticatedRoute>
               </Route>
               <Route exact path="/auth/login">
+                <Alert />
                 <UnAuthenticatedRoute>
                   <Login />
                 </UnAuthenticatedRoute>
               </Route>
               <Route exact path="/auth/reset_password">
+                <Alert />
                 <UnAuthenticatedRoute>
                   <ResetPassword />
                 </UnAuthenticatedRoute>
@@ -109,7 +116,7 @@ class App extends Component {
               </Route>
             </Switch>
             }
-            {/* <Footer /> */}
+            <Footer />
           </Suspense>
         </Router>:
         <Spinner></Spinner>
