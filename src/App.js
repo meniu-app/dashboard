@@ -78,21 +78,21 @@ class App extends Component {
                   </div>
                 </AuthenticatedRoute>
               </Route>
-              <Route exact path="/profile">
+              <Route exact path="/settings">
                 <Navbar/>
                 <Alert />
                 <AuthenticatedRoute>
                   <Profile />
                 </AuthenticatedRoute>
               </Route>
-              <Route exact path="/profile/edit">
+              <Route exact path="/settings/edit">
                 <Navbar/>
                 <Alert />
                 <AuthenticatedRoute>
                   <ProfileEdit />
                 </AuthenticatedRoute>
               </Route>
-              <Route exact path="/profile/change_password">
+              <Route exact path="/settings/change_password">
                 <Navbar/>
                 <Alert />
                 <AuthenticatedRoute>

@@ -8,11 +8,22 @@ class Profile extends Component {
   
     return (
       <div className="container">
-          <h3>This is my profile</h3>
-          <h5>Name: {user.first_name} {user.last_name}</h5>
-          <Link to="/profile/edit" className="btn btn-primary">Edit profile</Link>
-          <br />
-          <Link to="/profile/change_password" className="btn btn-primary mt-3">Change password</Link>
+          <h3 className="my-3">Settings</h3>
+          <div className="ms-4">
+            <div className="d-flex mb-3">
+              <h5>Account info</h5>
+              <Link to="/settings/edit" className="ms-5">Edit</Link>
+            </div>
+            <h6><b>Name</b></h6>
+            <p>{user.first_name} {user.last_name}</p>
+            <h6><b>Address</b></h6>
+            <p>100 Main Stree</p>
+            <div className="d-flex">
+              <h5>Password</h5>
+              <Link to="/settings/change_password" className="ms-5">Edit</Link>
+            </div>
+            <h6><b>*************</b></h6>
+          </div>
       </div>
     );
   }

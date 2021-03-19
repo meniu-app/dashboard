@@ -60,8 +60,8 @@ class Navbar extends Component {
                             {isLoggedIn &&
                                 (
                                 <>
-                                    <Link className="nav-link" to="/profile" >Settings</Link>
-                                    <Link className="nav-link" to="/profile" >Help</Link>
+                                    <Link className="nav-link" to="/settings" >Settings</Link>
+                                    <Link className="nav-link" to="/settings" >Help</Link>
                                     <span onClick={this.logout} className="nav--logout nav-link">Sign Out</span>
                                 </>
                                 )}

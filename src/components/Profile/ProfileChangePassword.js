@@ -37,7 +37,7 @@ class ProfileChangePassword extends Component {
           password2: '',
           diffPasswords: false
         })
-        history.push('/profile');
+        history.push('/settings');
       }
     }
   }
@@ -48,22 +48,24 @@ class ProfileChangePassword extends Component {
           <h3>Change password</h3>
           <form onSubmit={this.changePassword} className="form--login" method="POST">
                 <div className="mb-3">
-                    <label htmlFor="changePasswordOld" className="form-label">Old Password</label>
+                    <label htmlFor="changePasswordOld" className="form-label">Old password</label>
                     <input type="password" name="password" className="form-control" value={this.state.oldPassword} onChange={e => this.setState({oldPassword: e.target.value})} id="changePasswordOld" required></input>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="changePassword" className="form-label">Password</label>
+                    <label htmlFor="changePassword" className="form-label">New password</label>
                     <input type="password" name="password" className="form-control" value={this.state.password} onChange={e => this.setState({password: e.target.value, diffPasswords: false})} id="changePassword" required></input>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="changePassword2" className="form-label">Confirm Password</label>
+                    <label htmlFor="changePassword2" className="form-label">Confirm password</label>
                     <input type="password" name="password2" className="form-control" value={this.state.password2} onChange={e => this.setState({password2: e.target.value, diffPasswords: false})} id="changePassword2" required></input>
                     {this.state.diffPasswords ?
                       <p className="text-danger"><b>Passwords must be equal</b></p>:
                       <></>
                     }
                 </div>
-                <button className="btn btn-primary">Submit</button>
+                <div className="d-grid gap-2">
+                  <button className="btn btn-success">Change password</button>
+                </div>
             </form>
       </div>
     );
