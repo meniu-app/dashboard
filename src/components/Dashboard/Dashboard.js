@@ -91,12 +91,12 @@ class Dashboard extends Component {
                 <div className="px-3">
                     <div className="d-flex">
                         <h4 className="me-3">{menuDetail.name}</h4>
-                        <button className="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit menu</button>
-                        <button className="btn btn-danger ms-2"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete menu</button>
+                        <button className="btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit menu</button>
+                        <button className="btn btn-outline-danger ms-2"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete menu</button>
                         <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
                     </div>
                     <div className="row mt-3">
-                        <div className="col-4">
+                        <div className="col-4" style={{width: "200px"}}>
                             <img className="img-thumbnail" src={menuDetail.qr_code} alt=""/>
                         </div>
                     </div>
@@ -110,20 +110,22 @@ class Dashboard extends Component {
                                         category.items.map((item, indexItem) => {
                                             const image = item.images.length > 0 ? `${item.images[0].image_url}` : "https://via.placeholder.com/100C/O";
                                             return (
-                                                <div className="col-12 col-lg-4"  key={item.id + indexItem}>
+                                                <div className="col-12 col-md-6 col-lg-4"  key={item.id + indexItem}>
                                                     <div className="card my-2">
                                                         <div className="card-body d-flex">
                                                             <div className="me-3 flex-fill">
-                                                                <h5>{item.name}</h5>
-                                                                <h6>{item.price}</h6>
+                                                                <h6>{item.name}</h6>
+                                                                <p className="mb-1"><b>{item.price}</b></p>
                                                                 <p>{item.description}</p>
                                                             </div>
                                                             <div>
-                                                                <img className="img-thumbnail" src={image} alt=""/>
+                                                                <img className="img-thumbnail" style={{width: "80px"}} src={image} alt=""/>
                                                             </div>
                                                         </div>
-                                                        <button onClick={() => this.setSelectedItem(item)} className="btn btn-primary m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit item</button>
-                                                        <button onClick={() => this.setSelectedItem(item)} className="btn btn-danger m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete item</button>
+                                                        <div className="d-flex pe-3 ps-3 pb-3">
+                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-outline-primary me-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit</button>
+                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-outline-danger" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )

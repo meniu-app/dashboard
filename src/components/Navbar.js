@@ -29,9 +29,11 @@ class Navbar extends Component {
             <nav className="navbar navbar-expand-md navbar-light bg-light">
                 <div className="container-fluid">
                     <div className="navbar-brand d-flex">
+                        { user ?
                         <Link className="navbar-brand" to="/">
                             Welcome, <b>{user.first_name} {user.last_name}</b>
-                        </Link>
+                        </Link> : <></>
+                        }
                         {
                             (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady?
                             <div className="d-flex">

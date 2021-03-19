@@ -73,7 +73,7 @@ class Login extends Component {
                        <button className="btn btn-success" type="submit">Sign in</button>
                     </div>
                     <div className="mt-3 text-center">
-                        <p>No account? <a href="#"><strong>partner with Lulo!</strong></a></p>
+                        <p>No account? <a href="mailto:hello@oklulo.com"><strong>partner with Lulo!</strong></a></p>
                     </div>
                 </form>
             </div>
