@@ -45,7 +45,6 @@ class ProfileChangePassword extends Component {
   render() {
     return (
       <div className="container">
-          <h3>Change password</h3>
           <form onSubmit={this.changePassword} className="form--login" method="POST">
                 <div className="mb-3">
                     <label htmlFor="changePasswordOld" className="form-label">Old password</label>

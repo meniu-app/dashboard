@@ -40,7 +40,6 @@ class ProfileEdit extends Component {
   render() {
     return (
       <div className="container">
-        <h3>Edit Profile</h3>
         <form onSubmit={this.changeProfile} className="form--login" method="POST">
               <div className="mb-3">
                   <label htmlFor="profilefirstName" className="form-label">First name</label>
