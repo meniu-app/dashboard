@@ -19,6 +19,18 @@ class Navbar extends Component {
         this.props.history.push('/');
     }
 
+    getUserFullName (firstName, lastName) {
+        let fullName = '';
+        if (firstName !== null && firstName !== '')
+            fullName += `${firstName} `;
+        if (lastName !== null && lastName !== '')
+            fullName += `${lastName}`;
+        if (fullName === '') {
+            return getUserRole();
+        }
+        return fullName;
+    }
+
     handleChangeRestaurant = () => {}
 
     render() {
@@ -26,22 +38,14 @@ class Navbar extends Component {
         const user = getUser();
 
         return (
-            <nav id="main-nav" className="navbar navbar-expand-md navbar-light sticky-top">
+            <nav id="main-nav" className="navbar navbar-expand-md navbar-light">
                 <div className="container-fluid">
                     <div className="navbar-brand d-flex">
                         { user ?
                         <Link className="navbar-brand" to="/">
-                            {/* #TODO Remove this from the navbar, is now hande inside the subnav user menu */}
-                            Welcome, <b>{user.first_name} {user.last_name}</b>
+                            {/* #TODO ADD logo */}
+                            LULO
                         </Link> : <></> 
-                        }
-                        {
-                            (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady?
-                            <div>
-                                {/* #TODO remove this. This are handled now by the restaurant submenu */}
-                                <button className="btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit restaurant</button>
-                                <button className="btn btn-outline-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete restaurant</button>
-                            </div> : <></>
                         }
                     </div>
                     {
@@ -67,30 +71,30 @@ class Navbar extends Component {
                             {isLoggedIn &&
                                 (
                                 <>
+                                    {
+                                    (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady ?
                                     <li className="nav-item dropdown">
-                                        {/* #TODO Need to enclosed and shown only if we select a restaurant */}
-                                        <Link className="btn btn-outline-dark dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-                                                {/* #TODO Return the restaurant name */}
-                                                Restaurant Name
-                                        </Link>
+                                        <button className="btn btn-outline-dark dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {restaurantDetail.name}
+                                        </button>
                                         { user ?
                                         <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
-                                                {
-                                                    (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady?
-                                                    <li className="dropdown-item">
-                                                        {/* #TODO Need to enclose the restaurant parent button and show only id we are on a restaurant */}
-                                                        <button className="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit</button>
-                                                        <button className="btn btn-outline-danger btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete</button>
-                                                    </li>:<></>
-                                                }
+                                            {
+                                            (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady?
+                                            <li className="dropdown-item">
+                                                <button className="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit</button>
+                                                <button className="btn btn-outline-danger btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete</button>
+                                            </li>:<></>
+                                            }
                                         </ul>:<></>
                                         }
-                                    </li>
+                                    </li>:<button className="btn btn-ligth">{restaurantDetail.name}</button>
+                                    }
                                     <li className="nav-item dropdown">
                                     { user ?
-                                        <Link className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-                                            {user.first_name} {user.last_name}
-                                        </Link>:<></>
+                                        <div className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {this.getUserFullName(user.first_name, user.last_name)}
+                                        </div>:<></>
                                     }
                                     { user ?
                                         <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
