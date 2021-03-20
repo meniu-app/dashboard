@@ -7,8 +7,8 @@ import * as appAction from './actions/appActions';
 import Api from './api/Api';
 
 /**
- * Load components
- */
+* Load components
+*/
 const AuthenticatedRoute = lazy(() => import('./components/AuthenticatedRoute'));
 const UnAuthenticatedRoute = lazy(() => import('./components/UnAuthenticatedRoute'));
 const Navbar = lazy(() => import('./components/Navbar'));
@@ -58,96 +58,99 @@ class App extends Component {
     }
     await appActions.appStart();
   }
-
+  
   render() {
     const { appStarted, restaurantDetail, restaurantDataReady, restaurantTreeViewData, restaurantTreeViewDataReady } = this.props;
     return (
       <div>
-        {appStarted ?
+      {appStarted ?
         <Router>
-          <Suspense fallback={<Spinner></Spinner>}>
-            {
-            <Switch>
-              <Route exact path="/">
-                <Navbar/>
-                <Alert />
-                <AuthenticatedRoute>
-                  <div className="main-wrapper d-flex">
-                    <Sidenav restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} restaurantTreeViewData={restaurantTreeViewData} restaurantTreeViewDataReady={restaurantTreeViewDataReady} />
-                    <Dashboard restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} />
-                  </div>
-                </AuthenticatedRoute>
-              </Route>
-              <Route exact path="/settings">
-                <Navbar/>
-                <Alert />
-                <AuthenticatedRoute>
-                  <Profile />
-                </AuthenticatedRoute>
-              </Route>
-              <Route exact path="/settings/edit">
-                <Navbar/>
-                <Alert />
-                <AuthenticatedRoute>
-                  <ProfileEdit />
-                </AuthenticatedRoute>
-              </Route>
-              <Route exact path="/settings/change_password">
-                <Navbar/>
-                <Alert />
-                <AuthenticatedRoute>
-                  <ProfileChangePassword />
-                </AuthenticatedRoute>
-              </Route>
-              <Route exact path="/auth/login">
-                <Alert />
-                <UnAuthenticatedRoute>
-                  <Login />
-                </UnAuthenticatedRoute>
-              </Route>
-              <Route exact path="/auth/reset_password">
-                <Alert />
-                <UnAuthenticatedRoute>
-                  <ResetPassword />
-                </UnAuthenticatedRoute>
-              </Route>
-              <Route path="*">
-                <Redirect to="/"></Redirect>
-              </Route>
-            </Switch>
-            }
-            <Footer />
-          </Suspense>
+        <Suspense fallback={<Spinner></Spinner>}>
+        {
+          <Switch>
+          <Route exact path="/">
+            <section>
+              <Navbar/>
+            </section>
+            <Alert />
+          <AuthenticatedRoute>
+          <div id="main" className="container d-flex">
+          <Sidenav restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} restaurantTreeViewData={restaurantTreeViewData} restaurantTreeViewDataReady={restaurantTreeViewDataReady} />
+          <Dashboard restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} />
+          </div>
+          </AuthenticatedRoute>
+          </Route>
+          <Route exact path="/settings">
+          <Navbar/>
+          <Alert />
+          <AuthenticatedRoute>
+          <Profile />
+          </AuthenticatedRoute>
+          </Route>
+          <Route exact path="/settings/edit">
+          <Navbar/>
+          <Alert />
+          <AuthenticatedRoute>
+          <ProfileEdit />
+          </AuthenticatedRoute>
+          </Route>
+          <Route exact path="/settings/change_password">
+          <Navbar/>
+          <Alert />
+          <AuthenticatedRoute>
+          <ProfileChangePassword />
+          </AuthenticatedRoute>
+          </Route>
+          <Route exact path="/auth/login">
+          <Alert />
+          <UnAuthenticatedRoute>
+          <Login />
+          </UnAuthenticatedRoute>
+          </Route>
+          <Route exact path="/auth/reset_password">
+          <Alert />
+          <UnAuthenticatedRoute>
+          <ResetPassword />
+          </UnAuthenticatedRoute>
+          </Route>
+          <Route path="*">
+          <Redirect to="/"></Redirect>
+          </Route>
+          </Switch>
+        }
+        <Footer />
+        </Suspense>
         </Router>:
         <Spinner></Spinner>
-        }
+      }
       </div>
-    );
+      );
+    }
   }
-}
-
-App.propTypes = {
-  appActions: PropTypes.objectOf(PropTypes.func).isRequired,
-  appStarted: PropTypes.bool.isRequired,
-  restaurantDetail: PropTypes.object.isRequired,
-  restaurantTreeViewData: PropTypes.array.isRequired,
-  restaurantDataReady: PropTypes.bool.isRequired,
-  restaurantTreeViewDataReady: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  appStarted: state.app.appStarted,
-  restaurantDetail: state.app.restaurantDetail,
-  restaurantTreeViewData: state.app.restaurantTreeViewData,
-  restaurantDataReady: state.app.restaurantDataReady,
-  restaurantTreeViewDataReady: state.app.restaurantTreeViewDataReady,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  appActions: bindActionCreators(appAction, dispatch),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App);
+  
+  App.propTypes = {
+    appActions: PropTypes.objectOf(PropTypes.func).isRequired,
+    appStarted: PropTypes.bool.isRequired,
+    restaurantDetail: PropTypes.object.isRequired,
+    restaurantTreeViewData: PropTypes.array.isRequired,
+    restaurantDataReady: PropTypes.bool.isRequired,
+    restaurantTreeViewDataReady: PropTypes.bool.isRequired,
+  };
+  
+  const mapStateToProps = (state) => ({
+    appStarted: state.app.appStarted,
+    restaurantDetail: state.app.restaurantDetail,
+    restaurantTreeViewData: state.app.restaurantTreeViewData,
+    restaurantDataReady: state.app.restaurantDataReady,
+    restaurantTreeViewDataReady: state.app.restaurantTreeViewDataReady,
+  });
+  
+  const mapDispatchToProps = (dispatch) => ({
+    appActions: bindActionCreators(appAction, dispatch),
+  });
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+    )(App);
+    

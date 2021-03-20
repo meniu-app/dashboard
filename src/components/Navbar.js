@@ -26,7 +26,7 @@ class Navbar extends Component {
         const user = getUser();
 
         return (
-            <nav className="navbar navbar-expand-md navbar-light bg-light">
+            <nav id="main-nav" className="navbar navbar-expand-md navbar-light sticky-top">
                 <div className="container-fluid">
                     <div className="navbar-brand d-flex">
                         { user ?
