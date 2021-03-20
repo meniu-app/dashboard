@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { getUser, getUserRole, removeTokens, removeUser } from '../api/TokenHandler';
 import EditRestaurantModal from './Restaurant/EditRestaurantModal';
 import DeleteRestaurantModal from './Restaurant/DeleteRestaurantModal';
+import Logo from '../assets/img/lulo-logo.png'
 
 class Navbar extends Component {
 
@@ -41,12 +42,9 @@ class Navbar extends Component {
             <nav id="main-nav" className="navbar navbar-expand-md navbar-light">
                 <div className="container-fluid">
                     <div className="navbar-brand d-flex">
-                        { user ?
                         <Link className="navbar-brand" to="/">
-                            {/* #TODO ADD logo */}
-                            LULO
-                        </Link> : <></> 
-                        }
+                            <img src={Logo} alt="Logo" className="lulo-logo" />
+                        </Link>
                     </div>
                     {
                         (getUserRole() === 'admin' || getUserRole() === 'owner') &&
