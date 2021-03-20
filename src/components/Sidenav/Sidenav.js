@@ -170,12 +170,14 @@ class Sidenav extends Component {
         const treeData = this.convertRestaurantDataToTreeView(restaurantTreeViewData)
 
         return (
-            <nav className="container d-flex flex-column" id="main-sidebar">
+            <nav className="col-md-4 col-xs-12" id="main-sidebar">
                 <div className="row my-4">
-                    <div className="col-12 text-center">
-                        <button type="button" className="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#mainModal">
-                            <b>+</b> ADD
-                        </button>
+                    <div className="col">
+                        <div className="text-center">
+                            <button type="button" className="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#mainModal">
+                                <b>+</b> ADD
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <TreeMenu data={treeData} onClickItem={this.handleTreeOnToggle} />

@@ -31,12 +31,14 @@ class Navbar extends Component {
                     <div className="navbar-brand d-flex">
                         { user ?
                         <Link className="navbar-brand" to="/">
+                            {/* #TODO Remove this from the navbar, is now hande inside the subnav user menu */}
                             Welcome, <b>{user.first_name} {user.last_name}</b>
-                        </Link> : <></>
+                        </Link> : <></> 
                         }
                         {
                             (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady?
-                            <div className="d-flex">
+                            <div>
+                                {/* #TODO remove this. This are handled now by the restaurant submenu */}
                                 <button className="btn btn-outline-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit restaurant</button>
                                 <button className="btn btn-outline-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete restaurant</button>
                             </div> : <></>
@@ -56,18 +58,63 @@ class Navbar extends Component {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                        <div className="navbar-nav mr-auto">
+                        <ul className="navbar-nav mr-auto">
                             {!isLoggedIn &&
-                                <Link className="nav-link" to="/auth/login">Login</Link>}
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/auth/login">Login</Link>
+                                </li>
+                            }
                             {isLoggedIn &&
                                 (
                                 <>
-                                    <Link className="nav-link" to="/settings" >Settings</Link>
-                                    <Link className="nav-link" to="/settings" >Help</Link>
-                                    <span onClick={this.logout} className="nav--logout nav-link">Sign Out</span>
+                                    <li className="nav-item dropdown">
+                                        {/* #TODO Need to enclosed and shown only if we select a restaurant */}
+                                        <Link className="btn btn-outline-dark dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                                                {/* #TODO Return the restaurant name */}
+                                                Restaurant Name
+                                        </Link>
+                                        { user ?
+                                        <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                                                {
+                                                    (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady?
+                                                    <li className="dropdown-item">
+                                                        {/* #TODO Need to enclose the restaurant parent button and show only id we are on a restaurant */}
+                                                        <button className="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit</button>
+                                                        <button className="btn btn-outline-danger btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete</button>
+                                                    </li>:<></>
+                                                }
+                                        </ul>:<></>
+                                        }
+                                    </li>
+                                    <li className="nav-item dropdown">
+                                    { user ?
+                                        <Link className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">
+                                            {user.first_name} {user.last_name}
+                                        </Link>:<></>
+                                    }
+                                    { user ?
+                                        <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                                            <li>
+                                                <Link className="dropdown-item" to="/settings" >Settings</Link>
+                                            </li>
+                                            <li>
+                                                <Link className="dropdown-item" to="/">Another action</Link>
+                                            </li>
+                                            <li>
+                                                <hr className="dropdown-divider" />
+                                            </li>
+                                            <li>
+                                                <span onClick={this.logout} className="nav--logout dropdown-item">Sign Out</span>
+                                            </li>
+                                        </ul>:<></>
+                                    }
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/help" >Help</Link>
+                                    </li>
                                 </>
                                 )}
-                        </div>
+                        </ul>
                     </div>
                 </div>
             </nav>
