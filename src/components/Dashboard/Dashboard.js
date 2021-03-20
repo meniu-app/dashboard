@@ -88,18 +88,20 @@ class Dashboard extends Component {
                 <DeleteMenuModal menu={{...menuDetail}} />
                 {
                 menuDetailDataReady ?
-                <div className="px-3">
-                    <div className="d-flex">
-                        <h4 className="me-3">{menuDetail.name}</h4>
-                        <button className="btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit menu</button>
-                        <button className="btn btn-outline-danger ms-2"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete menu</button>
-                        <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
-                    </div>
-                    <div className="row mt-3">
-                        <div className="col-4" style={{width: "200px"}}>
-                            <img className="img-thumbnail" src={menuDetail.qr_code} alt=""/>
+                <div className="px-4 my-4" id="menu-detail">
+                    <section className="title col d-flex">
+                        <div className="">
+
                         </div>
-                    </div>
+                        <div className="me-3 d-flex justify-content-start">
+                            <h3><img className="img-thumbnail" src={menuDetail.qr_code} width="128" alt=""/> Menu: {menuDetail.name}</h3>
+                            <div className="ms-3">
+                                <button className="btn btn-outline-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit</button>
+                                <button className="btn btn-outline-danger ms-2 btn-sm"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete</button>
+                            </div>
+                        </div> 
+                        <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
+                    </section>
                     {
                         categories.map((category, index) => {
                             return (
