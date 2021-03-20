@@ -53,7 +53,7 @@ class Dashboard extends Component {
     setSelectedItem(item) {
         if (item.category === null) {
             this.setState({selectedItem: {...item, category: ''}});
-        }else {
+        } else {
             this.setState({selectedItem: item});
         }
     }
@@ -66,9 +66,15 @@ class Dashboard extends Component {
         if (menuDetailDataReady) {
             categories = Object.keys(menuDetail.categories).map(key => {return {id: key, ...menuDetail.categories[key]}})
             if (restaurantDetail.items_no_category?.length > 0) {
-                categories.push({id: '1', name: 'No category', items: restaurantDetail.items_no_category});
+                if (restaurantDetail.items_no_category.length > 0)
+                    categories.push({id: '1', name: 'No category', items: restaurantDetail.items_no_category});
             }
         }
+
+        categories = categories.filter(category => {
+            if (category.items.length > 0)
+                return category
+        })
 
         return (
             <div id="main-content" className="col-md-8 col-xs-12 px-0">
