@@ -32,6 +32,23 @@ body {
   cursor: pointer;
 }
 
+.modal{
+  .btn-sel{
+    color: #000;
+    vertical-align: top;
+    .badge{
+      color: $gray-text-shadow;
+      border: 1px solid #d8d8d8;
+      text-align: center;
+      width: 55px;
+      height: 50px;
+      padding: 10px;
+      margin-right: 20px;
+    }
+  }
+}
+
+
 .image--restaurant-detail {
   width: 70px;
   height: 70px;
