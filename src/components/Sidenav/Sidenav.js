@@ -23,17 +23,13 @@ class Sidenav extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCategory: {
-                id: '',
-                name: '',
-                description: ''
-            },
             selectedUser: {
                 id: '',
                 email: '',
                 restaurant: ''
             }
         }
+        this.setSelectedCategory = this.props.setSelectedCategory.bind(this)
     }
 
     async getMenuDetail(id) {
@@ -70,7 +66,7 @@ class Sidenav extends Component {
                 if (data.id === 'no_category') {
                     break;
                 }
-                this.setSelectedCategory({id: data.id, name: data.category.name, description: data.category.description})
+                this.props.setSelectedCategory({id: data.id, name: data.category.name, description: data.category.description})
                 if (categoryModal !== null) {
                     categoryModal.toggle()
                 }
@@ -89,16 +85,10 @@ class Sidenav extends Component {
     }
 
     handleChangeCategory = (e) => {
-        this.setState({
-            selectedCategory: {
-                ...this.state.selectedCategory,
-                [e.target.name]: e.target.value
-            }
+        this.props.setSelectedCategory({
+            ...this.props.selectedCategory,
+            [e.target.name]: e.target.value
         });
-    }
-
-    setSelectedCategory(item) {
-        this.setState({selectedCategory: item});
     }
 
     setSelectedUser(user) {
@@ -165,7 +155,7 @@ class Sidenav extends Component {
     }
 
     render() {
-        const { restaurantTreeViewData } = this.props;
+        const { restaurantTreeViewData, selectedCategory } = this.props;
 
         const treeData = this.convertRestaurantDataToTreeView(restaurantTreeViewData)
 
@@ -181,8 +171,8 @@ class Sidenav extends Component {
                     </div>
                 </div>
                 <TreeMenu data={treeData} onClickItem={this.handleTreeOnToggle} />
-                <EditCategoryModal category={{...this.state.selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
-                <DeleteCategoryModal category={{...this.state.selectedCategory}}/>
+                <EditCategoryModal category={{...selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
+                <DeleteCategoryModal category={{...selectedCategory}}/>
                 <DeleteUserModal user={this.state.selectedUser} />
             </div>
         );
@@ -197,6 +187,8 @@ Sidenav.propTypes = {
     restaurantsDataReady: PropTypes.bool.isRequired,
     restaurantTreeViewData: PropTypes.array.isRequired,
     restaurantTreeViewDataReady: PropTypes.bool.isRequired,
+    selectedCategory: PropTypes.object,
+    setSelectedCategory: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -206,6 +198,7 @@ const mapStateToProps = (state) => ({
     restaurantsDataReady: state.app.restaurantsDataReady,
     restaurantTreeViewData: state.app.restaurantTreeViewData,
     restaurantTreeViewDataReady: state.app.restaurantTreeViewDataReady,
+
 });
 
 const mapDispatchToProps = (dispatch) => ({

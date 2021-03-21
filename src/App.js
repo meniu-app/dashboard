@@ -25,6 +25,22 @@ import ResetPassword from './components/Auth/ResetPassword';
 import ProfileChangePassword from './components/Profile/ProfileChangePassword';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedCategory: {
+        id: '',
+        name: '',
+        description: ''
+      },
+    }
+  }
+
+  setSelectedCategory = (category) => {
+    this.setState({selectedCategory: category});
+  }
+
   async componentDidMount() {
     const { appActions } = this.props;
     try {
@@ -58,6 +74,8 @@ class App extends Component {
     }
     await appActions.appStart();
   }
+
+
   
   render() {
     const { appStarted, restaurantDetail, restaurantDataReady, restaurantTreeViewData, restaurantTreeViewDataReady } = this.props;
@@ -76,8 +94,16 @@ class App extends Component {
             <AuthenticatedRoute>
               <div className="container-fluid">
               <div id="main" className="row">
-                  <Sidenav restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} restaurantTreeViewData={restaurantTreeViewData} restaurantTreeViewDataReady={restaurantTreeViewDataReady} />
-                  <Dashboard restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} />
+                  <Sidenav restaurantDetail={restaurantDetail}
+                    restaurantDataReady={restaurantDataReady}
+                    restaurantTreeViewData={restaurantTreeViewData}
+                    restaurantTreeViewDataReady={restaurantTreeViewDataReady}
+                    selectedCategory={this.state.selectedCategory}
+                    setSelectedCategory={this.setSelectedCategory}/>
+                  <Dashboard restaurantDetail={restaurantDetail}
+                    restaurantDataReady={restaurantDataReady}
+                    selectedCategory={this.state.selectedCategory}
+                    setSelectedCategory={this.setSelectedCategory}/>
               </div>
               </div>
             </AuthenticatedRoute>
