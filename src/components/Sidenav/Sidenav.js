@@ -170,7 +170,7 @@ class Sidenav extends Component {
         const treeData = this.convertRestaurantDataToTreeView(restaurantTreeViewData)
 
         return (
-            <nav className="col-md-4 col-xs-12" id="main-sidebar">
+            <div className="col-12 col-sm-5 col-md-4 col-lg-3" id="main-sidebar">
                 <div className="row my-4">
                     <div className="col">
                         <div className="text-center">
@@ -184,7 +184,7 @@ class Sidenav extends Component {
                 <EditCategoryModal category={{...this.state.selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
                 <DeleteCategoryModal category={{...this.state.selectedCategory}}/>
                 <DeleteUserModal user={this.state.selectedUser} />
-            </nav>
+            </div>
         );
     }
 }

@@ -77,7 +77,7 @@ class Dashboard extends Component {
         })
 
         return (
-            <div id="main-content" className="col-md-8 col-xs-12 px-0">
+            <div id="main-content" className="col-12 col-sm-7 col-md-8 col-lg-9">
                 <MainModal restaurantDataReady={restaurantDataReady} />
                 {
                     restaurantDataReady &&
@@ -100,9 +100,12 @@ class Dashboard extends Component {
 
                         </div>
                         <div className="me-3 d-flex justify-content-start">
-                            <h3><img className="img-thumbnail" src={menuDetail.qr_code} width="128" alt=""/> Menu: {menuDetail.name}</h3>
-                            <div className="ms-3">
-                                <button className="btn btn-outline-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit</button>
+                            <h3 className="mb-0">
+                                <img className="img-thumbnail" src={menuDetail.qr_code} width="128" alt=""/>
+                                Menu: {menuDetail.name}
+                            </h3>
+                            <div className="ms-3 d-flex align-items-center">
+                                <button className="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit</button>
                                 <button className="btn btn-outline-danger ms-2 btn-sm"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete</button>
                             </div>
                         </div> 
