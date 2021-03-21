@@ -30,6 +30,7 @@ class Dashboard extends Component {
                 category: ''
             }
         }
+        this.setSelectedCategory = this.props.setSelectedCategory.bind(this)
     }
 
     handleChangeItem = (e) => {
@@ -56,6 +57,13 @@ class Dashboard extends Component {
         } else {
             this.setState({selectedItem: item});
         }
+    }
+
+    handleChangeCategory = (e) => {
+        this.props.setSelectedCategory({
+            ...this.props.selectedCategory,
+            [e.target.name]: e.target.value
+        });
     }
 
     render() {
@@ -118,7 +126,7 @@ class Dashboard extends Component {
                                     <div className="card col-md-5 col-12 category-title">
                                         <div className="card-body">
                                             <h5 className="h6">{category.name}</h5>
-                                            <a href="#">Edit Category</a>
+                                            <button className="btn btn-link" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit Category</button>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -164,7 +172,9 @@ Dashboard.propTypes = {
     menuDetail: PropTypes.object.isRequired,
     menuDetailDataReady: PropTypes.bool.isRequired,
     restaurantDataReady: PropTypes.bool.isRequired,
-    restaurantDetail: PropTypes.object
+    restaurantDetail: PropTypes.object,
+    selectedCategory: PropTypes.object,
+    setSelectedCategory: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
