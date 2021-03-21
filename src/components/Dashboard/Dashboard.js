@@ -77,7 +77,7 @@ class Dashboard extends Component {
         })
 
         return (
-            <div id="main-content" className="col-md-8 col-xs-12 px-0">
+            <div id="main-content" className="col-12 col-sm-7 col-md-8 col-lg-9">
                 <MainModal restaurantDataReady={restaurantDataReady} />
                 {
                     restaurantDataReady &&

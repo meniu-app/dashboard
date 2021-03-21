@@ -73,48 +73,50 @@ class App extends Component {
               <Navbar/>
             </section>
             <Alert />
-          <AuthenticatedRoute>
-          <div id="main" className="container d-flex">
-          <Sidenav restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} restaurantTreeViewData={restaurantTreeViewData} restaurantTreeViewDataReady={restaurantTreeViewDataReady} />
-          <Dashboard restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} />
-          </div>
-          </AuthenticatedRoute>
+            <AuthenticatedRoute>
+              <div className="container-fluid">
+              <div id="main" className="row">
+                  <Sidenav restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} restaurantTreeViewData={restaurantTreeViewData} restaurantTreeViewDataReady={restaurantTreeViewDataReady} />
+                  <Dashboard restaurantDetail={restaurantDetail} restaurantDataReady={restaurantDataReady} />
+              </div>
+              </div>
+            </AuthenticatedRoute>
           </Route>
           <Route exact path="/settings">
-          <Navbar/>
-          <Alert />
-          <AuthenticatedRoute>
-          <Profile />
-          </AuthenticatedRoute>
+            <Navbar/>
+            <Alert />
+            <AuthenticatedRoute>
+              <Profile />
+            </AuthenticatedRoute>
           </Route>
           <Route exact path="/settings/edit">
-          <Navbar/>
-          <Alert />
-          <AuthenticatedRoute>
-          <ProfileEdit />
-          </AuthenticatedRoute>
+            <Navbar/>
+            <Alert />
+            <AuthenticatedRoute>
+              <ProfileEdit />
+            </AuthenticatedRoute>
           </Route>
           <Route exact path="/settings/change_password">
-          <Navbar/>
-          <Alert />
-          <AuthenticatedRoute>
-          <ProfileChangePassword />
-          </AuthenticatedRoute>
+            <Navbar/>
+            <Alert />
+            <AuthenticatedRoute>
+              <ProfileChangePassword />
+            </AuthenticatedRoute>
           </Route>
           <Route exact path="/auth/login">
-          <Alert />
-          <UnAuthenticatedRoute>
-          <Login />
-          </UnAuthenticatedRoute>
+            <Alert />
+            <UnAuthenticatedRoute>
+              <Login />
+            </UnAuthenticatedRoute>
           </Route>
           <Route exact path="/auth/reset_password">
-          <Alert />
-          <UnAuthenticatedRoute>
-          <ResetPassword />
-          </UnAuthenticatedRoute>
+            <Alert />
+            <UnAuthenticatedRoute>
+              <ResetPassword />
+            </UnAuthenticatedRoute>
           </Route>
           <Route path="*">
-          <Redirect to="/"></Redirect>
+            <Redirect to="/"></Redirect>
           </Route>
           </Switch>
         }
