@@ -17,7 +17,6 @@ class MainModal extends Component {
                             <div className="row">
                                 { restaurantDataReady &&
                                 <div className="col-12 d-flex py-2">
-                                    <img src="https://via.placeholder.com/80C/O" alt=""/>
                                     <div className="mx-3">
                                         <button className="btn-sel btn btn-lg" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#itemModal">
                                             <span className="badge bg-light"><i className="fas fa-2x fa-hamburger"></i></span>
@@ -28,7 +27,6 @@ class MainModal extends Component {
                                 }
                                 { restaurantDataReady &&
                                 <div className="col-12 d-flex py-2">
-                                    <img src="https://via.placeholder.com/80C/O" alt=""/>
                                     <div className="mx-3">
                                         <button className="btn-sel btn btn-lg" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#categoryModal">
                                             <span className="badge bg-light"><i className="fas fa-2x fa-tasks"></i></span>
@@ -39,7 +37,6 @@ class MainModal extends Component {
                                 }
                                 { restaurantDataReady &&
                                 <div className="col-12 d-flex py-2">
-                                    <img src="https://via.placeholder.com/80C/O" alt=""/>
                                     <div className="mx-3">
                                         <button className="btn-sel btn btn-lg" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#menuModal">
                                             <span className="badge bg-light"><i className="far fa-2x fa-file-alt"></i></span>
