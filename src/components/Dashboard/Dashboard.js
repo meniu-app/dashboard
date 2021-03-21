@@ -103,7 +103,7 @@ class Dashboard extends Component {
                 {
                 menuDetailDataReady ?
                 <div className="px-4 my-4" id="menu-detail">
-                    <section className="title col d-flex">
+                    <section className="title col d-flex mb-4">
                         <div className="">
 
                         </div>
@@ -126,7 +126,11 @@ class Dashboard extends Component {
                                     <div className="card col-xl-4 col-lg-4 col-md-4 col-sm-6  col-12 category-title">
                                         <div className="card-body">
                                             <h5 className="h6">{category.name}</h5>
-                                            <button className="btn btn-link" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit Category</button>
+                                            {
+                                                category.id !== 'no_category' ?
+                                                <button className="btn btn-link" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit Category</button>
+                                                : <></>
+                                            }
                                         </div>
                                     </div>
                                     <div className="row">
