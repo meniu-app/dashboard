@@ -71,8 +71,9 @@ class Navbar extends Component {
                                 <>
                                     {
                                     (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady ?
-                                    <li className="nav-item dropdown">
+                                    <li className="nav-item dropdown me-5">
                                         <button className="btn btn-outline-dark dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i className="fas fa-utensils me-2"></i>
                                             {restaurantDetail.name}
                                         </button>
                                         { user ?
@@ -91,7 +92,7 @@ class Navbar extends Component {
                                     <li className="nav-item dropdown">
                                     { user ?
                                         <div className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            {this.getUserFullName(user.first_name, user.last_name)}
+                                            <i className="fas fa-user me-1"></i> {this.getUserFullName(user.first_name, user.last_name)}
                                         </div>:<></>
                                     }
                                     { user ?
