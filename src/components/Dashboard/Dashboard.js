@@ -115,7 +115,7 @@ class Dashboard extends Component {
                         categories.map((category, index) => {
                             return (
                                 <div key={category.id + index} id={category.id + index} className="category-group">
-                                    <div className="card col-md-5 col-12 category-title">
+                                    <div className="card col-xl-4 col-lg-4 col-md-4 col-sm-6  col-12 category-title">
                                         <div className="card-body">
                                             <h5 className="h6">{category.name}</h5>
                                             <a href="#">Edit Category</a>
@@ -126,7 +126,7 @@ class Dashboard extends Component {
                                         category.items.map((item, indexItem) => {
                                             const image = item.images.length > 0 ? `${item.images[0].image_url}` : "https://via.placeholder.com/100C/O";
                                             return (
-                                                <div className="col-12 col-sm-6 col-md-4 col-lg-4"  key={item.id + indexItem}>
+                                                <div className="col-xl-4 col-lg-6 col-md-6"  key={item.id + indexItem}>
                                                     <div className="card my-2">
                                                         <div className="card-body d-flex">
                                                             <div className="me-3 flex-fill">
