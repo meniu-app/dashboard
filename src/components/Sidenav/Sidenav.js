@@ -170,7 +170,7 @@ class Sidenav extends Component {
         const treeData = this.convertRestaurantDataToTreeView(restaurantTreeViewData)
 
         return (
-            <div className="col-12 col-sm-5 col-md-4 col-lg-3" id="main-sidebar">
+            <div id="main-sidebar" className="col-md-3 col-sm-4 col-xs-12 col-lg-3 col-xl-2">
                 <div className="row my-4">
                     <div className="col">
                         <div className="text-center">
