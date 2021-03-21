@@ -154,8 +154,8 @@ class Dashboard extends Component {
                                                             </div>
                                                         </div>
                                                         <div className="d-flex pe-3 pb-3">
-                                                            <button onClick={() => this.setSelectedItem(item)} className="no-btn" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit</button>
-                                                            <button onClick={() => this.setSelectedItem(item)} className="no-btn" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
+                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit</button>
+                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
                                                         </div>
                                                     </div>
                                                 </div>

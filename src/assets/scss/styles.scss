@@ -32,6 +32,16 @@ body {
   cursor: pointer;
 }
 
+/* Menu */
+#menu-detail{
+  .btn-link{
+    font-weight: 700;
+    color:#000;
+    text-decoration: none;
+    padding: 0 12px;
+  }
+}
+
 .modal{
   .btn-sel{
     color: #000;

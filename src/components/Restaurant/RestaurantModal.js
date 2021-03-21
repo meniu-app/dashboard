@@ -68,34 +68,50 @@ class RestaurantModal extends Component {
                         <div className="modal-body">
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
-                                <div className="mb-3">
-                                    <label htmlFor="restaurantNameInput" className="form-label">Restaurant name</label>
-                                    <input name="name" type="text" className="form-control" id="restaurantNameInput" placeholder="My Restaurant" required/>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <input name="name" type="text" className="form-control" id="restaurantNameInput" placeholder="Restaurant name" required/>
+                                    </div>
+                                    <div className="col">
+                                        <input name="phone" type="phone" className="form-control" id="restaurantPhoneInput" placeholder="Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3">
-                                    <label htmlFor="restaurantAddressInput" className="form-label">Restaurant address</label>
-                                    <input name="address" type="address" className="form-control" id="restaurantAddressInput" placeholder="Street..." required/>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <input name="address" type="text" className="form-control" id="restaurantAddressInput" placeholder="Street" required/>
+                                    </div>
+                                    <div className="col">
+                                        <input name="city" type="text" className="form-control" id="restaurantCityInput" placeholder="City" required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="restaurantEmailInput">Restaurant email</label>
-                                    <input name="email" type="email" className="form-control" id="restaurantEmailInput" placeholder="restaurant@email.com" required/>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <input name="state" type="text" className="form-control" id="restaurantStateInput" placeholder="State/Province" required/>
+                                    </div>
+                                    <div className="col">
+                                        <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="restaurantPhoneInput">Restaurant phone</label>
-                                    <input name="phone" type="phone" className="form-control" id="restaurantPhoneInput" placeholder="3453456" required/>
+                                <div className="row mb-4">
+                                    <div className="col-6">
+                                        <input name="email" type="email" className="form-control" id="restaurantEmailInput" placeholder="restaurant@email.com" required/>
+                                    </div>
+                                    <div className="col-6">
+                                        <label htmlFor="restaurantLogoInput">Restaurant logo</label>
+                                        <input name="logo" type="file" className="form-control-file" id="restaurantLogoInput" required/>
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="restaurantLogoInput">Restaurant logo</label>
-                                    <input name="logo" type="file" className="form-control-file" id="restaurantLogoInput" required/>
+                                <div className="row mb-4">
+                                    <div className="col-6">
+                                        <label htmlFor="restaurantBannerInput">Restaurant banner</label>
+                                        <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" required={this.state.backgroundImage}/>
+                                    </div>
+                                    <div className="col-6 form-check form-switch">
+                                        <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={this.state.backgroundImage} onChange={ this.handleBackgroudImageChange } />
+                                        <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="restaurantBannerInput">Restaurant banner</label>
-                                    <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" required={this.state.backgroundImage}/>
-                                </div>
-                                <div className="form-check form-switch">
-                                    <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={this.state.backgroundImage} onChange={ this.handleBackgroudImageChange } />
-                                    <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
-                                </div>
+                                
                                 <div className="form-group">
                                     <label htmlFor="restaurantBannerInput">Restaurant background</label>
                                     <TwitterPicker onChange={ this.handleBackgroundChange } />
