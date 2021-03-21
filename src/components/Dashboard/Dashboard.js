@@ -15,6 +15,7 @@ import EditItemModal from '../Item/EditItemModal';
 import EditMenuModal from '../Menu/EditMenuModal';
 import DeleteMenuModal from '../Menu/DeleteMenuModal';
 import DeleteItemModal from '../Item/DeleteItemModal';
+import NumberFormat from 'react-number-format';
 
 class Dashboard extends Component {
 
@@ -143,8 +144,9 @@ class Dashboard extends Component {
                                                         <div className="card-body pb-0 d-flex">
                                                             <div className="me-3 flex-fill">
                                                                 <h6>{item.name}</h6>
-                                                                {/* #TODO currency Formater: https://www.npmjs.com/package/react-number-format */}
-                                                                <p className="mb-1"><b>{item.price}</b></p>
+                                                                <p className="mb-1">
+                                                                    <b><NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} prefix={'$'} /></b>
+                                                                </p>
                                                                 <p>{item.description}</p>
                                                             </div>
                                                             <div>
