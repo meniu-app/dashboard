@@ -109,7 +109,7 @@ class Dashboard extends Component {
                         </div>
                         <div className="me-3 d-flex justify-content-start">
                             <h3 className="mb-0">
-                                <img className="img-thumbnail" src={menuDetail.qr_code} width="128" alt=""/>
+                                <img className="img-thumbnail me-3" src={menuDetail.qr_code} width="128" alt=""/>
                                 Menu: {menuDetail.name}
                             </h3>
                             <div className="ms-3 d-flex align-items-center">
@@ -123,7 +123,7 @@ class Dashboard extends Component {
                         categories.map((category, index) => {
                             return (
                                 <div key={category.id + index} id={category.id + index} className="category-group">
-                                    <div className="card col-xl-4 col-lg-4 col-md-4 col-sm-6  col-12 category-title">
+                                    <div className="card col-xl-4 col-lg-4 col-md-4 col-sm-6  col-12 category-title my-5">
                                         <div className="card-body">
                                             <h5 className="h6">{category.name}</h5>
                                             {
@@ -140,9 +140,10 @@ class Dashboard extends Component {
                                             return (
                                                 <div className="col-xl-4 col-lg-6 col-md-6"  key={item.id + indexItem}>
                                                     <div className="card my-2">
-                                                        <div className="card-body d-flex">
+                                                        <div className="card-body pb-0 d-flex">
                                                             <div className="me-3 flex-fill">
                                                                 <h6>{item.name}</h6>
+                                                                {/* #TODO currency Formater: https://www.npmjs.com/package/react-number-format */}
                                                                 <p className="mb-1"><b>{item.price}</b></p>
                                                                 <p>{item.description}</p>
                                                             </div>
@@ -150,9 +151,9 @@ class Dashboard extends Component {
                                                                 <img className="img-thumbnail" style={{width: "80px"}} src={image} alt=""/>
                                                             </div>
                                                         </div>
-                                                        <div className="d-flex pe-3 ps-3 pb-3">
-                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-outline-primary me-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit</button>
-                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-outline-danger" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
+                                                        <div className="d-flex pe-3 pb-3">
+                                                            <button onClick={() => this.setSelectedItem(item)} className="no-btn" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit</button>
+                                                            <button onClick={() => this.setSelectedItem(item)} className="no-btn" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
                                                         </div>
                                                     </div>
                                                 </div>
