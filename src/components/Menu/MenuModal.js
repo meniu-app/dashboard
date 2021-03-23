@@ -35,17 +35,21 @@ class MenuModal extends Component {
                         <div className="modal-body">
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
-                                <div className="mb-3">
-                                    <label htmlFor="menuNameInput" className="form-label">Menu name</label>
-                                    <input name="name" type="text" className="form-control" id="menuNameInput" placeholder="My menu" required/>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <input name="name" type="text" className="form-control" id="menuNameInput" placeholder="Menu Name" required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="menuDescriptionInput">Menu description</label>
-                                    <textarea name="description" className="form-control" id="menuDescriptionInput" rows="3" required></textarea>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <label htmlFor="menuDescriptionInput">Menu description</label>
+                                        <textarea name="description" className="form-control" id="menuDescriptionInput" rows="3" required></textarea>
+                                    </div>
                                 </div>
+                                
                                 <div className="mt-3 d-flex justify-content-end">
-                                    <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" className="btn btn-success">Submit</button>
                                 </div>
                             </form>
                             : <Spinner />
