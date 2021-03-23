@@ -58,6 +58,7 @@ class Login extends Component {
                 <div className="intro row m-3">
                     <div className="col text-center">
                         <h1>LULO Partner</h1>
+                        <h3>Understand your business like never before</h3>
                     </div>
                 </div>
                 { this.state.urlToken === null ?
