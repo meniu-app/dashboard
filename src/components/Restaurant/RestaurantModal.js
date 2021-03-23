@@ -73,7 +73,7 @@ class RestaurantModal extends Component {
                                         <input name="name" type="text" className="form-control" id="restaurantNameInput" placeholder="Restaurant name" required/>
                                     </div>
                                     <div className="col">
-                                        <input name="phone" type="phone" className="form-control" id="restaurantPhoneInput" placeholder="Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
+                                        <input name="phone" type="phone" className="form-control" id="restaurantPhoneInput" placeholder="Phone" required/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
