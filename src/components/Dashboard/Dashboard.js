@@ -140,20 +140,22 @@ class Dashboard extends Component {
                                             const image = item.images.length > 0 ? `${item.images[0].image_url}` : "https://via.placeholder.com/100C/O";
                                             return (
                                                 <div className="col-xl-4 col-lg-6 col-md-6"  key={item.id + indexItem}>
-                                                    <div className="card my-2">
+                                                    <div className="card my-3">
                                                         <div className="card-body pb-0 d-flex">
                                                             <div className="me-3 flex-fill">
                                                                 <h6>{item.name}</h6>
-                                                                <p className="mb-1">
-                                                                    <b><NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} prefix={'$'} /></b>
-                                                                </p>
                                                                 <p>{item.description}</p>
                                                             </div>
                                                             <div>
-                                                                <img className="img-thumbnail" style={{width: "80px"}} src={image} alt=""/>
+                                                                <p className="me-1">
+                                                                    <b><NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} prefix={'$'} /></b>
+                                                                </p>
+                                                            </div>
+                                                            <div>
+                                                                <img className="img-thumbnail" style={{height: "64px"}} src={image} alt=""/>
                                                             </div>
                                                         </div>
-                                                        <div className="d-flex pe-3 pb-3">
+                                                        <div className="d-flex pe-3 pb-1">
                                                             <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit</button>
                                                             <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
                                                         </div>

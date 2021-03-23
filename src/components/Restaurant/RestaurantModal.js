@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
-import { TwitterPicker } from 'react-color';
+import { CirclePicker } from 'react-color';
 import { getUser, getUserRole } from '../../api/TokenHandler';
 
 class RestaurantModal extends Component {
@@ -93,37 +93,44 @@ class RestaurantModal extends Component {
                                     </div>
                                 </div>
                                 <div className="row mb-4">
-                                    <div className="col-6">
+                                    <div className="col-12">
                                         <input name="email" type="email" className="form-control" id="restaurantEmailInput" placeholder="restaurant@email.com" required/>
                                     </div>
-                                    <div className="col-6">
+                                    
+                                </div>
+                                <div className="row mb-4">
+                                    <div className="col-6 file-input">
                                         <label htmlFor="restaurantLogoInput">Restaurant logo</label>
                                         <input name="logo" type="file" className="form-control-file" id="restaurantLogoInput" required/>
+                                    </div>
+                                    <div className="col-6 file-input">
+                                        <label htmlFor="restaurantBannerInput">Restaurant banner</label>
+                                        <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" required={this.state.backgroundImage}/>
+                                    </div>
+                                </div>
+                                <div className="row mb-4">
+                                    <div className="col-6 pd-3 form-check form-switch">
+                                        <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
+                                        <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={this.state.backgroundImage} onChange={ this.handleBackgroudImageChange } />
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-6">
-                                        <label htmlFor="restaurantBannerInput">Restaurant banner</label>
-                                        <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" required={this.state.backgroundImage}/>
+                                        <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant background</label>
+                                        <CirclePicker 
+                                            circleSize={24}
+                                            onChange={ this.handleBackgroundChange } />
                                     </div>
-                                    <div className="col-6 form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={this.state.backgroundImage} onChange={ this.handleBackgroudImageChange } />
-                                        <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
+                                    <div className="col-6">
+                                        <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant color</label>
+                                        <CirclePicker 
+                                            circleSize={24}
+                                            onChange={ this.handleColorChange } />
                                     </div>
                                 </div>
-                                
-                                <div className="form-group">
-                                    <label htmlFor="restaurantBannerInput">Restaurant background</label>
-                                    <TwitterPicker onChange={ this.handleBackgroundChange } />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="restaurantBannerInput">Restaurant color</label>
-                                    <TwitterPicker onChange={ this.handleColorChange } />
-                                </div>
-                                
                                 <div className="mt-3 d-flex justify-content-end">
-                                    <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" className="btn btn-success">Submit</button>
                                 </div>
                             </form>
                             : <Spinner />
