@@ -26,16 +26,21 @@ class DeleteCategoryModal extends Component {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="deleteCategoryModalLabel">Delete Category</h5>
+                            <h5 className="modal-title" id="deleteCategoryModalLabel"></h5>
                             <button id="button-close-modal-category-delete" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <p>Are you sure you want to delete <b>{category.name}</b>? It will be permanently deleted.</p>
+                            <h2 className="text-center">Delete Category</h2>
+                            <div className="row mb-4">
+                                <div className="col text-center">
+                                    <p>Are you sure you want to delete <b>{category.name}</b>? It will be permanently deleted.</p>
+                                </div>
+                            </div>
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="DELETE" encType="multipart/form-data">
                                 <div className="mt-3 d-flex justify-content-end">
-                                    <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" className="btn btn-primary">Delete</button>
+                                    <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" className="btn btn-success">Delete</button>
                                 </div>
                             </form>
                             : <Spinner />

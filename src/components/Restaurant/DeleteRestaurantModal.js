@@ -27,11 +27,16 @@ class DeleteRestaurantModal extends Component {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="deleteRestaurantModalLabel">Delete Restaurant</h5>
+                            <h5 className="modal-title" id="deleteRestaurantModalLabel"></h5>
                             <button id="button-close-modal-restaurant-delete" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <p>Are you sure you want to delete <b>{restaurantDetail.name}</b>? It will be permanently deleted.</p>
+                            <h2 className="text-center">Delete Restaurant</h2>
+                            <div className="row mb-4">
+                                <div className="col text-center">
+                                <p>Are you sure you want to delete <b>{restaurantDetail.name}</b>? It will be permanently deleted.</p>
+                                </div>
+                            </div>
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="DELETE" encType="multipart/form-data">
                                 <div className="mt-3 d-flex justify-content-end">
