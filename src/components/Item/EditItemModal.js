@@ -79,17 +79,23 @@ class EditItemModal extends Component {
                         <div className="modal-body">
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="PATCH" encType="multipart/form-data">
-                                <div className="mb-3">
-                                    <label htmlFor="itemNameInputEdit" className="form-label">Item name</label>
-                                    <input name="name" type="text" className="form-control"  id="itemNameInputEdit" value={newItem.name} onChange={ handleChangeItem } placeholder="Sopa de tomate" required/>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="itemPriceInputEdit" className="form-label">Item price</label>
-                                    <input name="price" type="text" min="0" className="form-control" id="itemPriceInputEdit" value={newItem.price} onChange={ handleChangeItem } onKeyPress={this.validate} placeholder="12,99" required/>
+                                <div className="d-flex justify-content-between">
+                                    <div className="mb-3">
+                                        <label htmlFor="itemNameInputEdit" className="form-label">Item name</label>
+                                        <input name="name" type="text" className="form-control"  id="itemNameInputEdit" value={newItem.name} onChange={ handleChangeItem } placeholder="Sopa de tomate" required/>
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="itemPriceInputEdit" className="form-label">Item price</label>
+                                        <input name="price" type="text" min="0" className="form-control" id="itemPriceInputEdit" value={newItem.price} onChange={ handleChangeItem } onKeyPress={this.validate} placeholder="12,99" required/>
+                                    </div>
                                 </div>
                                 <div className="mb-3 form-group">
                                     <label htmlFor="itemDescriptionInputEdit">Item description</label>
                                     <textarea name="description" className="form-control" value={newItem.description} id="itemDescriptionInputEdit" onChange={ handleChangeItem } rows="3" required></textarea>
+                                </div>
+                                <div className="mb-3 form-group">
+                                    <label htmlFor="itemNotesInput">Extra notes, food allergens, etc.</label>
+                                    <textarea name="notes" className="form-control" id="itemNotesInput" rows="2" required></textarea>
                                 </div>
                                 <div className="mb-3 form-group">
                                     <label htmlFor="itemMenuInputEdit">Item menu</label>

@@ -67,17 +67,23 @@ class ItemModal extends Component {
                         <div className="modal-body">
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
-                                <div className="mb-3">
-                                    <label htmlFor="itemNameInput" className="form-label">Item name</label>
-                                    <input name="name" type="text" className="form-control" id="itemNameInput" placeholder="Sopa de tomate" required/>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="itemPriceInput" className="form-label">Item price</label>
-                                    <input name="price" type="text" min="0" className="form-control" id="itemPriceInput" placeholder="12.99" onKeyPress={this.validate} required/>
+                                <div className="d-flex justify-content-between">
+                                    <div className="mb-3">
+                                        <label htmlFor="itemNameInput" className="form-label">Item name</label>
+                                        <input name="name" type="text" className="form-control" id="itemNameInput" placeholder="Sopa de tomate" required/>
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="itemPriceInput" className="form-label">Item price</label>
+                                        <input name="price" type="text" min="0" className="form-control" id="itemPriceInput" placeholder="12.99" onKeyPress={this.validate} required/>
+                                    </div>
                                 </div>
                                 <div className="mb-3 form-group">
                                     <label htmlFor="itemDescriptionInput">Item description</label>
                                     <textarea name="description" className="form-control" id="itemDescriptionInput" rows="3" required></textarea>
+                                </div>
+                                <div className="mb-3 form-group">
+                                    <label htmlFor="itemNotesInput">Extra notes, food allergens, etc.</label>
+                                    <textarea name="notes" className="form-control" id="itemNotesInput" rows="2" required></textarea>
                                 </div>
                                 <div className="mb-3 form-group">
                                     <label htmlFor="itemMenuInput">Item menu</label>
