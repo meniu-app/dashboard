@@ -54,7 +54,7 @@ class Login extends Component {
                         <h3>Understand your business like never before</h3>
                     </div>
                 </div>
-                <form onSubmit={this.loginSubmit} className="form--login" action="http://auth/login" method="POST">
+                <form onSubmit={this.loginSubmit} className="form--login" method="POST">
                     <div className="mb-3">
                         <label htmlFor="loginEmail" className="form-label fw-bolder">Email</label>
                         <input type="text" name="email" className="form-control" id="loginEmail" placeholder="email@domain.com" required></input>
