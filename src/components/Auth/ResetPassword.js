@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as appAction from '../../actions/appActions';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { getParameterByName } from '../../api/Helpers';
 
 class Login extends Component {
@@ -55,13 +55,28 @@ class Login extends Component {
 
         return (
             <div className="container mb-5">
+                <div className="intro row m-3">
+                    <div className="col text-center">
+                        <h1>LULO Partner</h1>
+                        <h3>Understand your business like never before</h3>
+                    </div>
+                </div>
                 { this.state.urlToken === null ?
                 <form onSubmit={this.getResetPasswordToken} className="form--login" method="POST">
+                    <h6>Reset your password</h6>
+                    <p>
+                        Enter the email address associated with your account
+                        <br/>
+                        and we will send you a link to reset your password
+                    </p>
                     <div className="mb-3">
                         <label htmlFor="loginEmail" className="form-label">Email</label>
                         <input type="text" name="email" className="form-control" id="loginEmail" value={this.state.email} onChange={e => this.setState({email: e.target.value})} placeholder="email@domain.com" required></input>
                     </div>
-                    <button type="submit" className="btn btn-primary me-2">Submit</button>
+                    <div className="d-grid gap-2 mb-3">
+                        <button type="submit" className="btn btn-success me-2">Send reset link</button>
+                    </div>
+                    <Link className="fw-bolder" to="/auth/login">Return to log in</Link>
                 </form>
                 :
                 <form onSubmit={this.resetPasswordConfirm} className="form--login" method="POST">
@@ -69,7 +84,10 @@ class Login extends Component {
                         <label htmlFor="loginPassword" className="form-label">Password</label>
                         <input type="password" name="password" className="form-control" id="loginPassword" value={this.state.password} onChange={e => this.setState({password: e.target.value})} required></input>
                     </div>
-                    <button type="submit" className="btn btn-primary me-2">Submit</button>
+                    <div className="d-grid gap-2 mb-3">
+                        <button type="submit" className="btn btn-success me-2">Reset password</button>
+                    </div>
+                    <Link className="fw-bolder" to="/auth/login">Return to log in</Link>
                 </form>
                 }
             </div>

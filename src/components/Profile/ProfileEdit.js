@@ -33,14 +33,13 @@ class ProfileEdit extends Component {
       user.first_name = this.state.firstName;
       user.last_name = this.state.lastName;
       setUser(user);
-      history.push('/profile');
+      history.push('/settings');
     }
   }
 
   render() {
     return (
       <div className="container">
-        <h3>Edit Profile</h3>
         <form onSubmit={this.changeProfile} className="form--login" method="POST">
               <div className="mb-3">
                   <label htmlFor="profilefirstName" className="form-label">First name</label>
@@ -50,7 +49,9 @@ class ProfileEdit extends Component {
                   <label htmlFor="profilelastName" className="form-label">last name</label>
                   <input type="text" name="lastName" className="form-control" value={this.state.lastName} onChange={e => this.setState({lastName: e.target.value})} required id="profilelastName"></input>
               </div>
-              <button className="btn btn-primary">Save</button>
+              <div className="d-grid gap-2">
+                <button className="btn btn-success">Change profile</button>
+              </div>
           </form>
       </div>
     );

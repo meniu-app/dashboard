@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
-import { SwatchesPicker } from 'react-color';
-import { getUserRole } from '../../api/TokenHandler';
+import { CirclePicker } from 'react-color';
+import { getUser, getUserRole } from '../../api/TokenHandler';
 
 class RestaurantModal extends Component {
 
@@ -31,7 +31,7 @@ class RestaurantModal extends Component {
     }
 
     async handleSubmit (event, props) {
-        const { appActions, menuDetailDataReady } = props;
+        const { appActions } = props;
 
         event.preventDefault();
         const data = new FormData(event.target);
@@ -43,7 +43,8 @@ class RestaurantModal extends Component {
         }
         data.append('settings', JSON.stringify(settings));
         let response = null;
-        if (getUserRole() === 'owner' && !menuDetailDataReady)
+        const user = getUser();
+        if (getUserRole() === 'owner' && user.restaurant === null)
             response = await appActions.addRestaurantData(data, true)
         else
             response = await appActions.addRestaurantData(data, false)
@@ -67,46 +68,69 @@ class RestaurantModal extends Component {
                         <div className="modal-body">
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
-                                <div className="mb-3">
-                                    <label htmlFor="restaurantNameInput" className="form-label">Restaurant name</label>
-                                    <input name="name" type="text" className="form-control" id="restaurantNameInput" placeholder="My Restaurant" required/>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <input name="name" type="text" className="form-control" id="restaurantNameInput" placeholder="Restaurant name" required/>
+                                    </div>
+                                    <div className="col">
+                                        <input name="phone" type="phone" className="form-control" id="restaurantPhoneInput" placeholder="Phone" required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3">
-                                    <label htmlFor="restaurantAddressInput" className="form-label">Restaurant address</label>
-                                    <input name="address" type="address" className="form-control" id="restaurantAddressInput" placeholder="Street..." required/>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <input name="address" type="text" className="form-control" id="restaurantAddressInput" placeholder="Street" required/>
+                                    </div>
+                                    <div className="col">
+                                        <input name="city" type="text" className="form-control" id="restaurantCityInput" placeholder="City" required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="restaurantEmailInput">Restaurant email</label>
-                                    <input name="email" type="email" className="form-control" id="restaurantEmailInput" placeholder="restaurant@email.com" required/>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <input name="state" type="text" className="form-control" id="restaurantStateInput" placeholder="State/Province" required/>
+                                    </div>
+                                    <div className="col">
+                                        <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="restaurantPhoneInput">Restaurant phone</label>
-                                    <input name="phone" type="phone" className="form-control" id="restaurantPhoneInput" placeholder="3453456" required/>
+                                <div className="row mb-4">
+                                    <div className="col-12">
+                                        <input name="email" type="email" className="form-control" id="restaurantEmailInput" placeholder="restaurant@email.com" required/>
+                                    </div>
+                                    
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="restaurantLogoInput">Restaurant logo</label>
-                                    <input name="logo" type="file" className="form-control-file" id="restaurantLogoInput" required/>
+                                <div className="row mb-4">
+                                    <div className="col-6 file-input">
+                                        <label htmlFor="restaurantLogoInput">Restaurant logo</label>
+                                        <input name="logo" type="file" className="form-control-file" id="restaurantLogoInput" required/>
+                                    </div>
+                                    <div className="col-6 file-input">
+                                        <label htmlFor="restaurantBannerInput">Restaurant banner</label>
+                                        <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" required={this.state.backgroundImage}/>
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="restaurantBannerInput">Restaurant banner</label>
-                                    <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" required={this.state.backgroundImage}/>
+                                <div className="row mb-4">
+                                    <div className="col-6 pd-3 form-check form-switch">
+                                        <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
+                                        <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={this.state.backgroundImage} onChange={ this.handleBackgroudImageChange } />
+                                    </div>
                                 </div>
-                                <div className="form-check form-switch">
-                                    <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={this.state.backgroundImage} onChange={ this.handleBackgroudImageChange } />
-                                    <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
+                                <div className="row mb-4">
+                                    <div className="col-6">
+                                        <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant background</label>
+                                        <CirclePicker 
+                                            circleSize={24}
+                                            onChange={ this.handleBackgroundChange } />
+                                    </div>
+                                    <div className="col-6">
+                                        <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant color</label>
+                                        <CirclePicker 
+                                            circleSize={24}
+                                            onChange={ this.handleColorChange } />
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="restaurantBannerInput">Restaurant background</label>
-                                    <SwatchesPicker onChange={ this.handleBackgroundChange } />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="restaurantBannerInput">Restaurant color</label>
-                                    <SwatchesPicker onChange={ this.handleColorChange } />
-                                </div>
-                                
                                 <div className="mt-3 d-flex justify-content-end">
-                                    <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" className="btn btn-success">Submit</button>
                                 </div>
                             </form>
                             : <Spinner />

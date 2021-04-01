@@ -15,6 +15,7 @@ import EditItemModal from '../Item/EditItemModal';
 import EditMenuModal from '../Menu/EditMenuModal';
 import DeleteMenuModal from '../Menu/DeleteMenuModal';
 import DeleteItemModal from '../Item/DeleteItemModal';
+import NumberFormat from 'react-number-format';
 
 class Dashboard extends Component {
 
@@ -30,6 +31,7 @@ class Dashboard extends Component {
                 category: ''
             }
         }
+        this.setSelectedCategory = this.props.setSelectedCategory.bind(this)
     }
 
     handleChangeItem = (e) => {
@@ -53,9 +55,16 @@ class Dashboard extends Component {
     setSelectedItem(item) {
         if (item.category === null) {
             this.setState({selectedItem: {...item, category: ''}});
-        }else {
+        } else {
             this.setState({selectedItem: item});
         }
+    }
+
+    handleChangeCategory = (e) => {
+        this.props.setSelectedCategory({
+            ...this.props.selectedCategory,
+            [e.target.name]: e.target.value
+        });
     }
 
     render() {
@@ -66,12 +75,18 @@ class Dashboard extends Component {
         if (menuDetailDataReady) {
             categories = Object.keys(menuDetail.categories).map(key => {return {id: key, ...menuDetail.categories[key]}})
             if (restaurantDetail.items_no_category?.length > 0) {
-                categories.push({id: '1', name: 'No category', items: restaurantDetail.items_no_category});
+                if (restaurantDetail.items_no_category.length > 0)
+                    categories.push({id: '1', name: 'No category', items: restaurantDetail.items_no_category});
             }
         }
 
+        categories = categories.filter(category => {
+            if (category.items.length > 0)
+                return category
+        })
+
         return (
-            <div id="main-content" className="container px-0">
+            <div id="main-content" className="col-xs-12 col-md-9 col-sm-8 col-lg-9 col-xl-10">
                 <MainModal restaurantDataReady={restaurantDataReady} />
                 {
                     restaurantDataReady &&
@@ -88,42 +103,62 @@ class Dashboard extends Component {
                 <DeleteMenuModal menu={{...menuDetail}} />
                 {
                 menuDetailDataReady ?
-                <div className="px-3">
-                    <div className="d-flex">
-                        <h4 className="me-3">{menuDetail.name}</h4>
-                        <button className="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit menu</button>
-                        <button className="btn btn-danger ms-2"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete menu</button>
-                        <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
-                    </div>
-                    <div className="row mt-3">
-                        <div className="col-4">
-                            <img className="img-thumbnail" src={menuDetail.qr_code} alt=""/>
+                <div className="px-4 my-4" id="menu-detail">
+                    <section className="title col d-flex mb-4">
+                        <div className="">
+
                         </div>
-                    </div>
+                        <div className="me-3 d-flex justify-content-start">
+                            <h3 className="mb-0">
+                                <img className="img-thumbnail me-3" src={menuDetail.qr_code} width="128" alt=""/>
+                                Menu: {menuDetail.name}
+                            </h3>
+                            <div className="ms-3 d-flex align-items-center">
+                                <button className="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit</button>
+                                <button className="btn btn-outline-danger ms-2 btn-sm"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete</button>
+                            </div>
+                        </div> 
+                        <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
+                    </section>
                     {
                         categories.map((category, index) => {
                             return (
-                                <div key={category.id + index} id={category.id + index}>
-                                    <h5 className="text-center my-3">{category.name}</h5>
+                                <div key={category.id + index} id={category.id + index} className="category-group">
+                                    <div className="card col-xl-4 col-lg-4 col-md-4 col-sm-6  col-12 category-title my-5">
+                                        <div className="card-body">
+                                            <h5 className="h6">{category.name}</h5>
+                                            {
+                                                category.id !== 'no_category' ?
+                                                <button className="btn btn-link" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit Category</button>
+                                                : <></>
+                                            }
+                                        </div>
+                                    </div>
                                     <div className="row">
                                     {
                                         category.items.map((item, indexItem) => {
                                             const image = item.images.length > 0 ? `${item.images[0].image_url}` : "https://via.placeholder.com/100C/O";
                                             return (
-                                                <div className="col-12 col-lg-4"  key={item.id + indexItem}>
-                                                    <div className="card my-2">
-                                                        <div className="card-body d-flex">
+                                                <div className="col-xl-4 col-lg-6 col-md-6"  key={item.id + indexItem}>
+                                                    <div className="card my-3">
+                                                        <div className="card-body pb-0 d-flex">
                                                             <div className="me-3 flex-fill">
-                                                                <h5>{item.name}</h5>
-                                                                <h6>{item.price}</h6>
+                                                                <h6>{item.name}</h6>
                                                                 <p>{item.description}</p>
                                                             </div>
                                                             <div>
-                                                                <img className="img-thumbnail" src={image} alt=""/>
+                                                                <p className="me-1">
+                                                                    <b><NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} prefix={'$'} /></b>
+                                                                </p>
+                                                            </div>
+                                                            <div>
+                                                                <img className="img-thumbnail" style={{height: "64px"}} src={image} alt=""/>
                                                             </div>
                                                         </div>
-                                                        <button onClick={() => this.setSelectedItem(item)} className="btn btn-primary m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit item</button>
-                                                        <button onClick={() => this.setSelectedItem(item)} className="btn btn-danger m-3" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete item</button>
+                                                        <div className="d-flex pe-3 pb-1">
+                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit</button>
+                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )
@@ -146,7 +181,9 @@ Dashboard.propTypes = {
     menuDetail: PropTypes.object.isRequired,
     menuDetailDataReady: PropTypes.bool.isRequired,
     restaurantDataReady: PropTypes.bool.isRequired,
-    restaurantDetail: PropTypes.object
+    restaurantDetail: PropTypes.object,
+    selectedCategory: PropTypes.object,
+    setSelectedCategory: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

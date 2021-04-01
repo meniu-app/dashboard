@@ -40,18 +40,22 @@ class EditCategoryModal extends Component {
                         <div className="modal-body">
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="PATCH" encType="multipart/form-data">
-                                <div className="mb-3">
-                                    <label htmlFor="categoryNameInputEdit" className="form-label">Category name</label>
-                                    <input name="name" type="text" className="form-control" id="categoryNameInputEdit" value={newCategory.name} onChange={handleChangeCategory} placeholder="My category" required/>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <input name="name" type="text" className="form-control" id="categoryNameInputEdit" value={newCategory.name} onChange={handleChangeCategory} placeholder="My category" required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="categoryDescriptionInputEdit">Category description</label>
-                                    <textarea name="description" className="form-control" id="categoryDescriptionInputEdit" value={newCategory.description} onChange={handleChangeCategory} rows="3" required></textarea>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <label htmlFor="categoryDescriptionInputEdit">Category description</label>
+                                        <textarea name="description" className="form-control" id="categoryDescriptionInputEdit" value={newCategory.description} onChange={handleChangeCategory} rows="3" required></textarea>
+                                    </div>
                                 </div>
+                                
                                 <div className="mt-3 d-flex justify-content-end">
-                                    <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal"  data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">Delete</button>
                                     <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal"  data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">Delete</button>
+                                    <button type="submit" className="btn btn-success">Submit</button>
                                 </div>
                             </form>
                             : <Spinner />

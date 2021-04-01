@@ -11,7 +11,8 @@ class Login extends Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            passwordShow: false
         };
     }
 
@@ -36,6 +37,7 @@ class Login extends Component {
               }
               else {
                 await appActions.getRestaurantDetailInitialData(undefined, user.id);
+                await appActions.getRestaurantTreeViewDetailData();
               }
             }
             this.props.history.push('/');
@@ -46,17 +48,33 @@ class Login extends Component {
 
         return (
             <div className="container mb-5">
+                <div className="intro row m-3">
+                    <div className="col text-center">
+                        <h1>LULO Partner</h1>
+                        <h3>Understand your business like never before</h3>
+                    </div>
+                </div>
                 <form onSubmit={this.loginSubmit} className="form--login" action="http://auth/login" method="POST">
                     <div className="mb-3">
-                        <label htmlFor="loginEmail" className="form-label">Email</label>
+                        <label htmlFor="loginEmail" className="form-label fw-bolder">Email</label>
                         <input type="text" name="email" className="form-control" id="loginEmail" placeholder="email@domain.com" required></input>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="loginPassword" className="form-label">Password</label>
-                        <input type="password" name="password" className="form-control" id="loginPassword" required></input>
+                        <label htmlFor="loginPassword" className="form-label fw-bolder">Password</label>
+                        <Link to="/auth/reset_password" type="link" className="float-end fw-bolder">Forgot your password?</Link>
+                        <div className="field-group d-flex">
+                            <input type={this.state.passwordShow ? "text" : "password"} name="password" className="form-control" id="loginPassword" required></input>
+                            <button className="btn btn-default fw-bolder btn-show-password" onClick={() => this.setState({passwordShow: !this.state.passwordShow})} type="button">
+                                {!this.state.passwordShow ? "Show" : "Hide"}
+                            </button>
+                        </div>
                     </div>
-                    <button className="btn btn-primary me-2">Login</button>
-                    <Link to="/auth/reset_password" type="button" className="btn btn-primary"> Forget Password</Link>
+                    <div className="d-grid gap-2">
+                       <button className="btn btn-success" type="submit">Sign in</button>
+                    </div>
+                    <div className="mt-3 text-center">
+                        <p>No account? <a href="mailto:hello@oklulo.com"><strong>partner with Lulo!</strong></a></p>
+                    </div>
                 </form>
             </div>
         );

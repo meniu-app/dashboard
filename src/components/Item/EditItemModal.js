@@ -49,6 +49,18 @@ class EditItemModal extends Component {
         }
     }
 
+    validate (evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var value = evt.target.value + key;
+        var regex = /^\d+(.\d{0,2})?$/;
+        if( !regex.test(value) ) {
+          theEvent.returnValue = false;
+          if(theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+
     render () {
 
         const { restaurantDetail, formLoading, item, handleChangeItem } = this.props;
@@ -67,51 +79,66 @@ class EditItemModal extends Component {
                         <div className="modal-body">
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="PATCH" encType="multipart/form-data">
-                                <div className="mb-3">
-                                    <label htmlFor="itemNameInputEdit" className="form-label">Item name</label>
-                                    <input name="name" type="text" className="form-control"  id="itemNameInputEdit" value={newItem.name} onChange={ handleChangeItem } placeholder="Sopa de tomate" required/>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <label htmlFor="itemNameInputEdit" className="form-label">Item name</label>
+                                        <input name="name" type="text" className="form-control"  id="itemNameInputEdit" value={newItem.name} onChange={ handleChangeItem } placeholder="Sopa de tomate" required/>
+                                    </div>
+                                    <div className="col">
+                                        <label htmlFor="itemPriceInputEdit" className="form-label">Item price</label>
+                                        <input name="price" type="text" min="0" className="form-control" id="itemPriceInputEdit" value={newItem.price} onChange={ handleChangeItem } onKeyPress={this.validate} placeholder="12,99" required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3">
-                                    <label htmlFor="itemPriceInputEdit" className="form-label">Item price</label>
-                                    <input name="price" type="number" className="form-control" id="itemPriceInputEdit" value={newItem.price} onChange={ handleChangeItem } placeholder="12,99" required/>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <label htmlFor="itemDescriptionInputEdit">Item description</label>
+                                        <textarea name="description" className="form-control" value={newItem.description} id="itemDescriptionInputEdit" onChange={ handleChangeItem } rows="3" required></textarea>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="itemDescriptionInputEdit">Item description</label>
-                                    <textarea name="description" className="form-control" value={newItem.description} id="itemDescriptionInputEdit" onChange={ handleChangeItem } rows="3" required></textarea>
+                                <div className="row mb-4">
+                                    <div className="col">
+                                        <label htmlFor="itemNotesInput">Extra notes, food allergens, etc.</label>
+                                        <textarea name="notes" className="form-control" id="itemNotesInput" rows="2" required></textarea>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="itemMenuInputEdit">Item menu</label>
-                                    <select name="menu" className="form-control" value={newItem.menu} onChange={ handleChangeItem } id="itemMenuInputEdit" required>
-                                        {
-                                            menus.map(menu => {
-                                                return (
-                                                    <option value={menu.id} key={menu.id}>{ menu.name }</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    {menus.length === 0 ? <p className="text-danger"><b>Please create a menu</b></p> : <></>}
+                                <div className="row mb-4">
+                                    <div className="col form-group">
+                                        <label htmlFor="itemMenuInputEdit">Item menu</label>
+                                        <select name="menu" className="form-control" value={newItem.menu} onChange={ handleChangeItem } id="itemMenuInputEdit" required>
+                                            {
+                                                menus.map(menu => {
+                                                    return (
+                                                        <option value={menu.id} key={menu.id}>{ menu.name }</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                        {menus.length === 0 ? <p className="text-danger"><b>Please create a menu</b></p> : <></>}
+                                    </div>
+                                    <div className="col form-group">
+                                        <label htmlFor="itemCategoryInputEdit">Item category</label>
+                                        <select name="category" className="form-control" value={newItem.category} onChange={ handleChangeItem } id="itemCategoryInputEdit" required>
+                                            {
+                                                categories.map((category, index) => {
+                                                    return (
+                                                        <option value={category.id} key={category.id+index}>{ category.name }</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                        {categories.length === 0 ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="itemCategoryInputEdit">Item category</label>
-                                    <select name="category" className="form-control" value={newItem.category} onChange={ handleChangeItem } id="itemCategoryInputEdit" required>
-                                        {
-                                            categories.map((category, index) => {
-                                                return (
-                                                    <option value={category.id} key={category.id+index}>{ category.name }</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    {categories.length === 0 ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
+                                <div className="row mb-4">
+                                    <div className="col-6 file-input">
+                                        <label htmlFor="itemImageInputEdit">Image</label>
+                                        <input name="image" type="file" className="form-control-file" id="itemImageInputEdit" />
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="itemImageInputEdit">Image</label>
-                                    <input name="image" type="file" className="form-control-file" id="itemImageInputEdit" />
-                                </div>
+                                
                                 <div className="mt-3 d-flex justify-content-end">
-                                    <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" className="btn btn-success">Submit</button>
                                 </div>
                             </form>
                             : <Spinner />

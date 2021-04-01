@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import * as appAction from '../actions/appActions';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { getUserRole, removeTokens, removeUser } from '../api/TokenHandler';
-import config from '../config';
+import { getUser, getUserRole, removeTokens, removeUser } from '../api/TokenHandler';
 import EditRestaurantModal from './Restaurant/EditRestaurantModal';
 import DeleteRestaurantModal from './Restaurant/DeleteRestaurantModal';
+import Logo from '../assets/img/lulo-logo.png'
 
 class Navbar extends Component {
 
@@ -20,33 +20,32 @@ class Navbar extends Component {
         this.props.history.push('/');
     }
 
+    getUserFullName (firstName, lastName) {
+        let fullName = '';
+        if (firstName !== null && firstName !== '')
+            fullName += `${firstName} `;
+        if (lastName !== null && lastName !== '')
+            fullName += `${lastName}`;
+        if (fullName === '') {
+            return getUserRole();
+        }
+        return fullName;
+    }
+
     handleChangeRestaurant = () => {}
 
     render() {
         const { isLoggedIn, restaurantDetail, restaurantDataReady } = this.props;
-        const env = config.env;
+        const user = getUser();
+
         return (
-            <nav className="navbar navbar-expand-md navbar-light bg-light">
+            <nav id="main-nav" className="navbar navbar-expand-md navbar-light">
                 <div className="container-fluid">
-                    {
-                     restaurantDataReady ?
-                        <div className="navbar-brand d-flex">
-                            <Link className="navbar-brand" to="/">
-                                {restaurantDetail.name} {restaurantDetail.address} {env === 'development' ? ' - Dev' : ''}
-                            </Link>
-                            {
-                                (getUserRole() === 'admin' || getUserRole() === 'owner') ?
-                                <div className="d-flex">
-                                    <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit restaurant</button>
-                                    <button className="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete restaurant</button>
-                                </div> : <></>
-                            }
-                        </div>
-                        :
+                    <div className="navbar-brand d-flex">
                         <Link className="navbar-brand" to="/">
-                            Meniu Dashboard {env === 'development' ? ' - Dev' : ''}
+                            <img src={Logo} alt="Logo" className="lulo-logo" />
                         </Link>
-                    }
+                    </div>
                     {
                         (getUserRole() === 'admin' || getUserRole() === 'owner') &&
                         <div>
@@ -61,17 +60,64 @@ class Navbar extends Component {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                        <div className="navbar-nav mr-auto">
+                        <ul className="navbar-nav mr-auto">
                             {!isLoggedIn &&
-                                <Link className="nav-link" to="/auth/login">Login</Link>}
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/auth/login">Login</Link>
+                                </li>
+                            }
                             {isLoggedIn &&
                                 (
                                 <>
-                                    <Link className="nav-link" to="/profile" >Profile</Link>
-                                    <span onClick={this.logout} className="nav--logout nav-link">Sign out</span>
+                                    {
+                                    (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady ?
+                                    <li className="nav-item dropdown me-5">
+                                        <button className="btn btn-outline-dark dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i className="fas fa-utensils me-2"></i>
+                                            {restaurantDetail.name}
+                                        </button>
+                                        { user ?
+                                        <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                                            {
+                                            (getUserRole() === 'admin' || getUserRole() === 'owner') && restaurantDataReady?
+                                            <li className="dropdown-item">
+                                                <button className="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editRestaurantModal">Edit</button>
+                                                <button className="btn btn-outline-danger btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">Delete</button>
+                                            </li>:<></>
+                                            }
+                                        </ul>:<></>
+                                        }
+                                    </li>:<button className="btn btn-ligth">{restaurantDetail.name}</button>
+                                    }
+                                    <li className="nav-item dropdown">
+                                    { user ?
+                                        <div className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i className="fas fa-user me-1"></i> {this.getUserFullName(user.first_name, user.last_name)}
+                                        </div>:<></>
+                                    }
+                                    { user ?
+                                        <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                                            <li>
+                                                <Link className="dropdown-item" to="/settings" >Settings</Link>
+                                            </li>
+                                            <li>
+                                                <Link className="dropdown-item" to="/">Another action</Link>
+                                            </li>
+                                            <li>
+                                                <hr className="dropdown-divider" />
+                                            </li>
+                                            <li>
+                                                <span onClick={this.logout} className="nav--logout dropdown-item">Sign Out</span>
+                                            </li>
+                                        </ul>:<></>
+                                    }
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/help" >Help</Link>
+                                    </li>
                                 </>
                                 )}
-                        </div>
+                        </ul>
                     </div>
                 </div>
             </nav>

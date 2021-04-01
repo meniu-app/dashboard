@@ -38,6 +38,18 @@ class ItemModal extends Component {
 
     }
 
+    validate (evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var value = evt.target.value + key;
+        var regex = /^\d+(.\d{0,2})?$/;
+        if( !regex.test(value) ) {
+          theEvent.returnValue = false;
+          if(theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+
     render () {
 
         const { restaurantDetail, formLoading } = this.props;
@@ -55,51 +67,67 @@ class ItemModal extends Component {
                         <div className="modal-body">
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
-                                <div className="mb-3">
-                                    <label htmlFor="itemNameInput" className="form-label">Item name</label>
-                                    <input name="name" type="text" className="form-control" id="itemNameInput" placeholder="Sopa de tomate" required/>
+                                <div className="row mb-4">
+                                    <div className="col-6">
+                                        <label htmlFor="itemNameInput" className="form-label">Item name</label>
+                                        <input name="name" type="text" className="form-control" id="itemNameInput" placeholder="Sopa de tomate" required/>
+                                    </div>
+                                    <div className="col-6">
+                                        <label htmlFor="itemPriceInput" className="form-label">Item price</label>
+                                        <input name="price" type="text" min="0" className="form-control" id="itemPriceInput" placeholder="12.99" onKeyPress={this.validate} required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3">
-                                    <label htmlFor="itemPriceInput" className="form-label">Item price</label>
-                                    <input name="price" type="number" className="form-control" id="itemPriceInput" placeholder="12,99" required/>
+                                <div className="row mb-4">
+                                    <div className="col-12">
+                                        <label htmlFor="itemDescriptionInput">Item description</label>
+                                        <textarea name="description" className="form-control" id="itemDescriptionInput" rows="3" required></textarea>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="itemDescriptionInput">Item description</label>
-                                    <textarea name="description" className="form-control" id="itemDescriptionInput" rows="3" required></textarea>
+                                <div className="row mb-4">
+                                    <div className="col-12">
+                                        <label htmlFor="itemNotesInput">Extra notes, food allergens, etc.</label>
+                                        <textarea name="notes" className="form-control" id="itemNotesInput" rows="2" required></textarea>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="itemMenuInput">Item menu</label>
-                                    <select name="menu" className="form-control" id="itemMenuInput" required>
-                                        {
-                                            menus.map(category => {
-                                                return (
-                                                    <option value={category.id} key={category.id}>{ category.name }</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    {menus.length === 0 ? <p className="text-danger"><b>Please create a menu</b></p> : <></>}
+                                
+                                <div className="row mb-4">
+                                    <div className="col-6">
+                                        <label htmlFor="itemMenuInput">Item menu</label>
+                                        <select name="menu" className="form-control" id="itemMenuInput" required>
+                                            {
+                                                menus.map(category => {
+                                                    return (
+                                                        <option value={category.id} key={category.id}>{ category.name }</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                        {menus.length === 0 ? <p className="text-danger"><b>Please create a menu</b></p> : <></>}
+                                    </div>
+                                    <div className="col-6">
+                                        <label htmlFor="itemCategoryInput">Item category</label>
+                                        <select name="category" className="form-control" id="itemCategoryInput" required>
+                                            {
+                                                categories.map(category => {
+                                                    return (
+                                                        <option value={category.id} key={category.id}>{ category.name }</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                        {categories.length === 0 ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="itemCategoryInput">Item category</label>
-                                    <select name="category" className="form-control" id="itemCategoryInput" required>
-                                        {
-                                            categories.map(category => {
-                                                return (
-                                                    <option value={category.id} key={category.id}>{ category.name }</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    {categories.length === 0 ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
+                                <div className="row mb-4">
+                                    <div className="col-6 file-input">
+                                        <label htmlFor="itemImageInput">Image</label>
+                                        <input name="image" type="file" className="form-control-file" id="itemImageInput" required />
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="itemImageInput">Image</label>
-                                    <input name="image" type="file" className="form-control-file" id="itemImageInput" required />
-                                </div>
+
                                 <div className="mt-3 d-flex justify-content-end">
-                                    <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" className="btn btn-success">Submit</button>
                                 </div>
                             </form>
                             : <Spinner />

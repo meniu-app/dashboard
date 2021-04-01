@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import EditCategoryModal from '../Category/EditCategoryModal';
-import { getUserRole } from '../../api/TokenHandler';
+import { getUser, getUserRole } from '../../api/TokenHandler';
 import DeleteCategoryModal from '../Category/DeleteCategoryModal';
 import DeleteUserModal from '../User/DeleteUserModal';
 import TreeMenu from 'react-simple-tree-menu';
+
 
 const DATA_TYPES = {
     restaurant: 'restaurant',
@@ -22,17 +23,13 @@ class Sidenav extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCategory: {
-                id: '',
-                name: '',
-                description: ''
-            },
             selectedUser: {
                 id: '',
                 email: '',
                 restaurant: ''
             }
         }
+        this.setSelectedCategory = this.props.setSelectedCategory.bind(this)
     }
 
     async getMenuDetail(id) {
@@ -45,7 +42,7 @@ class Sidenav extends Component {
         await appActions.getRestaurantDetailInitialData(id)
     }
 
-    handleTreeOnToggle = (data) => {
+    handleTreeOnToggle = async (data) => {
         const bootstrap = window.bootstrap;
         let categoryModal = null;
         let userModal = null;
@@ -62,11 +59,15 @@ class Sidenav extends Component {
                 this.getRestaurantDetail(data.id);
                 break;
             case DATA_TYPES.menu:
-                this.getMenuDetail(data.id);
+                await this.getRestaurantDetail(data.parents.restaurant.id);
+                await this.getMenuDetail(data.id);
                 break;
             case DATA_TYPES.category:
-                this.setSelectedCategory({id: data.id, name: data.label})
-                if (userModal !== null) {
+                if (data.id === 'no_category') {
+                    break;
+                }
+                this.props.setSelectedCategory({id: data.id, name: data.category.name, description: data.category.description})
+                if (categoryModal !== null) {
                     categoryModal.toggle()
                 }
                 break;
@@ -84,46 +85,67 @@ class Sidenav extends Component {
     }
 
     handleChangeCategory = (e) => {
-        this.setState({
-            selectedCategory: {
-                ...this.state.selectedCategory,
-                [e.target.name]: e.target.value
-            }
+        this.props.setSelectedCategory({
+            ...this.props.selectedCategory,
+            [e.target.name]: e.target.value
         });
-    }
-
-    setSelectedCategory(item) {
-        this.setState({selectedCategory: item});
     }
 
     setSelectedUser(user) {
         this.setState({selectedUser: user})
     }
 
-    getUserListData(user) {
-        return { key: user.id, id: user.id, type: DATA_TYPES.user, label: user.email };
+    getUserListData(user, restaurant) {
+        return { key: user.id, id: user.id, type: DATA_TYPES.user, label: user.email, parents: { restaurant } };
     }
 
-    getCategoriesData(categoriesObj) {
+    getCategoriesData(categoriesObj, restaurant, menu) {
         return Object.keys(categoriesObj).map((categoryId) => {
-            return { category: categoriesObj[categoryId], key: categoryId, id: categoryId, label: categoriesObj[categoryId].name, type: DATA_TYPES.category, nodes: categoriesObj[categoryId].items
-                  .map((item) => { return { key: item.id, id: item.id, label: item.name, type: DATA_TYPES.item }; }) }
+            return {
+                category: categoriesObj[categoryId],
+                key: categoryId,
+                id: categoryId,
+                label: categoriesObj[categoryId].name,
+                type: DATA_TYPES.category,
+                nodes: categoriesObj[categoryId].items.map((item) => {
+                    return {
+                        key: item.id,
+                        id: item.id,
+                        label: item.name,
+                        type: DATA_TYPES.item,
+                        parents: { restaurant, menu, category: categoriesObj[categoryId] }
+                    };
+                }),
+                parents: { restaurant, menu }
+            }
         })
     }
 
     populateRestaurantNodes(restaurant) {
         const menus = restaurant.menus.map((menu) => {
-            return { key: menu.id, id: menu.id, type: DATA_TYPES.menu, label: menu.name, nodes: this.getCategoriesData(menu.categories) };
+            return { key: menu.id, id: menu.id, type: DATA_TYPES.menu, label: menu.name, nodes: this.getCategoriesData(menu.categories, restaurant, menu), parents: { restaurant } };
         });
         const menusRoot = { key: 'menus_root', label: 'Menus', nodes: menus };
-        const usersOwnerRoot = { key: 'users_owner_root', label: 'Owner', nodes: restaurant.owner.map(this.getUserListData) };
-        const usersBusinessManagerRoot = { key: 'users_business_manager_root', label: 'Business Manager', nodes: restaurant.business_manager.map(this.getUserListData) };
-        const usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersOwnerRoot, usersBusinessManagerRoot ] };
+        const usersOwnerRoot = { key: 'users_owner_root', label: 'Owner', nodes: restaurant.owner.map((owner) => this.getUserListData(owner, restaurant)) };
+        const usersBusinessManagerRoot = { key: 'users_business_manager_root', label: 'Business Manager', nodes: restaurant.business_manager.map((manager) => this.getUserListData(manager, restaurant)) };
+        let usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersOwnerRoot, usersBusinessManagerRoot ] };
+        const userRole = getUserRole();
+        if (userRole === 'owner') {
+            usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersBusinessManagerRoot ] };
+        } else if (userRole === 'bussines manager' || userRole === '') {
+            return [ menusRoot ];
+        }
 
         return [ menusRoot, usersRoot ];
     }
 
     convertRestaurantDataToTreeView = (data) => {
+        const userRole = getUserRole();
+        if (userRole !== 'admin') {
+            const user = getUser();
+            data = data.filter(restaurant => restaurant.id === user.restaurant)
+        }
+
         const restaurants = data.map((restaurant) => {
             return { key: restaurant.id, id: restaurant.id, type: DATA_TYPES.restaurant, label: restaurant.name, nodes: this.populateRestaurantNodes(restaurant), restaurant };
         });
@@ -133,129 +155,26 @@ class Sidenav extends Component {
     }
 
     render() {
-        const { restaurantDetail, restaurantDataReady, restaurants, restaurantsDataReady, restaurantTreeViewData } = this.props;
+        const { restaurantTreeViewData, selectedCategory } = this.props;
 
         const treeData = this.convertRestaurantDataToTreeView(restaurantTreeViewData)
 
         return (
-            <nav id="main-sidebar">
+            <div id="main-sidebar" className="col-md-3 col-sm-4 col-xs-12 col-lg-3 col-xl-2">
                 <div className="row my-4">
-                    <div className="col-12 text-center">
-                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainModal">
-                            Add
-                        </button>
+                    <div className="col">
+                        <div className="text-center">
+                            <button type="button" className="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#mainModal">
+                                <b>+</b> ADD
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <TreeMenu data={treeData} onClickItem={this.handleTreeOnToggle} />
-                {
-                    restaurantsDataReady && getUserRole() === 'admin' ?
-                    <div className="row">
-                        <h5 className="mt-3">Restaurants</h5>
-                        {
-                            restaurants.map(restaurant => {
-                                return (
-                                    <div className="col-12 text-center mb-2" key={restaurant.id}>
-                                         <button className="btn btn-ligth" onClick={() => this.getRestaurantDetail(restaurant.id)}>
-                                            {restaurant.name}
-                                        </button>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
-                    : <> </>
-                }
-                <div className="row">
-                    <h5 className="mt-3">Menus</h5>
-                {
-                    restaurantDataReady ?
-                    restaurantDetail?.menus.map((menu, index) => {
-                        return (
-                            <div className="col-12 text-center mb-2" key={menu.id+index}>
-                                <button className="btn btn-ligth" onClick={() => this.getMenuDetail(menu.id)}>
-                                    {menu.name}
-                                </button>
-                            </div>
-                        )
-                    })
-                    :
-                    <></>
-                }
-                </div>
-                <div className="row">
-                    <h5 className="mt-3">Categories</h5>
-                    <EditCategoryModal category={{...this.state.selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
-                    <DeleteCategoryModal category={{...this.state.selectedCategory}}/>
-                {
-                    restaurantDataReady ?
-                    restaurantDetail.categories.map(category => {
-                        return (
-                            <div className="col-12 text-center mb-2" key={category.id}>
-                                {category.name}
-                                <br/>
-                                <button className="btn btn-primary" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
-                                    Edit
-                                </button>
-                                <button className="btn btn-danger" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">
-                                    Delete
-                                </button>
-                            </div>
-                        )
-                    })
-                    :
-                    <></>
-                }
-                </div>
-                <div className="row">
-                    { (getUserRole() === 'admin' || getUserRole() === 'owner') ?
-                    <h5 className="mt-3">Users</h5>
-                    :
-                    <></>
-                    }
-                    { restaurantDataReady && getUserRole() === 'admin'  ? <h6 className="mt-2">Owners</h6> : <></>}
-                    {
-                    restaurantDataReady && getUserRole() === 'admin' ?
-                    restaurantDetail.owner.map(owner => {
-                        return (
-                            <div className="col-12 text-center mb-2" key={owner.id}>
-                                {owner.email}
-                                <br/>
-                                {/* <button className="btn btn-primary" onClick={() => this.setSelectedUser(owner)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
-                                    Edit
-                                </button> */}
-                                <button className="btn btn-danger" onClick={() => this.setSelectedUser(owner)} data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                                    Delete
-                                </button>
-                            </div>
-                        )
-                    })
-                    :
-                    <></>
-                    }
-                    { restaurantDataReady && (getUserRole() === 'admin' || getUserRole() === 'owner') ?
-                    <div> <h6 className="mt-2">Managers</h6> <DeleteUserModal user={this.state.selectedUser} /> </div>
-                    : <></>}
-                    {
-                    restaurantDataReady && (getUserRole() === 'admin' || getUserRole() === 'owner') ?
-                    restaurantDetail.business_manager.map(manager => {
-                        return (
-                            <div className="col-12 text-center mb-2" key={manager.id}>
-                                {manager.email}
-                                <br/>
-                                {/* <button className="btn btn-primary" onClick={() => this.setSelectedUser(manager)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">
-                                    Edit
-                                </button> */}
-                                <button className="btn btn-danger" onClick={() => this.setSelectedUser(manager)} data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                                    Delete
-                                </button>
-                            </div>
-                        )
-                    })
-                    :
-                    <></>
-                    }
-                </div>
-            </nav>
+                <EditCategoryModal category={{...selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
+                <DeleteCategoryModal category={{...selectedCategory}}/>
+                <DeleteUserModal user={this.state.selectedUser} />
+            </div>
         );
     }
 }
@@ -268,6 +187,8 @@ Sidenav.propTypes = {
     restaurantsDataReady: PropTypes.bool.isRequired,
     restaurantTreeViewData: PropTypes.array.isRequired,
     restaurantTreeViewDataReady: PropTypes.bool.isRequired,
+    selectedCategory: PropTypes.object,
+    setSelectedCategory: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -277,6 +198,7 @@ const mapStateToProps = (state) => ({
     restaurantsDataReady: state.app.restaurantsDataReady,
     restaurantTreeViewData: state.app.restaurantTreeViewData,
     restaurantTreeViewDataReady: state.app.restaurantTreeViewDataReady,
+
 });
 
 const mapDispatchToProps = (dispatch) => ({

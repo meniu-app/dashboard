@@ -40,37 +40,48 @@ class UserModal extends Component {
                         <div className="modal-body">
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
-                                <div className="form-check">
-                                    <input className="form-check-input" type="radio" name="role" defaultValue="2" id="userRoleInput1" defaultChecked />
-                                        <label className="form-check-label" htmlFor="userRoleInput1">
-                                            Owner
+                                <div className="row mb-4">
+                                    <div className="col-6 form-check">
+                                        <p>
+                                            <input className="form-check-input" type="radio" name="role" defaultValue="2" id="userRoleInput1" defaultChecked />
+                                            <label className="form-check-label" htmlFor="userRoleInput1">
+                                                Owner
+                                            </label>
+                                        </p>
+                                        
+                                    </div>
+                                    <div className="col-6 form-check">
+                                        <input className="form-check-input" type="radio" name="role" defaultValue="3" id="userRoleInput2" />
+                                        <label className="form-check-label" htmlFor="userRoleInput2">
+                                            Business Manager
                                         </label>
                                     </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" type="radio" name="role" defaultValue="3" id="userRoleInput2" />
-                                    <label className="form-check-label" htmlFor="userRoleInput2">
-                                        Business Manager
-                                    </label>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="userEmailInput">User email</label>
-                                    <input name="email" type="email" className="form-control" id="userEmailInput" placeholder="user@email.com" required/>
+                                <div className="row mb-4">
+                                    <div className="col-6">
+                                        <label htmlFor="userEmailInput">User email</label>
+                                        <input name="email" type="email" className="form-control" id="userEmailInput" placeholder="user@email.com" required/>
+                                    </div>
+                                    <div className="col-6">
+                                        <label htmlFor="userPasswordInput">User password</label>
+                                        <input name="password" type="password" className="form-control" id="userPasswordInput" placeholder="" required/>
+                                    </div>
                                 </div>
-                                <div className="mb-3 form-group">
-                                    <label htmlFor="userPasswordInput">User password</label>
-                                    <input name="password" type="password" className="form-control" id="userPasswordInput" placeholder="" required/>
-                                </div>
+
                                 {
                                     getUserRole() === 'admin' && restaurantDetail.id &&
-                                    <div className="form-check form-switch">
-                                        <input name="restaurantChecked" className="form-check-input" type="checkbox" id="userRestaurantDefault" defaultChecked={true}/>
-                                        <label className="form-check-label" htmlFor="userRestaurantDefault">Link user to {restaurantDetail.name}? </label>
+                                    <div className="row mb-4">
+                                        <div className="form-check form-switch">
+                                            <input name="restaurantChecked" className="form-check-input" type="checkbox" id="userRestaurantDefault" defaultChecked={true}/>
+                                            <label className="form-check-label" htmlFor="userRestaurantDefault">Link user to {restaurantDetail.name}? </label>
+                                        </div>
                                     </div>
+                                    
                                 }
 
                                 <div className="mt-3 d-flex justify-content-end">
-                                    <button type="button" className="btn btn-secondary me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" className="btn btn-success">Submit</button>
                                 </div>
                             </form>
                             : <Spinner />

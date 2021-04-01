@@ -370,6 +370,16 @@ export const getRestaurantDetailInitialData = (id, userId) => async (dispatch) =
 }
 
 /**
+ * Function to fetch init data from Restaurants
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains data from restaurants
+ */
+export const setRestaurantDetailInitialData = (restaurant) => async (dispatch) => {
+    return dispatch(getRestaurantDetailInitialDataSuccessAction({restaurant}));
+}
+
+/**
  * Function to fetch Restaurants tree view data
  * @param {function} dispatch it is a function to dispatch actions to
  * update the store about the content of the app
@@ -632,6 +642,8 @@ export const addRestaurantData = (data, hasNoRestaurant) => async (dispatch) => 
                 restaurant: responseData['id']
             }
             await API.editOwner(data, user.id);
+            user.restaurant = data.restaurant;
+            setUser(user);
             dispatch(alertActivateAction({text: 'Restaurant successfully added', alert: 'success'}));
             return dispatch(addRestaurantDataOwnerSuccessAction(responseData));
         }
@@ -889,9 +901,9 @@ export const editCategoryData = (data, id) => async (dispatch) => {
     try {
         const response = await API.editCategory(data, id);
         const responseData = response['data'];
-        dispatch(alertActivateAction({text: 'Category successfully edited', alert: 'success'}));
         const restaurant = await API.getRestaurantDetail(responseData.restaurant);
         const restaurantData = restaurant['data'];
+        dispatch(alertActivateAction({text: 'Category successfully edited', alert: 'success'}));
         return dispatch(editCategoyDataSuccessAction(responseData, restaurantData));
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
@@ -1055,6 +1067,11 @@ export const deleteRestaurantData = (id) => async (dispatch) => {
     try {
         await API.deleteRestaurant(id);
         dispatch(alertActivateAction({text: 'Restaurant successfully deleted', alert: 'success'}));
+        const user = getUser();
+        if (user.role === 'owner') {
+            user.restaurant = null;
+            setUser(user);
+        }
         return dispatch(deleteRestaurantDataSuccessAction(id));
     } catch (error) {
         dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));

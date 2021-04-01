@@ -1,108 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+$colors: (
+  dark-gray: #546476,
+  light-gray: #8897A7,
+  dark-violet: #A973AA,
+  salmon: #E76C6D,
+  dark-blue: #456E9C,
+  red: #FA4747,
+  blue: #5B98C4,
+  light-salmon: #E48484,
+  azure: #71B7BC,
+  orange: #ED9356,
+  green: #9BBF6B,
+  light-orange: #E3B14E,
+  light-green: #9AF388,
+  yellow: #F9F684,
+  light-yellow: #FBFAE3,
+  brown: #997C61,
+);
 $gray-border: #d8d8d8;
 $gray-text-shadow: #808080;
 $gray-dark-text-shadow: rgb(73, 73, 73);
 $dark-text-shadow: #191919;
 
+$layout-boders: map-get($map: $colors, $key: dark-gray);
+
+html,
+body {
+  height: 100%;
+  font-family: 'Montserrat', sans-serif !important;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.lulo-logo {
+  width: 100px;
+}
+
 .form--login {
-    max-width: 500px;
-    margin: auto;
-    margin-top: 4rem;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 4rem;
 }
 
-.nav--logout {
-    cursor: pointer;
-}
-
-.image--restaurant-detail {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-}
-
-.image--restaurant {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-}
-
-.image--restaurant-dish {
-    width: 70px;
-    height: 70px;
-    border-radius: 6px;
-}
-
-.border--restaurant-dish {
-    border: 1px solid $gray-border;
-}
-
-.list-group-item-dish {
-    border-top: 1px solid rgba(0,0,0,.125);
-    border-bottom: 1px solid rgba(0,0,0,.125);
-    border-left: none;
-    border-right: none;
-    color: black;
-}
-
-.list-group-item {
-    a {
-        display: block;
-        text-decoration: none;
-        color: black;
+/* Nav */
+#main-nav {
+    border-bottom: 1px solid $layout-boders;
+    .navbar-nav{
+        margin-top: 15px;
+        .nav-link{
+            font-weight: 700;
+        }
+        .nav-link:last-child{
+            margin-right: 0;
+        }
     }
 }
 
+.nav--logout {
+  cursor: pointer;
+}
+
+/* Menu */
+#menu-detail{
+  .btn-link{
+    font-weight: 700;
+    color:#000;
+    text-decoration: none;
+    padding: 0 12px;
+  }
+}
+
+.modal{
+  .modal-content{
+    background: #efefef;
+  }
+  .btn-sel{
+    color: #000;
+    vertical-align: top;
+    .badge{
+      color: $gray-text-shadow;
+      border: 1px solid #d8d8d8;
+      text-align: center;
+      width: 55px;
+      height: 50px;
+      padding: 10px;
+      margin-right: 20px;
+    }
+  }
+  .file-input{
+    position: relative;
+    font-size: 14px;
+  }
+  .form-switch{
+    margin-left:11px;
+  }
+}
+
+.card{
+  border: 1px solid $layout-boders !important;
+  font-size: .9rem;
+  h6{
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 0;
+  }
+}
+
+.btn-color-primary, .btn-outline-primary:hover{
+  background: map-get($map: $colors, $key: blue) !important; 
+}
+
+.btn-outline-primary{
+  border: 1px solid map-get($map: $colors, $key: blue) !important;
+}
+
+.btn-color-danger, .btn-outline-danger:hover{
+  background: map-get($map: $colors, $key: red) !important; 
+}
+
+.btn-outline-danger{
+  border: 1px solid map-get($map: $colors, $key: red) !important;
+}
+
+.btn-success, .btn-outline-success:hover{
+  background: map-get($map: $colors, $key: light-green) !important;
+  color: #000 !important;
+  font-weight: 700 !important;
+  border: 1px solid map-get($map: $colors, $key: green) !important;
+}
+
+.btn-outline-success{
+  border: 1px solid map-get($map: $colors, $key: green) !important;
+}
+
+.image--restaurant-detail {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.image--restaurant {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.image--restaurant-dish {
+  width: 70px;
+  height: 70px;
+  border-radius: 6px;
+}
+
+.border--restaurant-dish {
+  border: 1px solid $layout-boders;
+}
+
+.list-group-item-dish {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-left: none;
+  border-right: none;
+  color: black;
+}
+
+.list-group-item {
+  a {
+    display: block;
+    text-decoration: none;
+    color: black;
+  }
+}
+
 .restaurant-dish__description {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dish--image {
-    height: 200px;
-    width: 100%;
+  height: 200px;
+  width: 100%;
 }
 
 .dish--description {
-    white-space: pre-wrap;
+  white-space: pre-wrap;
 }
 
 .button--back {
-    width: fit-content;
+  width: fit-content;
 }
 
 .center-cropped {
-    width: 100%;
-    height: 40vh;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+  width: 100%;
+  height: 40vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
-.accordion-button:not(.collapsed){
-    color: #0c63e4 !important;
+.accordion-button:not(.collapsed) {
+  color: #0c63e4 !important;
 }
 
 #main-sidebar {
-    width: 350px;
-    border-right: 1px solid lightgrey;
+  border-right: 1px solid $layout-boders;
 }
 
 .modal {
-    overflow-y: auto !important;
+  overflow-y: auto !important;
 }
 
 /**
     Tree view styles
  */
+.rstm-search{
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
 .rstm-tree-item-group {
-    padding-left: 0;
-
-    .rstm-tree-item {
-        list-style: none;
-
-        .rstm-toggle-icon {
-            display: inline-block;
-            margin: 0 5px;
-        }
+  padding-left: 0;
+  font-size: .9rem;
+  .rstm-tree-item-level1, .rstm-tree-item-level2, .rstm-tree-item-level3{
+    font-size: .8rem;
+  }
+  .rstm-tree-item-level4, .rstm-tree-item-level5{
+    font-size: .75rem;
+  }
+  .rstm-toggle-icon{
+    font-weight: 700;
+  }
+  .rstm-tree-item {
+    .rstm-toggle-icon {
+      display: inline-block;
+      margin: 0 5px;
     }
+  }
 }
