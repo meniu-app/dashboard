@@ -89,15 +89,15 @@ class EditRestaurantModal extends Component {
                                     <input name="address" type="address" className="form-control" id="restaurantAddressInputEdit" defaultValue={newRestaurant.address} onChange={ handleChangeRestaurant } placeholder="Street..." required/>
                                     </div>
                                     <div className="col">
-                                        <input name="city" type="text" className="form-control" id="restaurantCityInput" placeholder="City" required/>
+                                        <input name="city" type="text" className="form-control" id="editRestaurantCityInput" placeholder="City" required/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col">
-                                        <input name="state" type="text" className="form-control" id="restaurantStateInput" placeholder="State/Province" required/>
+                                        <input name="state" type="text" className="form-control" id="editRestaurantStateInput" placeholder="State/Province" required/>
                                     </div>
                                     <div className="col">
-                                        <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/>
+                                        <input name="zip" type="text" className="form-control" id="editRestaurantZipInput" placeholder="Zip/Postal Code" required/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">

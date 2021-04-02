@@ -811,6 +811,12 @@ export const editItemData = (data, imageData, id, imageId, ) => async (dispatch)
         // Making image update after item is created
         if (imageId !== null)
             await API.editImage(imageData, imageId);
+        if (imageId === null) {
+            imageData.append('item', id)
+            imageData.append('approved', true)
+            imageData.append('active', true)
+            await API.addImage(imageData)
+        }
 
         const menu = await API.getMenuDetail(responseData.menu);
         const menuData = menu['data'];
