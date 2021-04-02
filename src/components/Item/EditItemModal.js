@@ -97,8 +97,8 @@ class EditItemModal extends Component {
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col">
-                                        <label htmlFor="itemNotesInput">Extra notes, food allergens, etc.</label>
-                                        <textarea name="notes" className="form-control" id="itemNotesInput" rows="2" required></textarea>
+                                        <label htmlFor="editItemNotesInput">Extra notes, food allergens, etc.</label>
+                                        <textarea name="notes" className="form-control" id="editItemNotesInput" rows="2" required></textarea>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
