@@ -41,7 +41,7 @@ class UserModal extends Component {
                             { !formLoading ?
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
                                 <div className="row mb-4">
-                                    <div className="col-6 form-check">
+                                    <div className="col-6 form-check ps-5">
                                         <p>
                                             <input className="form-check-input" type="radio" name="role" defaultValue="2" id="userRoleInput1" defaultChecked />
                                             <label className="form-check-label" htmlFor="userRoleInput1">
@@ -59,11 +59,11 @@ class UserModal extends Component {
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-6">
-                                        <label htmlFor="userEmailInput">User email</label>
+                                        <label htmlFor="userEmailInput">Email</label>
                                         <input name="email" type="email" className="form-control" id="userEmailInput" placeholder="user@email.com" required/>
                                     </div>
                                     <div className="col-6">
-                                        <label htmlFor="userPasswordInput">User password</label>
+                                        <label htmlFor="userPasswordInput">Password</label>
                                         <input name="password" type="password" className="form-control" id="userPasswordInput" placeholder="" required/>
                                     </div>
                                 </div>

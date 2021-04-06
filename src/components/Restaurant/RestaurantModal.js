@@ -115,17 +115,11 @@ class RestaurantModal extends Component {
                                     </div>
                                 </div>
                                 <div className="row mb-4">
-                                    <div className="col-6">
+                                    <div className="col-12">
                                         <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant background</label>
                                         <CirclePicker 
                                             circleSize={24}
                                             onChange={ this.handleBackgroundChange } />
-                                    </div>
-                                    <div className="col-6">
-                                        <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant color</label>
-                                        <CirclePicker 
-                                            circleSize={24}
-                                            onChange={ this.handleColorChange } />
                                     </div>
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">

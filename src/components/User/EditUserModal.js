@@ -52,11 +52,11 @@ class UserModal extends Component {
                                     </label>
                                 </div>
                                 <div className="mb-3 form-group">
-                                    <label htmlFor="userEmailInput">User email</label>
+                                    <label htmlFor="userEmailInput">Email</label>
                                     <input name="email" type="email" className="form-control" id="userEmailInput" placeholder="user@email.com" required/>
                                 </div>
                                 <div className="mb-3 form-group">
-                                    <label htmlFor="userPasswordInput">User password</label>
+                                    <label htmlFor="userPasswordInput">Password</label>
                                     <input name="password" type="password" className="form-control" id="userPasswordInput" placeholder="" required/>
                                 </div>
                                 {

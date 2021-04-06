@@ -86,7 +86,7 @@ class ItemModal extends Component {
                                 <div className="row mb-4">
                                     <div className="col-12">
                                         <label htmlFor="itemNotesInput">Extra notes, food allergens, etc.</label>
-                                        <textarea name="notes" className="form-control" id="itemNotesInput" rows="2" required></textarea>
+                                        <textarea name="notes" className="form-control" id="itemNotesInput" rows="2"></textarea>
                                     </div>
                                 </div>
                                 
