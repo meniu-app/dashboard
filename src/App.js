@@ -133,6 +133,7 @@ class App extends Component {
             <Alert />
             <UnAuthenticatedRoute>
               <Login />
+              <Footer />
             </UnAuthenticatedRoute>
           </Route>
           <Route exact path="/auth/reset_password">
@@ -146,7 +147,6 @@ class App extends Component {
           </Route>
           </Switch>
         }
-        <Footer />
         </Suspense>
         </Router>:
         <Spinner></Spinner>
