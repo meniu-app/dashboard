@@ -142,16 +142,16 @@ class Dashboard extends Component {
                                                 <div className="col-xl-4 col-lg-6 col-md-6"  key={item.id + indexItem}>
                                                     <div className="card my-3">
                                                         <div className="card-body pb-0 d-flex">
-                                                            <div className="me-3 flex-fill">
+                                                            <div className="me-3 col-5">
                                                                 <h6>{item.name}</h6>
-                                                                <p>{item.description}</p>
+                                                                <p className="excerpt">{item.description}</p>
                                                             </div>
-                                                            <div>
+                                                            <div className="col-3">
                                                                 <p className="me-1">
                                                                     <b><NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} prefix={'$'} /></b>
                                                                 </p>
                                                             </div>
-                                                            <div>
+                                                            <div className="col-4">
                                                                 <img className="img-thumbnail" style={{height: "64px"}} src={image} alt=""/>
                                                             </div>
                                                         </div>

@@ -107,10 +107,26 @@ h6 {
 .card{
   border: 1px solid $layout-boders !important;
   font-size: .9rem;
+  min-height: 140px;
   h6{
     font-weight: 700;
     text-transform: capitalize;
     margin-bottom: 0;
+  }
+  .card-body{
+    min-height: 2rem;
+    h6{
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .excerpt{
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
   }
 }
 
