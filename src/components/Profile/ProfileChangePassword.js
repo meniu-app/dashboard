@@ -37,36 +37,34 @@ class ProfileChangePassword extends Component {
           password2: '',
           diffPasswords: false
         })
-        history.push('/settings');
+        history.push('/profile');
       }
     }
   }
 
   render() {
     return (
-      <div className="container">
-          <form onSubmit={this.changePassword} className="form--login" method="POST">
-                <div className="mb-3">
-                    <label htmlFor="changePasswordOld" className="form-label">Old password</label>
-                    <input type="password" name="password" className="form-control" value={this.state.oldPassword} onChange={e => this.setState({oldPassword: e.target.value})} id="changePasswordOld" required></input>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="changePassword" className="form-label">New password</label>
-                    <input type="password" name="password" className="form-control" value={this.state.password} onChange={e => this.setState({password: e.target.value, diffPasswords: false})} id="changePassword" required></input>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="changePassword2" className="form-label">Confirm password</label>
-                    <input type="password" name="password2" className="form-control" value={this.state.password2} onChange={e => this.setState({password2: e.target.value, diffPasswords: false})} id="changePassword2" required></input>
-                    {this.state.diffPasswords ?
-                      <p className="text-danger"><b>Passwords must be equal</b></p>:
-                      <></>
-                    }
-                </div>
-                <div className="d-grid gap-2">
-                  <button className="btn btn-success">Change password</button>
-                </div>
-            </form>
-      </div>
+      <form onSubmit={this.changePassword} method="POST" style={{'width': '300px'}}>
+            <div className="mb-3">
+                <label htmlFor="changePasswordOld" className="form-label">Current Password</label>
+                <input type="password" name="password" className="form-control" value={this.state.oldPassword} onChange={e => this.setState({oldPassword: e.target.value})} id="changePasswordOld" required></input>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="changePassword" className="form-label">New Password</label>
+                <input type="password" name="password" className="form-control" value={this.state.password} onChange={e => this.setState({password: e.target.value, diffPasswords: false})} id="changePassword" required></input>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="changePassword2" className="form-label">Reenter Password</label>
+                <input type="password" name="password2" className="form-control" value={this.state.password2} onChange={e => this.setState({password2: e.target.value, diffPasswords: false})} id="changePassword2" required></input>
+                {this.state.diffPasswords ?
+                  <p className="text-danger"><b>Passwords must be equal</b></p>:
+                  <></>
+                }
+            </div>
+            <div className="d-grid gap-2">
+              <button className="btn btn-success">Submit</button>
+            </div>
+        </form>
     );
   }
 }
