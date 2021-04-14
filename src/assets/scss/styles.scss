@@ -6,14 +6,14 @@ $colors: (
   dark-violet: #A973AA,
   salmon: #E76C6D,
   dark-blue: #456E9C,
-  red: #FA4747,
+  red: #FF7979,
   blue: #5B98C4,
   light-salmon: #E48484,
   azure: #71B7BC,
   orange: #ED9356,
   green: #9BBF6B,
   light-orange: #E3B14E,
-  light-green: #9AF388,
+  light-green: #5BFF8D,
   yellow: #F9F684,
   light-yellow: #FBFAE3,
   brown: #997C61,
@@ -107,10 +107,26 @@ h6 {
 .card{
   border: 1px solid $layout-boders !important;
   font-size: .9rem;
+  min-height: 140px;
   h6{
     font-weight: 700;
     text-transform: capitalize;
     margin-bottom: 0;
+  }
+  .card-body{
+    min-height: 2rem;
+    h6{
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .excerpt{
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
   }
 }
 
