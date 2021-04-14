@@ -137,7 +137,7 @@ class Dashboard extends Component {
                                     <div className="row">
                                     {
                                         category.items.map((item, indexItem) => {
-                                            const image = item.images.length > 0 ? `${item.images[0].image_url}` : "https://via.placeholder.com/100C/O";
+                                            const image = item.images.length > 0 ? `${item.images[0].image_url}` : restaurantDetail.logo_url;
                                             return (
                                                 <div className="col-xl-4 col-lg-6 col-md-6"  key={item.id + indexItem}>
                                                     <div className="card my-3">
