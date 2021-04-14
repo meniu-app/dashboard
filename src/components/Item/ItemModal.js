@@ -8,8 +8,15 @@ import Spinner from '../Spinner';
 
 class ItemModal extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+          showSelect: true
+        }
+      }
+
     async handleSubmit(event, props) {
-        const { appActions } = props;
+        const { appActions, restaurantDetail } = props;
         event.preventDefault();
         const {name, price, description, category, menu, image} = event.target;
         const formData = {
@@ -30,9 +37,21 @@ class ItemModal extends Component {
         data.append('menu', formData.menu);
         data.append('active', formData.active);
 
-        const response = await appActions.addItemData(data, imageData, formData.menu);
+        if (!this.state.showSelect) {
+            const newCategory = await appActions.addCategoryData({
+                restaurant: restaurantDetail.id,
+                name: formData.category,
+                description: formData.category
+            })
+            if (newCategory.type === 'ADD_CATEGORY_DATA_SUCCESS') {
+                data.set('category', newCategory.payload.id)
+            }
+        }
+
+        const response = await appActions.addItemData(data, imageData, formData.menu, this.state.showSelect);
         if (response) {
             document.getElementById('button-close-modal-item').click();
+            this.setState({showSelect: true})
             await appActions.getRestaurantTreeViewDetailData();
         }
 
@@ -92,7 +111,10 @@ class ItemModal extends Component {
                                 
                                 <div className="row mb-4">
                                     <div className="col-6">
-                                        <label htmlFor="itemMenuInput">Item menu</label>
+                                        <label htmlFor="itemMenuInput">
+                                            Item menu
+                                            <button className="btn btn-default" style={{visibility: 'hidden'}}>a</button>
+                                        </label>
                                         <select name="menu" className="form-control" id="itemMenuInput" required>
                                             {
                                                 menus.map(category => {
@@ -105,17 +127,25 @@ class ItemModal extends Component {
                                         {menus.length === 0 ? <p className="text-danger"><b>Please create a menu</b></p> : <></>}
                                     </div>
                                     <div className="col-6">
-                                        <label htmlFor="itemCategoryInput">Item category</label>
-                                        <select name="category" className="form-control" id="itemCategoryInput" required>
-                                            {
-                                                categories.map(category => {
-                                                    return (
-                                                        <option value={category.id} key={category.id}>{ category.name }</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                        {categories.length === 0 ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
+                                        <label htmlFor="itemCategoryInput">
+                                            Item category
+                                            <button type="button" className="btn btn-default" onClick={() => {this.setState({showSelect: !this.state.showSelect})}}>
+                                                <i className="fas fa-sync-alt"></i>
+                                            </button>
+                                        </label>
+                                        {this.state.showSelect ?
+                                            <select name="category" className="form-control" id="itemCategoryInput" required>
+                                                {
+                                                    categories.map(category => {
+                                                        return (
+                                                            <option value={category.id} key={category.id}>{ category.name }</option>
+                                                        )
+                                                    })
+                                                }
+                                            </select> :
+                                            <input name="category" className="form-control" type="text" required/>
+                                        }
+                                        {categories.length === 0 && this.state.showSelect ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
                                     </div>
                                 </div>
                                 <div className="row mb-4">
