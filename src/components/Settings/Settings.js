@@ -1,20 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
 import { CirclePicker } from 'react-color';
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng,
+} from 'react-places-autocomplete';
 
 class Settings extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            color: props.restaurantDetail.settings.color,
-            background: props.restaurantDetail.settings.backgroundColor,
-            formEdit: false
+            color: props.restaurantDetail?.settings?.color,
+            background: props.restaurantDetail?.settings?.backgroundColor,
+            formEdit: false,
+            address: ''
         }
+        this.inputRef = createRef(null)
     }
     
     handleBackgroundChange = (color) => {
@@ -25,6 +31,16 @@ class Settings extends Component {
         this.setState({ color: color.hex });
     }
 
+    handleChange = address => {
+        this.setState({ address });
+      };
+     
+      handleSelect = address => {
+        geocodeByAddress(address)
+          .then(results => getLatLng(results[0]))
+          .then(latLng => console.log('Success', latLng))
+          .catch(error => console.error('Error', error));
+      };
 
     async handleSubmit (event, props) {
         event.preventDefault();
@@ -53,8 +69,7 @@ class Settings extends Component {
     }
 
     render () {
-        const { formLoading, restaurantDetail, handleChangeRestaurant } = this.props;
-
+        const { formLoading, restaurantDetail, handleChangeRestaurant } = this.props
         const newRestaurant = {...restaurantDetail};
 
         return (
@@ -86,6 +101,69 @@ class Settings extends Component {
                                         <input name="address" type="address" className="form-control" id="settingsAddressInputEdit" defaultValue={newRestaurant.address} onChange={ handleChangeRestaurant } placeholder="Street..." required/> :
                                         <p className="mt-2">{newRestaurant.address}</p>
                                     }
+
+
+
+
+
+
+
+
+
+
+                            <PlacesAutocomplete
+                                value={this.state.address}
+                                onChange={this.handleChange}
+                                onSelect={this.handleSelect}
+                            >
+                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                <div>
+                                    <input
+                                    {...getInputProps({
+                                        placeholder: 'Search Places ...',
+                                        className: 'location-search-input',
+                                    })}
+                                    className="form-control"
+                                    />
+                                    <div className="autocomplete-dropdown-container">
+                                    {loading && <div>Loading...</div>}
+                                    {suggestions.map(suggestion => {
+                                        const className = suggestion.active
+                                        ? 'suggestion-item--active'
+                                        : 'suggestion-item';
+                                        // inline style for demonstration purpose
+                                        const style = suggestion.active
+                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                        return (
+                                        <div
+                                            {...getSuggestionItemProps(suggestion, {
+                                            className,
+                                            style,
+                                            })}
+                                            key={1}
+                                        >
+                                            <span>{suggestion.description}</span>
+                                        </div>
+                                        );
+                                    })}
+                                    </div>
+                                </div>
+                                )}
+                            </PlacesAutocomplete>
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 </div>
                             </div>
                             <div className="row mb-4">
