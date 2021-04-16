@@ -11,6 +11,7 @@
     "mixpanel-browser": "^2.41.0",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.5.2",
     "react-color": "^2.19.3",
     "react-dom": "^17.0.1",
     "react-number-format": "^4.5.1",

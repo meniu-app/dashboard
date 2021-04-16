@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // import Spinner from '../Spinner';
@@ -17,7 +17,7 @@ import DeleteMenuModal from '../Menu/DeleteMenuModal';
 import DeleteItemModal from '../Item/DeleteItemModal';
 import NumberFormat from 'react-number-format';
 
-class Dashboard extends Component {
+class Dashboard extends React.Component {
 
     constructor(props) {
         super(props);
@@ -32,6 +32,7 @@ class Dashboard extends Component {
             }
         }
         this.setSelectedCategory = this.props.setSelectedCategory.bind(this)
+        this.EditItemModalRef = React.createRef();
     }
 
     handleChangeItem = (e) => {
@@ -67,10 +68,15 @@ class Dashboard extends Component {
         });
     }
 
+    editButton = (item) => {
+        this.setSelectedItem(item);
+    }
+
     render() {
 
         const { menuDetail, menuDetailDataReady, restaurantDataReady, restaurantDetail } = this.props;
         let categories = []
+        const restaurantLogo = restaurantDetail.logo_url
 
         if (menuDetailDataReady) {
             categories = Object.keys(menuDetail.categories).map(key => {return {id: key, ...menuDetail.categories[key]}})
@@ -137,7 +143,10 @@ class Dashboard extends Component {
                                     <div className="row">
                                     {
                                         category.items.map((item, indexItem) => {
-                                            const image = item.images.length > 0 ? `${item.images[0].image_url}` : restaurantDetail.logo_url;
+                                            let image = item.images.length > 0 ? `${item.images[0].image_url}` : restaurantDetail.logo_url;
+                                            if (image === 'null') {
+                                                image = restaurantLogo
+                                            }
                                             return (
                                                 <div className="col-xl-4 col-lg-6 col-md-6"  key={item.id + indexItem}>
                                                     <div className="card my-3">
@@ -152,11 +161,11 @@ class Dashboard extends Component {
                                                                 </p>
                                                             </div>
                                                             <div className="col-4">
-                                                                <img className="img-thumbnail" style={{height: "64px"}} src={image} alt=""/>
+                                                                <img className="img-thumbnail" style={{height: "64px"}} src={image !== null ? image : restaurantLogo} alt=""/>
                                                             </div>
                                                         </div>
                                                         <div className="d-flex pe-3 pb-1">
-                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit</button>
+                                                            <button onClick={() => this.editButton(item)} className="btn btn-link" style={{width: 'fit-content'}} >Edit</button>
                                                             <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
                                                         </div>
                                                     </div>

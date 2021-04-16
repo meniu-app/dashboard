@@ -151,7 +151,7 @@ class ItemModal extends Component {
                                 <div className="row mb-4">
                                     <div className="col-6 file-input">
                                         <label htmlFor="itemImageInput">Image</label>
-                                        <input name="image" type="file" className="form-control-file" id="itemImageInput" required />
+                                        <input name="image" type="file" className="form-control-file" id="itemImageInput"/>
                                     </div>
                                 </div>
 

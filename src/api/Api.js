@@ -133,6 +133,9 @@ const api = {
   editImage: (data, id) => {
     return axios.patch(`${baseUrl}/v1/image/${id}/`, data)
   },
+  deleteImage: (id) => {
+    return axios.delete(`${baseUrl}/v1/image/${id}/`)
+  },
   addOwner: (data) => {
     return axios.post(`${baseUrl}/v1/owner`, data)
   },

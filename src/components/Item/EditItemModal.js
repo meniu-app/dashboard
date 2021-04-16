@@ -1,20 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Spinner from '../Spinner';
+import API from '../../api/Api';
 
-class EditItemModal extends Component {
+class EditItemModal extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            imageRemoved: false,
+            newImage: null
+        }
         this.handleChangeItem = this.props.handleChangeItem.bind(this);
+        this.removeImage = this.removeImage.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.imageChanged = this.imageChanged.bind(this);
+        this.currentImage = this.currentImage.bind(this);
+        this.clearForm = this.clearForm.bind(this);
     }
 
-    async handleSubmit(event, props) {
-        const { appActions, item } = props;
+    async handleSubmit(event) {
+        const { appActions, item } = this.props;
         event.preventDefault();
         const {name, price, description, category, menu, image} = event.target;
         const formData = {
@@ -42,7 +52,7 @@ class EditItemModal extends Component {
         if (formData.image.value === '')
             imageId = null;
 
-        const response = await appActions.editItemData(data, imageData, props.item.id, imageId);
+        const response = await appActions.editItemData(data, imageData, this.props.item.id, imageId);
         if (response) {
             document.getElementById('button-close-modal-item-edit').click();
             await appActions.getRestaurantTreeViewDetailData();
@@ -61,12 +71,40 @@ class EditItemModal extends Component {
         }
     }
 
-    render () {
+    async removeImage () {
+        const images = this.props.item?.images;
+        const image = images.length > 0 ? images[0] : null;
+        try {
+            if (image !== null) {
+                console.log(image)
+                await API.deleteImage(image.id);
+                this.setState({imageRemoved: true})
+            }
+        } catch (error) {
+            this.setState({imageRemoved: false})
+        }
+        this.setState({newImage: null})
+    }
 
+    imageChanged (e) {
+        this.setState({newImage: e.target})
+    }
+
+    currentImage (image) {
+        if (this.state.newImage !== null)
+            return URL.createObjectURL(this.state.newImage.files[0])
+        else if(image?.image_url && !this.state.imageRemoved)
+            return image.image_url
+        else
+            return this.props.restaurantDetail.logo_url
+    }
+
+    render () {
         const { restaurantDetail, formLoading, item, handleChangeItem } = this.props;
         const categories = restaurantDetail.categories;
         const menus = restaurantDetail.menus;
         const newItem = {...item};
+        const image = newItem?.images?.length > 0 ? newItem.images[0] : null
 
         return (
             <div className="modal fade" id="editItemModal" tabIndex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
@@ -78,7 +116,7 @@ class EditItemModal extends Component {
                         </div>
                         <div className="modal-body">
                             { !formLoading ?
-                            <form onSubmit={(e) => this.handleSubmit(e, this.props)} method="PATCH" encType="multipart/form-data">
+                            <form onSubmit={(e) => this.handleSubmit(e)} method="PATCH" encType="multipart/form-data">
                                 <div className="row mb-4">
                                     <div className="col">
                                         <label htmlFor="itemNameInputEdit" className="form-label">Item name</label>
@@ -131,8 +169,18 @@ class EditItemModal extends Component {
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-6 file-input">
-                                        <label htmlFor="itemImageInputEdit">Image</label>
-                                        <input name="image" type="file" className="form-control-file" id="itemImageInputEdit" />
+                                        <img src={this.currentImage(image)} style={{width: '200px'}} />
+                                    </div>
+                                    <div className="col-6 file-input">
+                                        <label htmlFor="itemImageInputEdit">Replace Image</label>
+                                        <input name="image" type="file" className="form-control-file" id="itemImageInputEdit" onChange={e => this.imageChanged(e)}/>
+                                        {
+                                            image?.image_url ?
+                                            <button type="button" className="btn btn-danger btn-sm mt-2" onClick={this.removeImage}>
+                                                Remove Image
+                                            </button> :
+                                            <></>
+                                        }
                                     </div>
                                 </div>
                                 
