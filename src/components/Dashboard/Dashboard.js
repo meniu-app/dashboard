@@ -29,7 +29,8 @@ class Dashboard extends React.Component {
                 description: '',
                 menu: '',
                 category: ''
-            }
+            },
+            showEditModal: false
         }
         this.setSelectedCategory = this.props.setSelectedCategory.bind(this)
         this.EditItemModalRef = React.createRef();
@@ -70,6 +71,11 @@ class Dashboard extends React.Component {
 
     editButton = (item) => {
         this.setSelectedItem(item);
+        this.setState({showEditModal: true})
+    }
+
+    changeShowEditModal = () => {
+        this.setState({showEditModal: false})
     }
 
     render() {
@@ -100,7 +106,7 @@ class Dashboard extends React.Component {
                         <ItemModal />
                         <CategoryModal />
                         <MenuModal />
-                        <EditItemModal item={{...this.state.selectedItem}} handleChangeItem={this.handleChangeItem}/>
+                        <EditItemModal item={{...this.state.selectedItem}} showEditModal={this.state.showEditModal} changeShowEditModal={this.changeShowEditModal} handleChangeItem={this.handleChangeItem}/>
                         <DeleteItemModal item={{...this.state.selectedItem}}/>
                     </div>
                 }
