@@ -164,7 +164,7 @@ class Sidenav extends Component {
                 <div className="row my-4">
                     <div className="col">
                         <div className="text-center">
-                            <button type="button" className="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#mainModal">
+                            <button type="button" className="btn btn-outline-secondary width-100" data-bs-toggle="modal" data-bs-target="#mainModal">
                                 <b>+</b> ADD
                             </button>
                         </div>
