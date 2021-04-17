@@ -5,7 +5,6 @@ import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Spinner from '../Spinner';
-import API from '../../api/Api';
 import Modal from 'react-bootstrap/Modal';
 
 class EditItemModal extends React.Component {
@@ -76,7 +75,8 @@ class EditItemModal extends React.Component {
         const image = images.length > 0 ? images[0] : null;
         try {
             if (image !== null) {
-                await API.deleteImage(image.id);
+                const response = await this.props.appActions.removeImagetData(image.id)
+                console.log(response)
                 this.setState({imageRemoved: true})
             }
         } catch (error) {

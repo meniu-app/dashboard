@@ -77,7 +77,9 @@ import {
     EDIT_USER_DATA_ERROR,
     CHANGE_PASSWORD,
     CHANGE_PASSWORD_SUCCESS,
-    CHANGE_PASSWORD_ERROR
+    CHANGE_PASSWORD_ERROR,
+    REMOVE_IMAGE_DATA,
+    REMOVE_IMAGE_DATA_SUCCESS
 } from './types';
 import API from '../api/Api';
 import {
@@ -1323,5 +1325,46 @@ export const changePasswordData = (data, id) => async (dispatch) => {
             dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         }
         return dispatch(changePasswordInitErrorAction(`Error: ${error}`));
+    }
+}
+
+/**
+ * Action to remove Image
+ */
+ const removeImageDataInitAction = () => ({
+    type: REMOVE_IMAGE_DATA
+});
+
+/**
+ * Action to remove Image success
+ */
+const removeImageDataSuccessAction = (data) => ({
+    type: REMOVE_IMAGE_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action to remove Image failed
+ */
+const removeImageDataErrorAction = () => ({
+    type: REMOVE_IMAGE_DATA_SUCCESS
+});
+
+/**
+ * Function to add remove Image
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const removeImagetData = (id) => async (dispatch) => {
+    dispatch(removeImageDataInitAction());
+    try {
+        const response = await API.deleteImage(id);
+        console.log(response)
+        dispatch(alertActivateAction({text: 'Image removed', alert: 'success'}));
+        return dispatch(removeImageDataSuccessAction());
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(removeImageDataErrorAction({error: error}));
     }
 }
