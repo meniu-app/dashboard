@@ -130,7 +130,7 @@ class ItemModal extends Component {
                                         <label htmlFor="itemCategoryInput">
                                             Item category
                                             <button type="button" className="btn btn-default" onClick={() => {this.setState({showSelect: !this.state.showSelect})}}>
-                                                <i className="fas fa-sync-alt"></i>
+                                                <i className="fas fa-plus"></i>
                                             </button>
                                         </label>
                                         {this.state.showSelect ?
@@ -143,7 +143,7 @@ class ItemModal extends Component {
                                                     })
                                                 }
                                             </select> :
-                                            <input name="category" className="form-control" type="text" required/>
+                                            <input placeholder="New category" name="category" className="form-control" type="text" required/>
                                         }
                                         {categories.length === 0 && this.state.showSelect ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
                                     </div>

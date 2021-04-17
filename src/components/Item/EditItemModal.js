@@ -13,7 +13,8 @@ class EditItemModal extends React.Component {
         super(props);
         this.state = {
             imageRemoved: false,
-            newImage: null
+            newImage: null,
+            showSelect: true
         }
         this.handleChangeItem = this.props.handleChangeItem.bind(this);
         this.removeImage = this.removeImage.bind(this);
@@ -23,7 +24,7 @@ class EditItemModal extends React.Component {
     }
 
     async handleSubmit(event) {
-        const { appActions, item } = this.props;
+        const { appActions, item, restaurantDetail } = this.props;
         event.preventDefault();
         const {name, price, description, category, menu, image} = event.target;
         const formData = {
@@ -50,6 +51,17 @@ class EditItemModal extends React.Component {
         let imageId = item.images.length > 0 ? item.images[0].id : null;
         if (formData.image.value === '')
             imageId = null;
+
+        if (!this.state.showSelect) {
+            const newCategory = await appActions.addCategoryData({
+                restaurant: restaurantDetail.id,
+                name: formData.category,
+                description: formData.category
+            })
+            if (newCategory.type === 'ADD_CATEGORY_DATA_SUCCESS') {
+                data.set('category', newCategory.payload.id)
+            }
+        }
 
         const response = await appActions.editItemData(data, imageData, this.props.item.id, imageId);
         if (response) {
@@ -147,8 +159,11 @@ class EditItemModal extends React.Component {
                                 </div>
                             </div>
                             <div className="row mb-4">
-                                <div className="col form-group">
-                                    <label htmlFor="itemMenuInputEdit">Item menu</label>
+                                <div className="col-6">
+                                    <label htmlFor="itemMenuInputEdit">
+                                        Item menu
+                                        <button className="btn btn-default" style={{visibility: 'hidden'}}>a</button>
+                                    </label>
                                     <select name="menu" className="form-control" value={newItem.menu} onChange={ handleChangeItem } id="itemMenuInputEdit" required>
                                         {
                                             menus.map(menu => {
@@ -160,18 +175,26 @@ class EditItemModal extends React.Component {
                                     </select>
                                     {menus.length === 0 ? <p className="text-danger"><b>Please create a menu</b></p> : <></>}
                                 </div>
-                                <div className="col form-group">
-                                    <label htmlFor="itemCategoryInputEdit">Item category</label>
-                                    <select name="category" className="form-control" value={newItem.category} onChange={ handleChangeItem } id="itemCategoryInputEdit" required>
-                                        {
-                                            categories.map((category, index) => {
-                                                return (
-                                                    <option value={category.id} key={category.id+index}>{ category.name }</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    {categories.length === 0 ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
+                                <div className="col-6">
+                                    <label htmlFor="itemCategoryInputEdit">
+                                        Item category
+                                        <button type="button" className="btn btn-default" onClick={() => {this.setState({showSelect: !this.state.showSelect})}}>
+                                            <i className="fas fa-plus"></i>
+                                        </button>
+                                    </label>
+                                    {this.state.showSelect ?
+                                        <select name="category" className="form-control" value={newItem.category} onChange={ handleChangeItem } id="itemCategoryInputEdit" required>
+                                            {
+                                                categories.map((category, index) => {
+                                                    return (
+                                                        <option value={category.id} key={category.id+index}>{ category.name }</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>:
+                                        <input placeholder="New category" name="category" className="form-control" type="text" required/>
+                                    }
+                                    {categories.length === 0  && this.state.showSelect ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
                                 </div>
                             </div>
                             <div className="row mb-4">

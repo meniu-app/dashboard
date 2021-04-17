@@ -156,7 +156,7 @@ class Settings extends Component {
                                     <div className="col">
                                         <label htmlFor="settingsPhoneInputEdit"><b>Store Country</b></label>
                                         { this.state.formEdit ?
-                                            <select name="country" className="form-control" id="restaurantCountryInput" placeholder="Country" defaultValue=''>
+                                            <select name="country" className="form-control" id="settingsRestaurantCountryInput" placeholder="Country" defaultValue=''>
                                                 <option value=''>Select Country</option>
                                                 <option value="CO">Colombia</option>
                                                 <option value="US">United States</option>
@@ -170,7 +170,7 @@ class Settings extends Component {
                                 <div className="col">
                                     <label htmlFor="settingsPhoneInputEdit"><b>Store Postal Code</b></label>
                                     { this.state.formEdit ?
-                                        <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/> :
+                                        <input name="zip" type="text" className="form-control" id="setingsRestaurantZipInput" placeholder="Zip/Postal Code" required/> :
                                         <p className="mt-2">{newRestaurant.zip}</p>
                                     }
                                 </div>
