@@ -1359,8 +1359,7 @@ const removeImageDataErrorAction = () => ({
 export const removeImagetData = (id) => async (dispatch) => {
     dispatch(removeImageDataInitAction());
     try {
-        const response = await API.deleteImage(id);
-        console.log(response)
+        await API.deleteImage(id);
         dispatch(alertActivateAction({text: 'Image removed', alert: 'success'}));
         return dispatch(removeImageDataSuccessAction());
     } catch (error) {

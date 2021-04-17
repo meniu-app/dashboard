@@ -82,19 +82,20 @@ class EditItemModal extends React.Component {
         }
     }
 
-    async removeImage () {
+    removeImage = async() => {
         const images = this.props.item?.images;
         const image = images.length > 0 ? images[0] : null;
         try {
-            if (image !== null) {
-                const response = await this.props.appActions.removeImagetData(image.id)
-                console.log(response)
+            if (image !== null && !this.state.imageRemoved) {
+                await this.props.appActions.removeImagetData(image.id)
+                await this.props.appActions.getMenuDetailInitialData(this.props.item.menu);
                 this.setState({imageRemoved: true})
             }
+            this.setState({newImage: null})
         } catch (error) {
             this.setState({imageRemoved: false})
+            this.setState({newImage: null})
         }
-        this.setState({newImage: null})
     }
 
     imageChanged (e) {
@@ -205,7 +206,7 @@ class EditItemModal extends React.Component {
                                     <label htmlFor="itemImageInputEdit">Replace Image</label>
                                     <input name="image" type="file" className="form-control-file" id="itemImageInputEdit" onChange={e => this.imageChanged(e)}/>
                                     {
-                                        image?.image_url ?
+                                        image?.image_url && !this.state.imageRemoved ?
                                         <button type="button" className="btn btn-danger btn-sm mt-2" onClick={this.removeImage}>
                                             Remove Image
                                         </button> :
