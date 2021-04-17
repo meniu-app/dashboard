@@ -144,19 +144,10 @@ class Settings extends Component {
                                 </div>
                             </div>
                             <div className="row mb-4">
-                                <div className="col">
-                                    <label htmlFor="settingsPhoneInputEdit"><b>Store Phone Number</b></label>
-                                    { this.state.formEdit ?
-                                        <input name="phone" type="tel" className="form-control" id="settingsPhoneInputEdit" defaultValue={newRestaurant.phone} onChange={ handleChangeRestaurant } placeholder="3453456" required/> :
-                                        <p className="mt-2">{newRestaurant.phone}</p>
-                                    }
-                                </div>
-                            </div>
-                            <div className="row mb-4">
                                     <div className="col">
                                         <label htmlFor="settingsPhoneInputEdit"><b>Store Country</b></label>
                                         { this.state.formEdit ?
-                                            <select name="country" className="form-control" id="settingsRestaurantCountryInput" placeholder="Country" defaultValue=''>
+                                            <select name="country" className="form-control" id="settingsRestaurantCountryInput" placeholder="Country" defaultValue={newRestaurant.country}>
                                                 <option value=''>Select Country</option>
                                                 <option value="CO">Colombia</option>
                                                 <option value="US">United States</option>
@@ -165,13 +156,20 @@ class Settings extends Component {
                                             <p className="mt-2">{newRestaurant.country}</p>
                                         }
                                     </div>
+                                    <div className="col">
+                                        <label htmlFor="settingsPhoneInputEdit"><b>Store Postal Code</b></label>
+                                        { this.state.formEdit ?
+                                            <input name="zip" type="text" className="form-control" id="setingsRestaurantZipInput" placeholder="Zip/Postal Code" required defaultValue={newRestaurant.zipcode}/> :
+                                            <p className="mt-2">{newRestaurant.zipcode}</p>
+                                        }
+                                    </div>
                             </div>
                             <div className="row mb-4">
                                 <div className="col">
-                                    <label htmlFor="settingsPhoneInputEdit"><b>Store Postal Code</b></label>
+                                    <label htmlFor="settingsPhoneInputEdit"><b>Store Phone Number</b></label>
                                     { this.state.formEdit ?
-                                        <input name="zip" type="text" className="form-control" id="setingsRestaurantZipInput" placeholder="Zip/Postal Code" required/> :
-                                        <p className="mt-2">{newRestaurant.zip}</p>
+                                        <input name="phone" type="tel" className="form-control" id="settingsPhoneInputEdit" defaultValue={newRestaurant.phone} onChange={ handleChangeRestaurant } placeholder="3453456" required/> :
+                                        <p className="mt-2">{newRestaurant.phone}</p>
                                     }
                                 </div>
                             </div>
@@ -197,24 +195,18 @@ class Settings extends Component {
                             </div>
                             <div className="row mb-4">
                                 <div className="col-6">
-                                    <label className="mb-3"><b>Store Brand Color</b></label>
-                                    { this.state.formEdit ?
-                                        <CirclePicker 
-                                            circleSize={24}
-                                            onChange={ this.handleBackgroundChange }
-                                            color={newRestaurant.settings.backgroundColor} /> :
-                                        <div className="color-circle" style={{background: newRestaurant.settings.backgroundColor}}></div>   
-                                    }
+                                    <label className="mb-3"><b>Brand Color</b></label>
+                                    <CirclePicker 
+                                        circleSize={24}
+                                        onChange={ this.handleBackgroundChange }
+                                        color={newRestaurant.settings.backgroundColor} />
                                 </div>
                                 <div className="col-6">
-                                    <label className="mb-3"><b>Store Text Color</b></label>
-                                    { this.state.formEdit ?
-                                        <CirclePicker 
-                                            circleSize={24}
-                                            onChange={ this.handleColorChange }
-                                            color={newRestaurant.settings.color} /> :
-                                        <div className="color-circle" style={{background: newRestaurant.settings.color}}></div>   
-                                    }
+                                    <label className="mb-3"><b>Brand Text Color</b></label>
+                                    <CirclePicker 
+                                        circleSize={24}
+                                        onChange={ this.handleColorChange }
+                                        color={newRestaurant.settings.color} />
                                 </div>
                             </div>
                             { this.state.formEdit ?

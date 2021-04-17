@@ -140,7 +140,7 @@ class EditRestaurantModal extends Component {
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col">
-                                        <select name="country" className="form-control" id="editRestaurantCountryInput" placeholder="Country" defaultValue=''>
+                                        <select name="country" className="form-control" id="editRestaurantCountryInput" placeholder="Country" defaultValue={newRestaurant.country}>
                                             <option value=''>Select Country</option>
                                             <option value="CO">Colombia</option>
                                             <option value="US">United States</option>
@@ -148,7 +148,7 @@ class EditRestaurantModal extends Component {
                                         </select> 
                                     </div>
                                     <div className="col">
-                                        <input name="zip" type="text" className="form-control" id="editRestaurantZipInput" placeholder="Zip/Postal Code" required/>
+                                        <input name="zipcode" type="text" className="form-control" id="editRestaurantZipInput" defaultValue={newRestaurant.zipcode} placeholder="Zip/Postal Code" required/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
