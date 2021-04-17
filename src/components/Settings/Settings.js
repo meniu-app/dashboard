@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
 import { CirclePicker } from 'react-color';
 import PlacesAutocomplete, {
-    geocodeByAddress,
-    getLatLng,
+    // geocodeByAddress,
+    // getLatLng
 } from 'react-places-autocomplete';
 
 class Settings extends Component {
@@ -18,7 +18,7 @@ class Settings extends Component {
             color: props.restaurantDetail?.settings?.color,
             background: props.restaurantDetail?.settings?.backgroundColor,
             formEdit: false,
-            address: ''
+            address: props.restaurantDetail?.address
         }
         this.inputRef = createRef(null)
     }
@@ -33,14 +33,15 @@ class Settings extends Component {
 
     handleChange = address => {
         this.setState({ address });
-      };
+    };
      
-      handleSelect = address => {
-        geocodeByAddress(address)
-          .then(results => getLatLng(results[0]))
-          .then(latLng => console.log('Success', latLng))
-          .catch(error => console.error('Error', error));
-      };
+    handleSelect = address => {
+        this.setState({ address })
+        // geocodeByAddress(address)
+        //     .then(results => getLatLng(results[0]))
+        //     .then(latLng => console.log('Success', latLng))
+        //     .catch(error => console.error('Error', error));
+    };
 
     async handleSubmit (event, props) {
         event.preventDefault();
@@ -97,73 +98,49 @@ class Settings extends Component {
                             <div className="row mb-4">
                                 <div className="col">
                                     <label htmlFor="settingsAddressInputEdit"><b>Address</b></label>
-                                    { this.state.formEdit ?
-                                        <input name="address" type="address" className="form-control" id="settingsAddressInputEdit" defaultValue={newRestaurant.address} onChange={ handleChangeRestaurant } placeholder="Street..." required/> :
-                                        <p className="mt-2">{newRestaurant.address}</p>
-                                    }
-
-
-
-
-
-
-
-
-
-
-                            <PlacesAutocomplete
-                                value={this.state.address}
-                                onChange={this.handleChange}
-                                onSelect={this.handleSelect}
-                            >
-                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                <div>
-                                    <input
-                                    {...getInputProps({
-                                        placeholder: 'Search Places ...',
-                                        className: 'location-search-input',
-                                    })}
-                                    className="form-control"
-                                    />
-                                    <div className="autocomplete-dropdown-container">
-                                    {loading && <div>Loading...</div>}
-                                    {suggestions.map(suggestion => {
-                                        const className = suggestion.active
-                                        ? 'suggestion-item--active'
-                                        : 'suggestion-item';
-                                        // inline style for demonstration purpose
-                                        const style = suggestion.active
-                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                                        return (
-                                        <div
-                                            {...getSuggestionItemProps(suggestion, {
-                                            className,
-                                            style,
-                                            })}
-                                            key={1}
+                                    { !this.state.formEdit ?
+                                        <p className="mt-2">{newRestaurant.address}</p> :
+                                        <PlacesAutocomplete
+                                            value={this.state.address}
+                                            onChange={this.handleChange}
+                                            onSelect={this.handleSelect}
                                         >
-                                            <span>{suggestion.description}</span>
-                                        </div>
-                                        );
-                                    })}
-                                    </div>
-                                </div>
-                                )}
-                            </PlacesAutocomplete>
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                            <div>
+                                                <input
+                                                {...getInputProps({
+                                                    placeholder: 'Street...',
+                                                    className: 'location-search-input',
+                                                })}
+                                                className="form-control"
+                                                name="address"
+                                                />
+                                                <div className="autocomplete-dropdown-container">
+                                                {loading && <div>Loading...</div>}
+                                                {suggestions.map((suggestion, idx) => {
+                                                    const className = suggestion.active
+                                                    ? 'suggestion-item--active'
+                                                    : 'suggestion-item';
+                                                    const style = suggestion.active
+                                                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                    return (
+                                                    <div
+                                                        {...getSuggestionItemProps(suggestion, {
+                                                        className,
+                                                        style,
+                                                        })}
+                                                        key={idx}
+                                                    >
+                                                        <span>{suggestion.description}</span>
+                                                    </div>
+                                                    );
+                                                })}
+                                                </div>
+                                            </div>
+                                            )}
+                                        </PlacesAutocomplete>
+                                    }
                                 </div>
                             </div>
                             <div className="row mb-4">
@@ -175,11 +152,15 @@ class Settings extends Component {
                                     }
                                 </div>
                             </div>
-                            {/* <div className="row mb-4">
+                            <div className="row mb-4">
                                 <div className="col">
-                                    <input name="email" type="email" className="form-control" id="settingsEmailInputEdit" defaultValue={newRestaurant.email} onChange={ handleChangeRestaurant } placeholder="restaurant@email.com" required/>
+                                    <label htmlFor="settingsEmailInputEdit"><b>Store Email</b></label>
+                                    { this.state.formEdit ?
+                                        <input name="email" type="email" className="form-control" id="settingsEmailInputEdit" defaultValue={newRestaurant.email} onChange={ handleChangeRestaurant } placeholder="restaurant@email.com"/>:
+                                        <p className="mt-2">{newRestaurant.email}</p>
+                                    }
                                 </div>
-                            </div> */}
+                            </div>
                             <div className="row mb-4">
                                 <div className="col">
                                     <label htmlFor="settingsLogoInputEdit"><b>Store Logo</b></label>

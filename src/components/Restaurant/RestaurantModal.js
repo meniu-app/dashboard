@@ -6,14 +6,16 @@ import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
 import { CirclePicker } from 'react-color';
 import { getUser, getUserRole } from '../../api/TokenHandler';
+import PlacesAutocomplete from 'react-places-autocomplete';
 
 class RestaurantModal extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            background: '#fff',
-            color: '#000'
+            backgroundColor: '#fff',
+            color: '#000',
+            address: ''
         };
     }
     
@@ -48,6 +50,18 @@ class RestaurantModal extends Component {
         }
     }
 
+    handleChange = address => {
+        this.setState({ address });
+    };
+     
+    handleSelect = address => {
+        this.setState({ address })
+        // geocodeByAddress(address)
+        //     .then(results => getLatLng(results[0]))
+        //     .then(latLng => console.log('Success', latLng))
+        //     .catch(error => console.error('Error', error));
+    };
+
     render () {
         const { formLoading } = this.props;
 
@@ -72,16 +86,52 @@ class RestaurantModal extends Component {
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col">
-                                        <input name="address" type="text" className="form-control" id="restaurantAddressInput" placeholder="Street" required/>
-                                    </div>
-                                    <div className="col">
-                                        <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code"/>
+                                        <PlacesAutocomplete
+                                                value={this.state.address}
+                                                onChange={this.handleChange}
+                                                onSelect={this.handleSelect}
+                                            >
+                                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                                <div>
+                                                    <input
+                                                    {...getInputProps({
+                                                        placeholder: 'Street...',
+                                                        className: 'location-search-input',
+                                                    })}
+                                                    className="form-control"
+                                                    name="address"
+                                                    />
+                                                    <div className="autocomplete-dropdown-container">
+                                                    {loading && <div>Loading...</div>}
+                                                    {suggestions.map((suggestion, idx) => {
+                                                        const className = suggestion.active
+                                                        ? 'suggestion-item--active'
+                                                        : 'suggestion-item';
+                                                        const style = suggestion.active
+                                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                        return (
+                                                        <div
+                                                            {...getSuggestionItemProps(suggestion, {
+                                                            className,
+                                                            style,
+                                                            })}
+                                                            key={idx}
+                                                        >
+                                                            <span>{suggestion.description}</span>
+                                                        </div>
+                                                        );
+                                                    })}
+                                                    </div>
+                                                </div>
+                                                )}
+                                        </PlacesAutocomplete>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col">
-                                        <select name="country" className="form-control" id="restaurantCountryInput" placeholder="Country">
-                                            <option selected>Select Country</option>
+                                        <select name="country" className="form-control" id="restaurantCountryInput" placeholder="Country" defaultValue=''>
+                                            <option value=''>Select Country</option>
                                             <option value="CO">Colombia</option>
                                             <option value="US">United States</option>
                                             <option value="ES">Spain</option>
@@ -103,11 +153,17 @@ class RestaurantModal extends Component {
                                     </div>
                                 </div>
                                 <div className="row mb-4">
-                                    <div className="col-12">
-                                        <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant Background</label>
+                                    <div className="col-6">
+                                        <label className="mb-3">Restaurant Background</label>
                                         <CirclePicker 
                                             circleSize={24}
                                             onChange={ this.handleBackgroundChange } />
+                                    </div>
+                                    <div className="col-6">
+                                        <label className="mb-3">Restaurant color</label>
+                                        <CirclePicker 
+                                            circleSize={24}
+                                            onChange={ this.handleColorChange } />
                                     </div>
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">

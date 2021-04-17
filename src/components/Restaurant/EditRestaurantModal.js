@@ -5,6 +5,10 @@ import * as appAction from '../../actions/appActions';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
 import { CirclePicker } from 'react-color';
+import PlacesAutocomplete, {
+    // geocodeByAddress,
+    // getLatLng
+} from 'react-places-autocomplete';
 
 class EditRestaurantModal extends Component {
 
@@ -12,7 +16,8 @@ class EditRestaurantModal extends Component {
         super(props);
         this.state = {
             ...props.restaurantDetail.settings,
-            changedBanner: false
+            changedBanner: false,
+            address: props.restaurantDetail?.address
         };
         this.handleChangeRestaurant = this.props.handleChangeRestaurant.bind(this);
         this.handleBackgroudImageChange = this.handleBackgroudImageChange.bind(this);
@@ -40,11 +45,8 @@ class EditRestaurantModal extends Component {
         const data = new FormData(event.target);
         const settings = {
             color: this.state.color,
-            backgroundColor: this.state.background,
-            backgroundImage: this.state.backgroundImage
+            backgroundColor: this.state.background
         }
-        if (event.target.banner.value === '')
-            data.delete('banner');
         if (event.target.logo.value === '')
             data.delete('logo');
 
@@ -56,9 +58,17 @@ class EditRestaurantModal extends Component {
         }
     }
 
-    handleChangeBanner = () => {
-        this.setState({changedBanner: true})
-    }
+    handleChange = address => {
+        this.setState({ address });
+    };
+     
+    handleSelect = address => {
+        this.setState({ address })
+        // geocodeByAddress(address)
+        //     .then(results => getLatLng(results[0]))
+        //     .then(latLng => console.log('Success', latLng))
+        //     .catch(error => console.error('Error', error));
+    };
 
     render () {
         const { formLoading, restaurantDetail, handleChangeRestaurant } = this.props;
@@ -86,65 +96,91 @@ class EditRestaurantModal extends Component {
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col">
-                                    <input name="address" type="address" className="form-control" id="restaurantAddressInputEdit" defaultValue={newRestaurant.address} onChange={ handleChangeRestaurant } placeholder="Street..." required/>
-                                    </div>
-                                    <div className="col">
-                                        <input name="city" type="text" className="form-control" id="editRestaurantCityInput" placeholder="City" required/>
+                                        <PlacesAutocomplete
+                                                value={this.state.address}
+                                                onChange={this.handleChange}
+                                                onSelect={this.handleSelect}
+                                            >
+                                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                                <div>
+                                                    <input
+                                                    {...getInputProps({
+                                                        placeholder: 'Street...',
+                                                        className: 'location-search-input',
+                                                    })}
+                                                    className="form-control"
+                                                    name="address"
+                                                    />
+                                                    <div className="autocomplete-dropdown-container">
+                                                    {loading && <div>Loading...</div>}
+                                                    {suggestions.map((suggestion, idx) => {
+                                                        const className = suggestion.active
+                                                        ? 'suggestion-item--active'
+                                                        : 'suggestion-item';
+                                                        const style = suggestion.active
+                                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                        return (
+                                                        <div
+                                                            {...getSuggestionItemProps(suggestion, {
+                                                            className,
+                                                            style,
+                                                            })}
+                                                            key={idx}
+                                                        >
+                                                            <span>{suggestion.description}</span>
+                                                        </div>
+                                                        );
+                                                    })}
+                                                    </div>
+                                                </div>
+                                                )}
+                                        </PlacesAutocomplete>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col">
-                                        <input name="state" type="text" className="form-control" id="editRestaurantStateInput" placeholder="State/Province" required/>
+                                        <select name="country" className="form-control" id="restaurantCountryInput" placeholder="Country" defaultValue=''>
+                                            <option value=''>Select Country</option>
+                                            <option value="CO">Colombia</option>
+                                            <option value="US">United States</option>
+                                            <option value="ES">Spain</option>
+                                        </select> 
                                     </div>
                                     <div className="col">
-                                        <input name="zip" type="text" className="form-control" id="editRestaurantZipInput" placeholder="Zip/Postal Code" required/>
+                                        <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col">
-                                        <input name="email" type="email" className="form-control" id="restaurantEmailInputEdit" defaultValue={newRestaurant.email} onChange={ handleChangeRestaurant } placeholder="restaurant@email.com" required/>
+                                        <input name="email" type="email" className="form-control" id="restaurantEmailInputEdit" defaultValue={newRestaurant.email} onChange={ handleChangeRestaurant } placeholder="restaurant@email.com" />
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-6 file-input">
-                                        <label htmlFor="restaurantLogoInputEdit">Restaurant logo</label>
+                                        <label htmlFor="restaurantLogoInputEdit">Restaurant Logo</label>
                                         <input name="logo" type="file" className="form-control-file" onChange={ handleChangeRestaurant } id="restaurantLogoInputEdit" />
-                                    </div>
-                                    <div className="col-6 file-input">
-                                        <label htmlFor="restaurantBannerInputEdit">Restaurant banner</label>
-                                        <input name="banner" type="file" className="form-control-file" onChange={ this.handleChangeBanner } id="restaurantBannerInputEdit" />
-                                    </div>
-                                </div>
-                                <div className="row mb-4">
-                                    <div className="col-6 pd-3 form-check form-switch">
-                                    <input className="form-check-input" type="checkbox" id="restaurantBackgroundInputEdit" defaultChecked={this.state.backgroundImage} onClick={ this.handleBackgroudImageChange } />
-                                    <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
-                                    {
-                                        restaurantDetail.banner === '' && this.state.backgroundImage && !this.state.changedBanner ?
-                                        <p className="text-danger"><b>Add a banner image</b></p> :
-                                        <></>
-                                    }
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-6">
-                                        <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant background</label>
+                                        <label className="mb-3">Restaurant Background</label>
                                         <CirclePicker 
                                             circleSize={24}
                                             onChange={ this.handleBackgroundChange }
-                                            value={newRestaurant.settings.background} />
+                                            color={newRestaurant.settings.backgroundColor} />
                                     </div>
                                     <div className="col-6">
-                                        <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant color</label>
+                                        <label className="mb-3">Restaurant color</label>
                                         <CirclePicker 
                                             circleSize={24}
                                             onChange={ this.handleColorChange }
-                                            value={newRestaurant.settings.color} />
+                                            color={newRestaurant.settings.color} />
                                     </div>
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
-                                    <input type="submit" className="btn btn-success" onClick={e => this.handleSubmit(e, this.props)} value="Submit" disabled={restaurantDetail.banner === '' && this.state.backgroundImage && !this.state.changedBanner} />
+                                    <input type="submit" className="btn btn-success" onClick={e => this.handleSubmit(e, this.props)} value="Submit" />
                                 </div>
                             </form>
                             : <Spinner />
