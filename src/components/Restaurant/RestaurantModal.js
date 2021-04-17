@@ -13,8 +13,7 @@ class RestaurantModal extends Component {
         super(props);
         this.state = {
             background: '#fff',
-            color: '#000',
-            backgroundImage: false
+            color: '#000'
         };
     }
     
@@ -26,10 +25,6 @@ class RestaurantModal extends Component {
         this.setState({ color: color.hex });
     }
 
-    handleBackgroudImageChange = (e) => {
-        this.setState({backgroundImage: e.target.checked})
-    }
-
     async handleSubmit (event, props) {
         const { appActions } = props;
 
@@ -38,8 +33,7 @@ class RestaurantModal extends Component {
         data.append('active', true);
         const settings = {
             color: this.state.color,
-            backgroundColor: this.state.background,
-            backgroundImage: this.state.backgroundImage
+            backgroundColor: this.state.background
         }
         data.append('settings', JSON.stringify(settings));
         let response = null;
@@ -94,29 +88,18 @@ class RestaurantModal extends Component {
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-12">
-                                        <input name="email" type="email" className="form-control" id="restaurantEmailInput" placeholder="restaurant@email.com" required/>
+                                        <input name="email" type="email" className="form-control" id="restaurantEmailInput" placeholder="restaurant@email.com"/>
                                     </div>
-                                    
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-6 file-input">
-                                        <label htmlFor="restaurantLogoInput">Restaurant logo</label>
+                                        <label htmlFor="restaurantLogoInput">Restaurant Logo</label>
                                         <input name="logo" type="file" className="form-control-file" id="restaurantLogoInput" required/>
-                                    </div>
-                                    <div className="col-6 file-input">
-                                        <label htmlFor="restaurantBannerInput">Restaurant banner</label>
-                                        <input name="banner" type="file" className="form-control-file" id="restaurantBannerInput" required={this.state.backgroundImage}/>
-                                    </div>
-                                </div>
-                                <div className="row mb-4">
-                                    <div className="col-6 pd-3 form-check form-switch">
-                                        <label className="form-check-label" htmlFor="restaurantBackgroundInput">Banner as background</label>
-                                        <input className="form-check-input" type="checkbox" id="restaurantBackgroundInput" defaultChecked={this.state.backgroundImage} onChange={ this.handleBackgroudImageChange } />
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-12">
-                                        <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant background</label>
+                                        <label htmlFor="restaurantBannerInput" className="mb-3">Restaurant Background</label>
                                         <CirclePicker 
                                             circleSize={24}
                                             onChange={ this.handleBackgroundChange } />
