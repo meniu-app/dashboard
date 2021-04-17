@@ -153,6 +153,29 @@ class Settings extends Component {
                                 </div>
                             </div>
                             <div className="row mb-4">
+                                    <div className="col">
+                                        <label htmlFor="settingsPhoneInputEdit"><b>Store Country</b></label>
+                                        { this.state.formEdit ?
+                                            <select name="country" className="form-control" id="restaurantCountryInput" placeholder="Country" defaultValue=''>
+                                                <option value=''>Select Country</option>
+                                                <option value="CO">Colombia</option>
+                                                <option value="US">United States</option>
+                                                <option value="ES">Spain</option>
+                                            </select> :
+                                            <p className="mt-2">{newRestaurant.country}</p>
+                                        }
+                                    </div>
+                            </div>
+                            <div className="row mb-4">
+                                <div className="col">
+                                    <label htmlFor="settingsPhoneInputEdit"><b>Store Postal Code</b></label>
+                                    { this.state.formEdit ?
+                                        <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/> :
+                                        <p className="mt-2">{newRestaurant.zip}</p>
+                                    }
+                                </div>
+                            </div>
+                            <div className="row mb-4">
                                 <div className="col">
                                     <label htmlFor="settingsEmailInputEdit"><b>Store Email</b></label>
                                     { this.state.formEdit ?
