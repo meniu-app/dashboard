@@ -122,7 +122,6 @@ class App extends Component {
             </AuthenticatedRoute>
           </Route>
           <Route exact path="/auth/login">
-            <Alert />
             <UnAuthenticatedRoute>
               <Login />
               <Footer />

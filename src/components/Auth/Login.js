@@ -5,6 +5,7 @@ import * as appAction from '../../actions/appActions';
 import { bindActionCreators } from 'redux';
 import { Link, withRouter } from 'react-router-dom';
 import { getUser, getUserRole } from '../../api/TokenHandler';
+import Alert from 'react-bootstrap/Alert';
 class Login extends Component {
 
     constructor(props) {
@@ -46,6 +47,8 @@ class Login extends Component {
 
     render() {
 
+        const { loginError } = this.props;
+
         return (
             <div className="container mb-5">
                 <div className="intro row m-3">
@@ -69,6 +72,16 @@ class Login extends Component {
                             </button>
                         </div>
                     </div>
+                    {
+                        loginError &&
+                        <Alert variant='danger' className="text-center">
+                            Unable to log in with provided credentials.
+                            <br/>
+                            Please contact support for assistance via <Alert.Link href="https://wa.link/asmsn4" target="_blank">Whatsapp</Alert.Link>.
+                            <br/>
+                            Or try again.
+                        </Alert>
+                    }
                     <div className="d-grid gap-2">
                        <button className="btn btn-success" type="submit">Sign in</button>
                     </div>
@@ -84,11 +97,13 @@ class Login extends Component {
 Login.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    history: PropTypes.object
+    history: PropTypes.object,
+    loginError: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.app.isLoggedIn,
+    loginError: state.app.loginError
 });
 
 const mapDispatchToProps = (dispatch) => ({
