@@ -27,7 +27,7 @@ class Profile extends Component {
             <div className="ms-4">
               <div className="d-flex mb-3 align-items-end">
                 <p className="form-label">Email</p>
-                <button type="button" className="btn btn-link ms-5" onClick={() => this.setState({showFormEmail: !this.state.showFormEmail})}>
+                <button type="button" className="btn btn-link ms-5" onClick={() => this.setState({showFormEmail: !this.state.showFormEmail, showFormPassword: false})}>
                   {this.state.showFormEmail ? 'Editing' : 'Edit'}
                 </button>
               </div>
@@ -42,7 +42,7 @@ class Profile extends Component {
             <div className="ms-4">
               <div className="d-flex mb-3 align-items-end">
                 <p className="form-label">Password</p>
-                <button type="button" className="btn btn-link ms-5" onClick={() => this.setState({showFormPassword: !this.state.showFormPassword})}>
+                <button type="button" className="btn btn-link ms-5" onClick={() => this.setState({showFormPassword: !this.state.showFormPassword, showFormEmail: false})}>
                   {this.state.showFormPassword ? 'Editing' : 'Edit'}
                 </button>
               </div>
