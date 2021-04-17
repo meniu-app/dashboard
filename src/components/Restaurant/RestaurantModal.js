@@ -75,12 +75,17 @@ class RestaurantModal extends Component {
                                         <input name="address" type="text" className="form-control" id="restaurantAddressInput" placeholder="Street" required/>
                                     </div>
                                     <div className="col">
-                                        <input name="city" type="text" className="form-control" id="restaurantCityInput" placeholder="City" required/>
+                                        <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code"/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col">
-                                        <input name="state" type="text" className="form-control" id="restaurantStateInput" placeholder="State/Province" required/>
+                                        <select name="country" className="form-control" id="restaurantCountryInput" placeholder="Country">
+                                            <option selected>Select Country</option>
+                                            <option value="CO">Colombia</option>
+                                            <option value="US">United States</option>
+                                            <option value="ES">Spain</option>
+                                        </select> 
                                     </div>
                                     <div className="col">
                                         <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/>

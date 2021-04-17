@@ -26,14 +26,13 @@ class Profile extends Component {
           <div className="col-12">
             <div className="ms-4">
               <div className="d-flex mb-3 align-items-end">
-                <p className="form-label">Email</p>
+                <p className="form-label"><strong>Email:</strong><br/>{this.state.email}</p>
                 <button type="button" className="btn btn-link ms-5" onClick={() => this.setState({showFormEmail: !this.state.showFormEmail, showFormPassword: false})}>
                   {this.state.showFormEmail ? 'Editing' : 'Edit'}
                 </button>
               </div>
               {this.state.showFormEmail &&
               <>
-                <p>{this.state.email}</p>
                 <ProfileEdit refreshUserEmail={this.refreshUserEmail}/>
               </>}
             </div>
@@ -41,7 +40,7 @@ class Profile extends Component {
           <div className="col-12">
             <div className="ms-4">
               <div className="d-flex mb-3 align-items-end">
-                <p className="form-label">Password</p>
+                <p className="form-label mb-0"><strong>Password:</strong><br/>********</p>
                 <button type="button" className="btn btn-link ms-5" onClick={() => this.setState({showFormPassword: !this.state.showFormPassword, showFormEmail: false})}>
                   {this.state.showFormPassword ? 'Editing' : 'Edit'}
                 </button>

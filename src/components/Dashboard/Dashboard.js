@@ -129,21 +129,30 @@ class Dashboard extends React.Component {
                                 <button className="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit</button>
                                 <button className="btn btn-outline-danger ms-2 btn-sm"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete</button>
                             </div>
-                        </div> 
+                        </div>
                         <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
                     </section>
                     {
                         categories.map((category, index) => {
                             return (
                                 <div key={category.id + index} id={category.id + index} className="category-group">
-                                    <div className="card col-xl-4 col-lg-4 col-md-4 col-sm-6  col-12 category-title my-5">
-                                        <div className="card-body">
-                                            <h5 className="h6">{category.name}</h5>
-                                            {
-                                                category.id !== 'no_category' ?
-                                                <button className="btn btn-link" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit Category</button>
-                                                : <></>
-                                            }
+                                    <div className="row">
+                                        <div className="col-xl-4 col-lg-6 col-md-6">
+                                            <div className="card col-12 category-title my-3">
+                                                <div className="card-body">
+                                                    <h5 className="h6">{category.name}</h5>
+                                                    {
+                                                        category.id !== 'no_category' ?
+                                                          <button className="btn btn-link" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit Category</button>
+                                                          : <></>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row-cols-xl-6 row-cols-lg-6 row-cols-md-6">
+                                            <button className="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#categoryModal">
+                                                Add a category
+                                            </button>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -179,6 +188,11 @@ class Dashboard extends React.Component {
                                             )
                                         })
                                     }
+                                        <div className="row-cols-xl-6 row-cols-lg-6 row-cols-md-6">
+                                            <button className="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                                Add an item
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             )

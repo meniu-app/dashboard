@@ -75,11 +75,11 @@ class App extends Component {
   }
 
 
-  
+
   render() {
     const { appStarted, restaurantDetail, restaurantDataReady, restaurantTreeViewData, restaurantTreeViewDataReady } = this.props;
     return (
-      <div>
+      <div className="flex-column">
       {appStarted ?
         <Router>
         <Suspense fallback={<Spinner></Spinner>}>
@@ -91,7 +91,7 @@ class App extends Component {
             </section>
             <Alert />
             <AuthenticatedRoute>
-              <div className="container-fluid">
+              <div className="container-fluid flex-1">
               <div id="main" className="row">
                   <Sidenav restaurantDetail={restaurantDetail}
                     restaurantDataReady={restaurantDataReady}
@@ -146,7 +146,7 @@ class App extends Component {
       );
     }
   }
-  
+
   App.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
     appStarted: PropTypes.bool.isRequired,
@@ -155,7 +155,7 @@ class App extends Component {
     restaurantDataReady: PropTypes.bool.isRequired,
     restaurantTreeViewDataReady: PropTypes.bool.isRequired,
   };
-  
+
   const mapStateToProps = (state) => ({
     appStarted: state.app.appStarted,
     restaurantDetail: state.app.restaurantDetail,
@@ -163,13 +163,12 @@ class App extends Component {
     restaurantDataReady: state.app.restaurantDataReady,
     restaurantTreeViewDataReady: state.app.restaurantTreeViewDataReady,
   });
-  
+
   const mapDispatchToProps = (dispatch) => ({
     appActions: bindActionCreators(appAction, dispatch),
   });
-  
+
   export default connect(
     mapStateToProps,
     mapDispatchToProps,
     )(App);
-    
