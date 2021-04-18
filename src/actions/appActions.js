@@ -759,7 +759,7 @@ export const addUserData = (data, role) => async (dispatch) => {
             response = await API.addBusinessManager(data);
         const responseData = response['data'];
 
-        if (responseData.restaurant !== null || responseData.restaurant === undefined) {
+        if (responseData.restaurant !== null && responseData.restaurant !== undefined) {
             const restaurant = await API.getRestaurantDetail(responseData.restaurant);
             const restaurantData = restaurant['data'];
             dispatch(addRestaurantDataOwnerSuccessAction(restaurantData));
