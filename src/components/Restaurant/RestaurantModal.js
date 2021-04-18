@@ -138,7 +138,7 @@ class RestaurantModal extends Component {
                                         </select> 
                                     </div>
                                     <div className="col">
-                                        <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/>
+                                        <input name="zipcode" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">

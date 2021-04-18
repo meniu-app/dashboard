@@ -159,7 +159,7 @@ class Settings extends Component {
                                     <div className="col">
                                         <label htmlFor="settingsPhoneInputEdit"><b>Store Postal Code</b></label>
                                         { this.state.formEdit ?
-                                            <input name="zip" type="text" className="form-control" id="setingsRestaurantZipInput" placeholder="Zip/Postal Code" required defaultValue={newRestaurant.zipcode}/> :
+                                            <input name="zipcode" type="text" className="form-control" id="setingsRestaurantZipInput" placeholder="Zip/Postal Code" required defaultValue={newRestaurant.zipcode}/> :
                                             <p className="mt-2">{newRestaurant.zipcode}</p>
                                         }
                                     </div>
