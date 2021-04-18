@@ -135,10 +135,11 @@ class RestaurantModal extends Component {
                                             <option value="CO">Colombia</option>
                                             <option value="US">United States</option>
                                             <option value="ES">Spain</option>
+                                            <option value="MX">Mexico</option>
                                         </select> 
                                     </div>
                                     <div className="col">
-                                        <input name="zip" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/>
+                                        <input name="zipcode" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
