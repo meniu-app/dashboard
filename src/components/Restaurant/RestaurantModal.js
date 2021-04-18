@@ -135,6 +135,7 @@ class RestaurantModal extends Component {
                                             <option value="CO">Colombia</option>
                                             <option value="US">United States</option>
                                             <option value="ES">Spain</option>
+                                            <option value="MX">Mexico</option>
                                         </select> 
                                     </div>
                                     <div className="col">

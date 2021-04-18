@@ -152,6 +152,7 @@ class Settings extends Component {
                                                 <option value="CO">Colombia</option>
                                                 <option value="US">United States</option>
                                                 <option value="ES">Spain</option>
+                                                <option value="MX">Mexico</option>
                                             </select> :
                                             <p className="mt-2">{newRestaurant.country}</p>
                                         }
