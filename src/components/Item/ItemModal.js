@@ -18,7 +18,7 @@ class ItemModal extends Component {
     async handleSubmit(event, props) {
         const { appActions, restaurantDetail } = props;
         event.preventDefault();
-        const {name, price, description, category, menu, image} = event.target;
+        const {name, price, description, category, menu, image, extra_notes} = event.target;
         const formData = {
             name: name.value,
             price: price.value,
@@ -26,7 +26,8 @@ class ItemModal extends Component {
             category: category.value,
             menu: menu.value,
             active: true,
-            image: image
+            image: image,
+            extra_notes: extra_notes.value
         }
         const data = new FormData();
         const imageData = new FormData(event.target);
@@ -36,6 +37,7 @@ class ItemModal extends Component {
         data.append('category', formData.category);
         data.append('menu', formData.menu);
         data.append('active', formData.active);
+        data.append('extra_notes', formData.extra_notes);
 
         if (!this.state.showSelect) {
             const newCategory = await appActions.addCategoryData({
@@ -105,7 +107,7 @@ class ItemModal extends Component {
                                 <div className="row mb-4">
                                     <div className="col-12">
                                         <label htmlFor="itemNotesInput">Extra notes, food allergens, etc.</label>
-                                        <textarea name="notes" className="form-control" id="itemNotesInput" rows="2"></textarea>
+                                        <textarea name="extra_notes" className="form-control" id="itemNotesInput" rows="2"></textarea>
                                     </div>
                                 </div>
                                 

@@ -26,7 +26,7 @@ class EditItemModal extends React.Component {
     async handleSubmit(event) {
         const { appActions, item, restaurantDetail } = this.props;
         event.preventDefault();
-        const {name, price, description, category, menu, image} = event.target;
+        const {name, price, description, category, menu, image, extra_notes} = event.target;
         const formData = {
             name: name.value,
             price: price.value,
@@ -34,7 +34,8 @@ class EditItemModal extends React.Component {
             category: category.value,
             menu: menu.value,
             active: true,
-            image: image
+            image: image,
+            extra_notes: extra_notes.value
         }
         if (formData.category === '') {
             formData.category = null;
@@ -47,6 +48,7 @@ class EditItemModal extends React.Component {
         data.append('category', formData.category);
         data.append('menu', formData.menu);
         data.append('active', formData.active);
+        data.append('extra_notes', formData.extra_notes);
 
         let imageId = item.images.length > 0 ? item.images[0].id : null;
         if (formData.image.value === '')
@@ -156,7 +158,7 @@ class EditItemModal extends React.Component {
                             <div className="row mb-4">
                                 <div className="col">
                                     <label htmlFor="editItemNotesInput">Extra notes, food allergens, etc.</label>
-                                    <textarea name="notes" className="form-control" id="editItemNotesInput" rows="2"></textarea>
+                                    <textarea name="extra_notes" className="form-control" value={newItem.extra_notes ? newItem.extra_notes : ''} onChange={ handleChangeItem } id="editItemNotesInput" rows="2"></textarea>
                                 </div>
                             </div>
                             <div className="row mb-4">
