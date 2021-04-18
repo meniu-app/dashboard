@@ -805,15 +805,16 @@ const editItemDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object}
  */
-export const editItemData = (data, imageData, id, imageId, ) => async (dispatch) => {
+export const editItemData = (data, imageData, id, imageId, imageRemoved) => async (dispatch) => {
     dispatch(editItemDataInitAction());
     try {
         const response = await API.editItem(data, id);
         const responseData = response['data'];
         // Making image update after item is created
-        if (imageId !== null)
+        if (imageId !== null && !imageRemoved) {
             await API.editImage(imageData, imageId);
-        if (imageId === null) {
+        }
+        if (imageId === null || (imageData.get('image').name !== '' && imageRemoved)) {
             imageData.append('item', id)
             imageData.append('approved', true)
             imageData.append('active', true)

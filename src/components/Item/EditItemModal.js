@@ -65,7 +65,7 @@ class EditItemModal extends React.Component {
             }
         }
 
-        const response = await appActions.editItemData(data, imageData, this.props.item.id, imageId);
+        const response = await appActions.editItemData(data, imageData, this.props.item.id, imageId, this.state.imageRemoved);
         if (response) {
             this.props.changeShowEditModal();
             await appActions.getRestaurantTreeViewDetailData();
