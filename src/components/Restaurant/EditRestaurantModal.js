@@ -153,11 +153,6 @@ class EditRestaurantModal extends Component {
                                     </div>
                                 </div>
                                 <div className="row mb-4">
-                                    <div className="col">
-                                        <input name="email" type="email" className="form-control" id="restaurantEmailInputEdit" defaultValue={newRestaurant.email} onChange={ handleChangeRestaurant } placeholder="restaurant@email.com" />
-                                    </div>
-                                </div>
-                                <div className="row mb-4">
                                     <div className="col-6 file-input">
                                         <label htmlFor="restaurantLogoInputEdit">Restaurant Logo</label>
                                         <input name="logo" type="file" className="form-control-file" onChange={ handleChangeRestaurant } id="restaurantLogoInputEdit" />
@@ -165,14 +160,14 @@ class EditRestaurantModal extends Component {
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-6">
-                                        <label className="mb-3">Restaurant Background</label>
+                                        <label className="mb-3">Brand Color</label>
                                         <CirclePicker 
                                             circleSize={24}
                                             onChange={ this.handleBackgroundChange }
                                             color={newRestaurant.settings.backgroundColor} />
                                     </div>
                                     <div className="col-6">
-                                        <label className="mb-3">Restaurant color</label>
+                                        <label className="mb-3">Brand Text Color</label>
                                         <CirclePicker 
                                             circleSize={24}
                                             onChange={ this.handleColorChange }

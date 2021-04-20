@@ -176,15 +176,6 @@ class Settings extends Component {
                             </div>
                             <div className="row mb-4">
                                 <div className="col">
-                                    <label htmlFor="settingsEmailInputEdit"><b>Store Email</b></label>
-                                    { this.state.formEdit ?
-                                        <input name="email" type="email" className="form-control" id="settingsEmailInputEdit" defaultValue={newRestaurant.email} onChange={ handleChangeRestaurant } placeholder="restaurant@email.com"/>:
-                                        <p className="mt-2">{newRestaurant.email}</p>
-                                    }
-                                </div>
-                            </div>
-                            <div className="row mb-4">
-                                <div className="col">
                                     <label htmlFor="settingsLogoInputEdit"><b>Store Logo</b></label>
                                     { this.state.formEdit ?
                                         <input name="logo" type="file" className="form-control-file" onChange={ handleChangeRestaurant } id="settingsLogoInputEdit" /> :

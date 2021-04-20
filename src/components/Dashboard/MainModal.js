@@ -20,7 +20,7 @@ class MainModal extends Component {
                                     <div className="mx-3">
                                         <button className="btn-sel btn btn-lg" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#itemModal">
                                             <span className="badge bg-light"><i className="fas fa-2x fa-hamburger"></i></span>
-                                            Add an item to any category
+                                            Add an item
                                         </button>
                                     </div>
                                 </div>
@@ -30,7 +30,7 @@ class MainModal extends Component {
                                     <div className="mx-3">
                                         <button className="btn-sel btn btn-lg" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#categoryModal">
                                             <span className="badge bg-light"><i className="fas fa-2x fa-tasks"></i></span>
-                                            Add a category to your menu
+                                            Add a category
                                         </button>
                                     </div>
                                 </div>
@@ -40,7 +40,7 @@ class MainModal extends Component {
                                     <div className="mx-3">
                                         <button className="btn-sel btn btn-lg" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#menuModal">
                                             <span className="badge bg-light"><i className="far fa-2x fa-file-alt"></i></span>
-                                            Add a menu to your store
+                                            Add a Menu
                                         </button>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@ class MainModal extends Component {
                                     <div className="mx-3">
                                         <button className="btn-sel btn btn-lg" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#userModal">
                                             <span className="badge bg-light"><i className="fas fa-2x fa-user-plus"></i></span>
-                                            Add new store user
+                                            Add new user
                                         </button>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@ class MainModal extends Component {
                                     <div className="mx-3">
                                         <button className="btn-sel btn btn-lg" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#restaurantModal">
                                             <span className="badge bg-light"><i className="fas fa-2x fa-utensils"></i></span>
-                                            Add a new restaurant
+                                            Add a store
                                         </button>
                                     </div>
                                 </div>
