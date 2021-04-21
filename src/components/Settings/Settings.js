@@ -69,6 +69,14 @@ class Settings extends Component {
         this.setState({changedBanner: true})
     }
 
+    colors = () => {
+        return [
+            "#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3",
+            "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39",
+            "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#fff", "#000"
+        ]
+    }
+
     render () {
         const { formLoading, restaurantDetail, handleChangeRestaurant } = this.props
         const newRestaurant = {...restaurantDetail};
@@ -191,14 +199,16 @@ class Settings extends Component {
                                     <CirclePicker 
                                         circleSize={24}
                                         onChange={ this.handleBackgroundChange }
-                                        color={newRestaurant.settings.backgroundColor} />
+                                        color={newRestaurant.settings.backgroundColor}
+                                        colors={this.colors()}/>
                                 </div>
                                 <div className="col-6">
                                     <label className="mb-3"><b>Brand Text Color</b></label>
                                     <CirclePicker 
                                         circleSize={24}
                                         onChange={ this.handleColorChange }
-                                        color={newRestaurant.settings.color} />
+                                        color={newRestaurant.settings.color}
+                                        colors={this.colors()}/>
                                 </div>
                             </div>
                             { this.state.formEdit ?

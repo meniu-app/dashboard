@@ -62,6 +62,14 @@ class RestaurantModal extends Component {
         //     .catch(error => console.error('Error', error));
     };
 
+    colors = () => {
+        return [
+            "#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3",
+            "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39",
+            "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#fff", "#000"
+        ]
+    }
+
     render () {
         const { formLoading } = this.props;
 
@@ -153,13 +161,15 @@ class RestaurantModal extends Component {
                                         <label className="mb-3">Brand Color</label>
                                         <CirclePicker 
                                             circleSize={24}
-                                            onChange={ this.handleBackgroundChange } />
+                                            onChange={ this.handleBackgroundChange }
+                                            colors={this.colors()}/>
                                     </div>
                                     <div className="col-6">
                                         <label className="mb-3">Brand Text Color</label>
                                         <CirclePicker 
                                             circleSize={24}
-                                            onChange={ this.handleColorChange } />
+                                            onChange={ this.handleColorChange }
+                                            colors={this.colors()}/>
                                     </div>
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
