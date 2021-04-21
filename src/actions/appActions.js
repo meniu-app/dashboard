@@ -259,7 +259,7 @@ export const resetPasswordConfirmData = (password, token) => async (dispatch) =>
         dispatch(alertActivateAction({text: 'Password succesfully updated', alert: 'success'}));
         return dispatch(resetPasswordConfirmInitSuccessAction(data));
     } catch (error) {
-        if (error.response.data?.email) {
+        if (error.response.data?.password) {
             dispatch(alertActivateAction({text: 'Please create a strong password', alert: 'danger'}));
         } else {
             dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));

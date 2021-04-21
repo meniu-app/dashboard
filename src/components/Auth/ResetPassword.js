@@ -13,7 +13,10 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            urlToken: null
+            urlToken: null,
+            passwordShow: false,
+            confirmPassword: '',
+            confirmPasswordShow: false
         };
     }
 
@@ -40,14 +43,13 @@ class Login extends Component {
 
     resetPasswordConfirm = async (event) => {
         event.preventDefault();
-        const password = event.target.password.value;
         const { appActions } = this.props;
-        this.setState({
-            password
-        });
-        const response = await appActions.resetPasswordConfirmData(password, this.state.urlToken);
+        if (this.state.password !== this.state.confirmPassword) {
+            return
+        }
+        const response = await appActions.resetPasswordConfirmData(this.state.password, this.state.urlToken);
         if (response) {
-            this.setState({password: ''})
+            this.setState({password: '', confirmPassword: ''})
         }
     }
 
@@ -82,7 +84,21 @@ class Login extends Component {
                 <form onSubmit={this.resetPasswordConfirm} className="form--login" method="POST">
                     <div className="mb-3">
                         <label htmlFor="loginPassword" className="form-label">Password</label>
-                        <input type="password" name="password" className="form-control" id="loginPassword" value={this.state.password} onChange={e => this.setState({password: e.target.value})} required></input>
+                        <div className="field-group d-flex">
+                            <input type={this.state.passwordShow ? "text" : "password"} name="password" className="form-control" id="resetPassword" value={this.state.password} onChange={e => this.setState({password: e.target.value})} required></input>
+                            <button className="btn btn-default fw-bolder btn-show-password" onClick={() => this.setState({passwordShow: !this.state.passwordShow})} type="button">
+                                {!this.state.passwordShow ? "Show" : "Hide"}
+                            </button>
+                        </div>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="loginPassword" className="form-label">Password</label>
+                        <div className="field-group d-flex">
+                            <input type={this.state.confirmPasswordShow ? "text" : "password"} name="confirmPassword" className="form-control" id="resetPasswordConfirm" value={this.state.confirmPassword} onChange={e => this.setState({confirmPassword: e.target.value})} required></input>
+                            <button className="btn btn-default fw-bolder btn-show-password" onClick={() => this.setState({confirmPasswordShow: !this.state.confirmPasswordShow})} type="button">
+                                {!this.state.confirmPasswordShow ? "Show" : "Hide"}
+                            </button>
+                        </div>
                     </div>
                     <div className="d-grid gap-2 mb-3">
                         <button type="submit" className="btn btn-success me-2">Reset password</button>
