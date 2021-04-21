@@ -141,24 +141,20 @@ class EditItemModal extends React.Component {
                         <form onSubmit={(e) => this.handleSubmit(e)} method="PATCH" encType="multipart/form-data">
                             <div className="row mb-4">
                                 <div className="col">
-                                    <label htmlFor="itemNameInputEdit" className="form-label">Item name</label>
-                                    <input name="name" type="text" className="form-control"  id="itemNameInputEdit" value={newItem.name} onChange={ handleChangeItem } placeholder="Sopa de tomate" required/>
+                                    <input name="name" type="text" className="form-control"  id="itemNameInputEdit" value={newItem.name} onChange={ handleChangeItem } placeholder="Item name" required/>
                                 </div>
                                 <div className="col">
-                                    <label htmlFor="itemPriceInputEdit" className="form-label">Item price</label>
-                                    <input name="price" type="text" min="0" className="form-control" id="itemPriceInputEdit" value={newItem.price} onChange={ handleChangeItem } onKeyPress={this.validate} placeholder="12,99" required/>
+                                    <input name="price" type="text" min="0" className="form-control" id="itemPriceInputEdit" value={newItem.price} onChange={ handleChangeItem } onKeyPress={this.validate} placeholder="12.99 or 15000" required/>
                                 </div>
                             </div>
                             <div className="row mb-4">
                                 <div className="col">
-                                    <label htmlFor="itemDescriptionInputEdit">Item description</label>
-                                    <textarea name="description" className="form-control" value={newItem.description} id="itemDescriptionInputEdit" onChange={ handleChangeItem } rows="3" required></textarea>
+                                    <textarea name="description" className="form-control" value={newItem.description} id="itemDescriptionInputEdit" onChange={ handleChangeItem } rows="3" required placeholder="Item description"></textarea>
                                 </div>
                             </div>
                             <div className="row mb-4">
                                 <div className="col">
-                                    <label htmlFor="editItemNotesInput">Extra notes, food allergens, etc.</label>
-                                    <textarea name="extra_notes" className="form-control" value={newItem.extra_notes ? newItem.extra_notes : ''} onChange={ handleChangeItem } id="editItemNotesInput" rows="2"></textarea>
+                                    <textarea name="extra_notes" className="form-control" value={newItem.extra_notes ? newItem.extra_notes : ''} onChange={ handleChangeItem } id="editItemNotesInput" rows="2" placeholder="Extra notes, food allergens, etc."></textarea>
                                 </div>
                             </div>
                             <div className="row mb-4">

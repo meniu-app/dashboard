@@ -90,24 +90,20 @@ class ItemModal extends Component {
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
                                 <div className="row mb-4">
                                     <div className="col-6">
-                                        <label htmlFor="itemNameInput" className="form-label">Item name</label>
-                                        <input name="name" type="text" className="form-control" id="itemNameInput" placeholder="Sopa de tomate" required/>
+                                        <input name="name" type="text" className="form-control" id="itemNameInput" placeholder="Iten name" required/>
                                     </div>
                                     <div className="col-6">
-                                        <label htmlFor="itemPriceInput" className="form-label">Item price</label>
-                                        <input name="price" type="text" min="0" className="form-control" id="itemPriceInput" placeholder="12.99" onKeyPress={this.validate} required/>
+                                        <input name="price" type="text" min="0" className="form-control" id="itemPriceInput" placeholder="12.99 or 15000" onKeyPress={this.validate} required/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-12">
-                                        <label htmlFor="itemDescriptionInput">Item description</label>
-                                        <textarea name="description" className="form-control" id="itemDescriptionInput" rows="3" required></textarea>
+                                        <textarea name="description" className="form-control" id="itemDescriptionInput" rows="3" required placeholder="Item description"></textarea>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-12">
-                                        <label htmlFor="itemNotesInput">Extra notes, food allergens, etc.</label>
-                                        <textarea name="extra_notes" className="form-control" id="itemNotesInput" rows="2"></textarea>
+                                        <textarea name="extra_notes" className="form-control" id="itemNotesInput" rows="2" placeholder="Extra notes, food allergens, etc."></textarea>
                                     </div>
                                 </div>
                                 
