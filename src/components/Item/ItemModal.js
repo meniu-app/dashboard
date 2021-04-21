@@ -90,7 +90,7 @@ class ItemModal extends Component {
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
                                 <div className="row mb-4">
                                     <div className="col-6">
-                                        <input name="name" type="text" className="form-control" id="itemNameInput" placeholder="Iten name" required/>
+                                        <input name="name" type="text" className="form-control" id="itemNameInput" placeholder="Item name" required/>
                                     </div>
                                     <div className="col-6">
                                         <input name="price" type="text" min="0" className="form-control" id="itemPriceInput" placeholder="12.99 or 15000" onKeyPress={this.validate} required/>
