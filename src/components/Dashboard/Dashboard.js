@@ -15,7 +15,6 @@ import EditItemModal from '../Item/EditItemModal';
 import EditMenuModal from '../Menu/EditMenuModal';
 import DeleteMenuModal from '../Menu/DeleteMenuModal';
 import DeleteItemModal from '../Item/DeleteItemModal';
-import NumberFormat from 'react-number-format';
 
 class Dashboard extends React.Component {
 
@@ -76,6 +75,19 @@ class Dashboard extends React.Component {
 
     changeShowEditModal = () => {
         this.setState({showEditModal: false})
+    }
+
+    formatNumber = (value) => {
+        switch (this.props.restaurantDetail.country) {
+            case 'US':
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
+            case 'ES':
+                return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value)
+            case 'MX':
+                return '$' + new Intl.NumberFormat('en-MX').format(value)
+            default:
+                return '$' + new Intl.NumberFormat('es-CO').format(value)
+        }
     }
 
     render() {
@@ -172,7 +184,7 @@ class Dashboard extends React.Component {
                                                             </div>
                                                             <div className="col-3">
                                                                 <p className="me-1">
-                                                                    <b><NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} prefix={'$'} /></b>
+                                                                    <b>{this.formatNumber(item.price)}</b>
                                                                 </p>
                                                             </div>
                                                             <div className="col-4">
