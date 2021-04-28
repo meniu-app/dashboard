@@ -15,7 +15,6 @@ import EditItemModal from '../Item/EditItemModal';
 import EditMenuModal from '../Menu/EditMenuModal';
 import DeleteMenuModal from '../Menu/DeleteMenuModal';
 import DeleteItemModal from '../Item/DeleteItemModal';
-import NumberFormat from 'react-number-format';
 
 class Dashboard extends React.Component {
 
@@ -78,6 +77,19 @@ class Dashboard extends React.Component {
         this.setState({showEditModal: false})
     }
 
+    formatNumber = (value) => {
+        switch (this.props.restaurantDetail.country) {
+            case 'US':
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
+            case 'ES':
+                return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value)
+            case 'MX':
+                return '$' + new Intl.NumberFormat('en-MX').format(value)
+            default:
+                return '$' + new Intl.NumberFormat('es-CO').format(value)
+        }
+    }
+
     render() {
 
         const { menuDetail, menuDetailDataReady, restaurantDataReady, restaurantDetail } = this.props;
@@ -96,6 +108,8 @@ class Dashboard extends React.Component {
             if (category.items.length > 0)
                 return category
         })
+
+        categories.sort((a, b) => a?.name > b?.name ? 1 : -1)
 
         return (
             <div id="main-content" className="col-xs-12 col-md-9 col-sm-8 col-lg-9 col-xl-10">
@@ -172,7 +186,7 @@ class Dashboard extends React.Component {
                                                             </div>
                                                             <div className="col-3">
                                                                 <p className="me-1">
-                                                                    <b><NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} prefix={'$'} /></b>
+                                                                    <b>{this.formatNumber(item.price)}</b>
                                                                 </p>
                                                             </div>
                                                             <div className="col-4">
