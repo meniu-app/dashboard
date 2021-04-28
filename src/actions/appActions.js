@@ -77,7 +77,9 @@ import {
     EDIT_USER_DATA_ERROR,
     CHANGE_PASSWORD,
     CHANGE_PASSWORD_SUCCESS,
-    CHANGE_PASSWORD_ERROR
+    CHANGE_PASSWORD_ERROR,
+    REMOVE_IMAGE_DATA,
+    REMOVE_IMAGE_DATA_SUCCESS
 } from './types';
 import API from '../api/Api';
 import {
@@ -257,7 +259,7 @@ export const resetPasswordConfirmData = (password, token) => async (dispatch) =>
         dispatch(alertActivateAction({text: 'Password succesfully updated', alert: 'success'}));
         return dispatch(resetPasswordConfirmInitSuccessAction(data));
     } catch (error) {
-        if (error.response.data?.email) {
+        if (error.response.data?.password) {
             dispatch(alertActivateAction({text: 'Please create a strong password', alert: 'danger'}));
         } else {
             dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
@@ -757,7 +759,7 @@ export const addUserData = (data, role) => async (dispatch) => {
             response = await API.addBusinessManager(data);
         const responseData = response['data'];
 
-        if (responseData.restaurant !== null) {
+        if (responseData.restaurant !== null && responseData.restaurant !== undefined) {
             const restaurant = await API.getRestaurantDetail(responseData.restaurant);
             const restaurantData = restaurant['data'];
             dispatch(addRestaurantDataOwnerSuccessAction(restaurantData));
@@ -803,15 +805,16 @@ const editItemDataErrorAction = (error) => ({
  * update the store about the content of the app
  * @returns {Object}
  */
-export const editItemData = (data, imageData, id, imageId, ) => async (dispatch) => {
+export const editItemData = (data, imageData, id, imageId, imageRemoved) => async (dispatch) => {
     dispatch(editItemDataInitAction());
     try {
         const response = await API.editItem(data, id);
         const responseData = response['data'];
         // Making image update after item is created
-        if (imageId !== null)
+        if (imageId !== null && !imageRemoved) {
             await API.editImage(imageData, imageId);
-        if (imageId === null) {
+        }
+        if (imageId === null || (imageData.get('image').name !== '' && imageRemoved)) {
             imageData.append('item', id)
             imageData.append('approved', true)
             imageData.append('active', true)
@@ -1323,5 +1326,45 @@ export const changePasswordData = (data, id) => async (dispatch) => {
             dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
         }
         return dispatch(changePasswordInitErrorAction(`Error: ${error}`));
+    }
+}
+
+/**
+ * Action to remove Image
+ */
+ const removeImageDataInitAction = () => ({
+    type: REMOVE_IMAGE_DATA
+});
+
+/**
+ * Action to remove Image success
+ */
+const removeImageDataSuccessAction = (data) => ({
+    type: REMOVE_IMAGE_DATA_SUCCESS,
+    payload: data
+});
+
+/**
+ * Action to remove Image failed
+ */
+const removeImageDataErrorAction = () => ({
+    type: REMOVE_IMAGE_DATA_SUCCESS
+});
+
+/**
+ * Function to add remove Image
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object}
+ */
+export const removeImagetData = (id) => async (dispatch) => {
+    dispatch(removeImageDataInitAction());
+    try {
+        await API.deleteImage(id);
+        dispatch(alertActivateAction({text: 'Image removed', alert: 'success'}));
+        return dispatch(removeImageDataSuccessAction());
+    } catch (error) {
+        dispatch(alertActivateAction({text: 'An error occurred', alert: 'danger'}));
+        return dispatch(removeImageDataErrorAction({error: error}));
     }
 }

@@ -25,6 +25,6 @@ export const initialize = () => {
 };
 
 export const track = (name, props) => {
-  // 'application' stands for app type, in future 'Meniu administration dashboard' will be tracked also
-  mixpanel.track(name, { application: 'Meniu mobile', environment: ENV, ...props });
+  // 'application' stands for app type, in future 'LULO administration dashboard' will be tracked also
+  mixpanel.track(name, { application: 'LULO mobile', environment: ENV, ...props });
 };

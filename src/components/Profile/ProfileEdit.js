@@ -11,49 +11,41 @@ class ProfileEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: ''
+      email: ''
     }
   }
 
   componentDidMount() {
     const user = getUser();
     if (user) {
-      this.setState({firstName: user.first_name, lastName: user.last_name})
+      this.setState({email: user.email})
     }
   }
 
   changeProfile = async (e) => {
-    const { appActions, history } = this.props;
+    const { appActions, refreshUserEmail } = this.props;
     e.preventDefault();
     const user = getUser();
-    const response = await appActions.editUserData({first_name: this.state.firstName, last_name: this.state.lastName}, user.id);
+    const response = await appActions.editUserData({email: this.state.email}, user.id);
     if (response.type === 'EDIT_USER_DATA_SUCCESS') {
       const user = getUser();
-      user.first_name = this.state.firstName;
-      user.last_name = this.state.lastName;
+      user.email = this.state.email;
       setUser(user);
-      history.push('/settings');
+      refreshUserEmail(user.email);
     }
   }
 
   render() {
     return (
-      <div className="container">
-        <form onSubmit={this.changeProfile} className="form--login" method="POST">
-              <div className="mb-3">
-                  <label htmlFor="profilefirstName" className="form-label">First name</label>
-                  <input type="text" name="firstName" className="form-control" value={this.state.firstName} onChange={e => this.setState({firstName: e.target.value})} required id="profilefirstName"></input>
-              </div>
-              <div className="mb-3">
-                  <label htmlFor="profilelastName" className="form-label">last name</label>
-                  <input type="text" name="lastName" className="form-control" value={this.state.lastName} onChange={e => this.setState({lastName: e.target.value})} required id="profilelastName"></input>
-              </div>
-              <div className="d-grid gap-2">
-                <button className="btn btn-success">Change profile</button>
-              </div>
-          </form>
-      </div>
+      <form onSubmit={this.changeProfile} method="POST" className="mb-5" style={{'width': '300px'}}>
+        <div className="mb-3">
+            <label htmlFor="profileEmail" className="form-label">New Email</label>
+            <input type="text" name="email" className="form-control" value={this.state.email} onChange={e => this.setState({email: e.target.value})} required id="profileEmail"></input>
+        </div>
+        <div className="d-grid gap-2">
+          <button className="btn btn-success">Submit</button>
+        </div>
+      </form>
     );
   }
 }
@@ -61,7 +53,8 @@ class ProfileEdit extends Component {
 ProfileEdit.propTypes = {
   appActions: PropTypes.objectOf(PropTypes.func).isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
-  history: PropTypes.object
+  history: PropTypes.object,
+  refreshUserEmail: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({

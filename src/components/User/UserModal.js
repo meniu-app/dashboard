@@ -20,7 +20,6 @@ class UserModal extends Component {
         const response = await appActions.addUserData(data, role.value)
         if (response) {
             event.target.email.value = '';
-            event.target.password.value = '';
             document.getElementById('button-close-modal-user').click();
             await appActions.getRestaurantTreeViewDetailData();
         }
@@ -62,10 +61,10 @@ class UserModal extends Component {
                                         <label htmlFor="userEmailInput">Email</label>
                                         <input name="email" type="email" className="form-control" id="userEmailInput" placeholder="user@email.com" required/>
                                     </div>
-                                    <div className="col-6">
+                                    {/* <div className="col-6">
                                         <label htmlFor="userPasswordInput">Password</label>
                                         <input name="password" type="password" className="form-control" id="userPasswordInput" placeholder="" required/>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 {

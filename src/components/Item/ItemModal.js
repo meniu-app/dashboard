@@ -8,10 +8,17 @@ import Spinner from '../Spinner';
 
 class ItemModal extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+          showSelect: true
+        }
+      }
+
     async handleSubmit(event, props) {
-        const { appActions } = props;
+        const { appActions, restaurantDetail } = props;
         event.preventDefault();
-        const {name, price, description, category, menu, image} = event.target;
+        const {name, price, description, category, menu, image, extra_notes} = event.target;
         const formData = {
             name: name.value,
             price: price.value,
@@ -19,7 +26,8 @@ class ItemModal extends Component {
             category: category.value,
             menu: menu.value,
             active: true,
-            image: image
+            image: image,
+            extra_notes: extra_notes.value
         }
         const data = new FormData();
         const imageData = new FormData(event.target);
@@ -29,10 +37,23 @@ class ItemModal extends Component {
         data.append('category', formData.category);
         data.append('menu', formData.menu);
         data.append('active', formData.active);
+        data.append('extra_notes', formData.extra_notes);
 
-        const response = await appActions.addItemData(data, imageData, formData.menu);
+        if (!this.state.showSelect) {
+            const newCategory = await appActions.addCategoryData({
+                restaurant: restaurantDetail.id,
+                name: formData.category,
+                description: formData.category
+            })
+            if (newCategory.type === 'ADD_CATEGORY_DATA_SUCCESS') {
+                data.set('category', newCategory.payload.id)
+            }
+        }
+
+        const response = await appActions.addItemData(data, imageData, formData.menu, this.state.showSelect);
         if (response) {
             document.getElementById('button-close-modal-item').click();
+            this.setState({showSelect: true})
             await appActions.getRestaurantTreeViewDetailData();
         }
 
@@ -69,30 +90,29 @@ class ItemModal extends Component {
                             <form onSubmit={(e) => this.handleSubmit(e, this.props)} encType="multipart/form-data">
                                 <div className="row mb-4">
                                     <div className="col-6">
-                                        <label htmlFor="itemNameInput" className="form-label">Item name</label>
-                                        <input name="name" type="text" className="form-control" id="itemNameInput" placeholder="Sopa de tomate" required/>
+                                        <input name="name" type="text" className="form-control" id="itemNameInput" placeholder="Item name" required/>
                                     </div>
                                     <div className="col-6">
-                                        <label htmlFor="itemPriceInput" className="form-label">Item price</label>
-                                        <input name="price" type="text" min="0" className="form-control" id="itemPriceInput" placeholder="12.99" onKeyPress={this.validate} required/>
+                                        <input name="price" type="text" min="0" className="form-control" id="itemPriceInput" placeholder="12.99 or 15000" onKeyPress={this.validate} required/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-12">
-                                        <label htmlFor="itemDescriptionInput">Item description</label>
-                                        <textarea name="description" className="form-control" id="itemDescriptionInput" rows="3" required></textarea>
+                                        <textarea name="description" className="form-control" id="itemDescriptionInput" rows="3" required placeholder="Item description"></textarea>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-12">
-                                        <label htmlFor="itemNotesInput">Extra notes, food allergens, etc.</label>
-                                        <textarea name="notes" className="form-control" id="itemNotesInput" rows="2"></textarea>
+                                        <textarea name="extra_notes" className="form-control" id="itemNotesInput" rows="2" placeholder="Extra notes, food allergens, etc."></textarea>
                                     </div>
                                 </div>
                                 
                                 <div className="row mb-4">
                                     <div className="col-6">
-                                        <label htmlFor="itemMenuInput">Item menu</label>
+                                        <label htmlFor="itemMenuInput">
+                                            Item menu
+                                            <button className="btn btn-default" style={{visibility: 'hidden'}}>a</button>
+                                        </label>
                                         <select name="menu" className="form-control" id="itemMenuInput" required>
                                             {
                                                 menus.map(category => {
@@ -105,23 +125,31 @@ class ItemModal extends Component {
                                         {menus.length === 0 ? <p className="text-danger"><b>Please create a menu</b></p> : <></>}
                                     </div>
                                     <div className="col-6">
-                                        <label htmlFor="itemCategoryInput">Item category</label>
-                                        <select name="category" className="form-control" id="itemCategoryInput" required>
-                                            {
-                                                categories.map(category => {
-                                                    return (
-                                                        <option value={category.id} key={category.id}>{ category.name }</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                        {categories.length === 0 ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
+                                        <label htmlFor="itemCategoryInput">
+                                            Item category
+                                            <button type="button" className="btn btn-default" onClick={() => {this.setState({showSelect: !this.state.showSelect})}}>
+                                                <i className="fas fa-plus"></i>
+                                            </button>
+                                        </label>
+                                        {this.state.showSelect ?
+                                            <select name="category" className="form-control" id="itemCategoryInput" required>
+                                                {
+                                                    categories.map(category => {
+                                                        return (
+                                                            <option value={category.id} key={category.id}>{ category.name }</option>
+                                                        )
+                                                    })
+                                                }
+                                            </select> :
+                                            <input placeholder="New category" name="category" className="form-control" type="text" required/>
+                                        }
+                                        {categories.length === 0 && this.state.showSelect ? <p className="text-danger"><b>Please create a category</b></p> : <></>}
                                     </div>
                                 </div>
                                 <div className="row mb-4">
                                     <div className="col-6 file-input">
                                         <label htmlFor="itemImageInput">Image</label>
-                                        <input name="image" type="file" className="form-control-file" id="itemImageInput" required />
+                                        <input name="image" type="file" className="form-control-file" id="itemImageInput"/>
                                     </div>
                                 </div>
 

@@ -23,6 +23,8 @@ export default {
         message: {
             text: '',
             alert: 'success'
-        }
+        },
+
+        loginError: false
     }
 }

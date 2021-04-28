@@ -173,17 +173,20 @@ export default function(state = initialState.app, action) {
             };
         case POST_LOGIN:
             return {
-                ...state
+                ...state,
+                loginError: false
             };
         case POST_LOGIN_SUCCESS:
             return {
                 ...state,
-                isLoggedIn: true
+                isLoggedIn: true,
+                loginError: false
             };
         case POST_LOGIN_ERROR:
             return {
                 ...state,
-                isLoggedIn: false
+                isLoggedIn: false,
+                loginError: true
             };
         case RESET_PASSWORD:
             return {

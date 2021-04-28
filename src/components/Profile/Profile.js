@@ -1,42 +1,51 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { getUser } from "../../api/TokenHandler";
+import ProfileEdit from './ProfileEdit'
+import ProfileChangePassword from './ProfileChangePassword'
 
 class Profile extends Component {
-  render() {
-    const user = getUser();
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showFormEmail: false,
+      showFormPassword: false,
+      email: getUser().email
+    }
+  }
+
+  refreshUserEmail = (email) => {
+    this.setState({email: email})
+  }
+
+  render() {
     return (
       <div className="container">
         <div className="row">
-          <div className="col">
-            <h3 className="my-3">Settings</h3>
+          <h3 className="my-3">Profile</h3>
+          <div className="col-12">
             <div className="ms-4">
-              <div className="d-flex mb-3">
-                <h5>Account info</h5>
-                <Link to="/settings/edit" className="ms-5">
-                  Edit
-                </Link>
+              <div className="d-flex mb-3 align-items-end">
+                <p className="form-label"><strong>Email:</strong><br/>{this.state.email}</p>
+                <button type="button" className="btn btn-link ms-5" onClick={() => this.setState({showFormEmail: !this.state.showFormEmail, showFormPassword: false})}>
+                  {this.state.showFormEmail ? 'Editing' : 'Edit'}
+                </button>
               </div>
-              <h6>
-                <b>Name</b>
-              </h6>
-              <p>
-                {user.first_name} {user.last_name}
-              </p>
-              <h6>
-                <b>Address</b>
-              </h6>
-              <p>100 Main Stree</p>
-              <div className="d-flex">
-                <h6>Password</h6>
-                <Link to="/settings/change_password" className="ms-5">
-                  Edit
-                </Link>
+              {this.state.showFormEmail &&
+              <>
+                <ProfileEdit refreshUserEmail={this.refreshUserEmail}/>
+              </>}
+            </div>
+          </div>
+          <div className="col-12">
+            <div className="ms-4">
+              <div className="d-flex mb-3 align-items-end">
+                <p className="form-label mb-0"><strong>Password:</strong><br/>********</p>
+                <button type="button" className="btn btn-link ms-5" onClick={() => this.setState({showFormPassword: !this.state.showFormPassword, showFormEmail: false})}>
+                  {this.state.showFormPassword ? 'Editing' : 'Edit'}
+                </button>
               </div>
-              <h6>
-                <b>*************</b>
-              </h6>
+              {this.state.showFormPassword && <ProfileChangePassword />}
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // import Spinner from '../Spinner';
@@ -17,7 +17,7 @@ import DeleteMenuModal from '../Menu/DeleteMenuModal';
 import DeleteItemModal from '../Item/DeleteItemModal';
 import NumberFormat from 'react-number-format';
 
-class Dashboard extends Component {
+class Dashboard extends React.Component {
 
     constructor(props) {
         super(props);
@@ -29,9 +29,11 @@ class Dashboard extends Component {
                 description: '',
                 menu: '',
                 category: ''
-            }
+            },
+            showEditModal: false
         }
         this.setSelectedCategory = this.props.setSelectedCategory.bind(this)
+        this.EditItemModalRef = React.createRef();
     }
 
     handleChangeItem = (e) => {
@@ -67,10 +69,20 @@ class Dashboard extends Component {
         });
     }
 
+    editButton = (item) => {
+        this.setSelectedItem(item);
+        this.setState({showEditModal: true})
+    }
+
+    changeShowEditModal = () => {
+        this.setState({showEditModal: false})
+    }
+
     render() {
 
         const { menuDetail, menuDetailDataReady, restaurantDataReady, restaurantDetail } = this.props;
         let categories = []
+        const restaurantLogo = restaurantDetail.logo_url
 
         if (menuDetailDataReady) {
             categories = Object.keys(menuDetail.categories).map(key => {return {id: key, ...menuDetail.categories[key]}})
@@ -94,7 +106,7 @@ class Dashboard extends Component {
                         <ItemModal />
                         <CategoryModal />
                         <MenuModal />
-                        <EditItemModal item={{...this.state.selectedItem}} handleChangeItem={this.handleChangeItem}/>
+                        <EditItemModal item={{...this.state.selectedItem}} showEditModal={this.state.showEditModal} changeShowEditModal={this.changeShowEditModal} handleChangeItem={this.handleChangeItem}/>
                         <DeleteItemModal item={{...this.state.selectedItem}}/>
                     </div>
                 }
@@ -117,27 +129,39 @@ class Dashboard extends Component {
                                 <button className="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMenuModal">Edit</button>
                                 <button className="btn btn-outline-danger ms-2 btn-sm"  data-bs-toggle="modal" data-bs-target="#deleteMenuModal">Delete</button>
                             </div>
-                        </div> 
+                        </div>
                         <EditMenuModal menu={{...menuDetail}} handleChangeMenu={this.handleChangeMenu}/>
                     </section>
                     {
                         categories.map((category, index) => {
                             return (
                                 <div key={category.id + index} id={category.id + index} className="category-group">
-                                    <div className="card col-xl-4 col-lg-4 col-md-4 col-sm-6  col-12 category-title my-5">
-                                        <div className="card-body">
-                                            <h5 className="h6">{category.name}</h5>
-                                            {
-                                                category.id !== 'no_category' ?
-                                                <button className="btn btn-link" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit Category</button>
-                                                : <></>
-                                            }
+                                    <div className="row">
+                                        <div className="col-xl-4 col-lg-6 col-md-6">
+                                            <div className="card col-12 category-title my-3">
+                                                <div className="card-body">
+                                                    <h5 className="h6">{category.name}</h5>
+                                                    {
+                                                        category.id !== 'no_category' ?
+                                                          <button className="btn btn-link" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit Category</button>
+                                                          : <></>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row-cols-xl-6 row-cols-lg-6 row-cols-md-6">
+                                            <button className="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#categoryModal">
+                                                Add a category
+                                            </button>
                                         </div>
                                     </div>
                                     <div className="row">
                                     {
                                         category.items.map((item, indexItem) => {
-                                            const image = item.images.length > 0 ? `${item.images[0].image_url}` : "https://via.placeholder.com/100C/O";
+                                            let image = item.images.length > 0 ? `${item.images[0].image_url}` : restaurantDetail.logo_url;
+                                            if (image === 'null') {
+                                                image = restaurantLogo
+                                            }
                                             return (
                                                 <div className="col-xl-4 col-lg-6 col-md-6"  key={item.id + indexItem}>
                                                     <div className="card my-3">
@@ -152,11 +176,11 @@ class Dashboard extends Component {
                                                                 </p>
                                                             </div>
                                                             <div className="col-4">
-                                                                <img className="img-thumbnail" style={{height: "64px"}} src={image} alt=""/>
+                                                                <img className="img-thumbnail" style={{height: "64px"}} src={image !== null ? image : restaurantLogo} alt=""/>
                                                             </div>
                                                         </div>
                                                         <div className="d-flex pe-3 pb-1">
-                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#editItemModal">Edit</button>
+                                                            <button onClick={() => this.editButton(item)} className="btn btn-link" style={{width: 'fit-content'}} >Edit</button>
                                                             <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
                                                         </div>
                                                     </div>
@@ -164,6 +188,11 @@ class Dashboard extends Component {
                                             )
                                         })
                                     }
+                                        <div className="row-cols-xl-6 row-cols-lg-6 row-cols-md-6">
+                                            <button className="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                                Add an item
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             )

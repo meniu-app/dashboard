@@ -98,10 +98,10 @@ class Navbar extends Component {
                                     { user ?
                                         <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
                                             <li>
-                                                <Link className="dropdown-item" to="/settings" >Settings</Link>
+                                                <Link className="dropdown-item" to="/profile">Profile</Link>
                                             </li>
                                             <li>
-                                                <Link className="dropdown-item" to="/">Another action</Link>
+                                                <Link className="dropdown-item" to="/settings">Settings</Link>
                                             </li>
                                             <li>
                                                 <hr className="dropdown-divider" />

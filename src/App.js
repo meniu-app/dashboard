@@ -17,12 +17,11 @@ const Login = lazy(() => import('./components/Auth/Login'));
 const Dashboard = lazy(() => import('./components/Dashboard/Dashboard'));
 const Sidenav = lazy(() => import('./components/Sidenav/Sidenav'));
 const Profile = lazy(() => import('./components/Profile/Profile'));
-const ProfileEdit = lazy(() => import('./components/Profile/ProfileEdit'));
+const Settings = lazy(() => import('./components/Settings/Settings'));
 import Spinner from './components/Spinner';
 import { getRefreshToken, getUser, getUserRole, removeTokens, removeUser } from './api/TokenHandler';
 import Alert from './components/Alert';
 import ResetPassword from './components/Auth/ResetPassword';
-import ProfileChangePassword from './components/Profile/ProfileChangePassword';
 
 class App extends Component {
 
@@ -76,11 +75,11 @@ class App extends Component {
   }
 
 
-  
+
   render() {
     const { appStarted, restaurantDetail, restaurantDataReady, restaurantTreeViewData, restaurantTreeViewDataReady } = this.props;
     return (
-      <div>
+      <div className="flex-column">
       {appStarted ?
         <Router>
         <Suspense fallback={<Spinner></Spinner>}>
@@ -92,7 +91,7 @@ class App extends Component {
             </section>
             <Alert />
             <AuthenticatedRoute>
-              <div className="container-fluid">
+              <div className="container-fluid flex-1">
               <div id="main" className="row">
                   <Sidenav restaurantDetail={restaurantDetail}
                     restaurantDataReady={restaurantDataReady}
@@ -108,29 +107,21 @@ class App extends Component {
               </div>
             </AuthenticatedRoute>
           </Route>
-          <Route exact path="/settings">
+          <Route exact path="/profile">
             <Navbar/>
             <Alert />
             <AuthenticatedRoute>
               <Profile />
             </AuthenticatedRoute>
           </Route>
-          <Route exact path="/settings/edit">
+          <Route exact path="/settings">
             <Navbar/>
             <Alert />
             <AuthenticatedRoute>
-              <ProfileEdit />
-            </AuthenticatedRoute>
-          </Route>
-          <Route exact path="/settings/change_password">
-            <Navbar/>
-            <Alert />
-            <AuthenticatedRoute>
-              <ProfileChangePassword />
+              <Settings />
             </AuthenticatedRoute>
           </Route>
           <Route exact path="/auth/login">
-            <Alert />
             <UnAuthenticatedRoute>
               <Login />
               <Footer />
@@ -155,7 +146,7 @@ class App extends Component {
       );
     }
   }
-  
+
   App.propTypes = {
     appActions: PropTypes.objectOf(PropTypes.func).isRequired,
     appStarted: PropTypes.bool.isRequired,
@@ -164,7 +155,7 @@ class App extends Component {
     restaurantDataReady: PropTypes.bool.isRequired,
     restaurantTreeViewDataReady: PropTypes.bool.isRequired,
   };
-  
+
   const mapStateToProps = (state) => ({
     appStarted: state.app.appStarted,
     restaurantDetail: state.app.restaurantDetail,
@@ -172,13 +163,12 @@ class App extends Component {
     restaurantDataReady: state.app.restaurantDataReady,
     restaurantTreeViewDataReady: state.app.restaurantTreeViewDataReady,
   });
-  
+
   const mapDispatchToProps = (dispatch) => ({
     appActions: bindActionCreators(appAction, dispatch),
   });
-  
+
   export default connect(
     mapStateToProps,
     mapDispatchToProps,
     )(App);
-    
