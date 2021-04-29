@@ -107,6 +107,7 @@ class Sidenav extends Component {
                 id: categoryId,
                 label: categoriesObj[categoryId].name,
                 type: DATA_TYPES.category,
+                created_at: categoriesObj[categoryId]?.created_at,
                 nodes: categoriesObj[categoryId].items.map((item) => {
                     return {
                         key: item.id,
@@ -118,7 +119,7 @@ class Sidenav extends Component {
                 }),
                 parents: { restaurant, menu }
             }
-        })
+        }).sort((a, b) => a?.created_at > b?.created_at ? 1 : -1)
     }
 
     populateRestaurantNodes(restaurant) {
