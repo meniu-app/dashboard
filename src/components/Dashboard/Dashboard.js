@@ -109,7 +109,7 @@ class Dashboard extends React.Component {
                 return category
         })
 
-        categories.sort((a, b) => a?.name > b?.name ? 1 : -1)
+        categories.sort((a, b) => a?.created_at > b?.created_at ? 1 : -1)
 
         return (
             <div id="main-content" className="col-xs-12 col-md-9 col-sm-8 col-lg-9 col-xl-10">
