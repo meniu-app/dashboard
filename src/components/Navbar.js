@@ -91,7 +91,7 @@ class Navbar extends Component {
                                     }
                                     <li className="nav-item dropdown">
                                     { user ?
-                                        <div className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <div className="nav-link dropdown-toggle text-capitalize" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i className="fas fa-user me-1"></i> {this.getUserFullName(user.first_name, user.last_name)}
                                         </div>:<></>
                                     }
