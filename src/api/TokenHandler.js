@@ -76,7 +76,7 @@ export const getUserRole = () => {
         case 'owner':
             return 'owner';
         case 'bussines manager':
-            return 'bussines manager'
+            return 'business manager'
         default:
             return '';
     }

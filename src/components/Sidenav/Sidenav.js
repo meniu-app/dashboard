@@ -133,7 +133,7 @@ class Sidenav extends Component {
         const userRole = getUserRole();
         if (userRole === 'owner') {
             usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersBusinessManagerRoot ] };
-        } else if (userRole === 'bussines manager' || userRole === '') {
+        } else if (userRole === 'business manager' || userRole === '') {
             return [ menusRoot ];
         }
 
