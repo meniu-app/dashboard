@@ -52,7 +52,9 @@ class ItemModal extends Component {
 
         const response = await appActions.addItemData(data, imageData, formData.menu, this.state.showSelect);
         if (response) {
-            document.getElementById('button-close-modal-item').click();
+            const button = document.getElementById('button-close-modal-item');
+            if (button)
+                button.click()
             this.setState({showSelect: true})
             await appActions.getRestaurantTreeViewDetailData();
         }
