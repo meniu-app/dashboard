@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getAccessToken, getRefreshToken, removeTokens, removeUser, setAccessToken, } from './TokenHandler';
 import config from '../config';
 
-const baseUrl = config.env === 'development' ? 'https://meniu-server-dev.herokuapp.com/api' : 'https://api.oklulo.com/api';
+const baseUrl = config.env === 'development' ? 'https://lulo-server-dev.herokuapp.com/api' : 'https://api.oklulo.com/api';
 
 //request interceptor to add the auth token header to requests
 axios.interceptors.request.use(
