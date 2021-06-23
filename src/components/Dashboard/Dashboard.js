@@ -136,7 +136,7 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="me-3 d-flex justify-content-start">
                             <h3 className="mb-0">
-                                <img className="img-thumbnail me-3" src={menuDetail.qr_code} width="128" alt=""/>
+                                <img className="img-thumbnail me-3" src={'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl='+ window.location.href + '/restaurant/' + menuDetail.id +'?scanned=true'} width="128" alt=""/>
                                 Menu: {menuDetail.name}
                             </h3>
                             <div className="ms-3 d-flex align-items-center">
