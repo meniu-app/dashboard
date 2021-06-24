@@ -90,6 +90,17 @@ class Dashboard extends React.Component {
         }
     }
 
+    qrurl = (menu_id) => {
+        switch (window.location.href) {
+            case 'http://lulo-dashboard-dev.herokuapp.com/':
+                return 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://lulo-mobile-dev.herokuapp.com/restaurant/' + menu_id + '?scanned=true'
+            case 'https://lulo-dashboard-dev.herokuapp.com/':
+                return 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://lulo-mobile-dev.herokuapp.com/restaurant/' + menu_id + '?scanned=true'        
+            default:
+                return 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://app.oklulo.com/restaurant/' + menu_id + '?scanned=true'
+        }
+    }
+
     render() {
 
         const { menuDetail, menuDetailDataReady, restaurantDataReady, restaurantDetail } = this.props;
@@ -136,7 +147,7 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="me-3 d-flex justify-content-start">
                             <h3 className="mb-0">
-                                <img className="img-thumbnail me-3" src={menuDetail.qr_code} width="128" alt=""/>
+                                <img className="img-thumbnail me-3" src={this.qrurl(restaurantDetail.id)} width="180" alt=""/>
                                 Menu: {menuDetail.name}
                             </h3>
                             <div className="ms-3 d-flex align-items-center">

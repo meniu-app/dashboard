@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "./assets/scss/styles.scss";
@@ -7,6 +9,16 @@ import appStore from './store';
 import { Provider } from 'react-redux';
 
 const store = appStore();
+
+Sentry.init({
+    dsn: "https://5ad063c50f6544fb8da194a2882004d3@o879743.ingest.sentry.io/5832705",
+    integrations: [new Integrations.BrowserTracing()],
+
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 0.5,
+});
 
 ReactDOM.render(
   <Provider store={store}>
