@@ -85,6 +85,15 @@ h6 {
     color:#000;
     text-decoration: none;
     padding: 0 12px;
+
+    &.color__blue {
+      color: #0d6efd;
+    }
+
+    &.color__red {
+      color: #dc3545;
+    }
+
   }
 }
 
@@ -236,6 +245,27 @@ h6 {
   color: #0c63e4 !important;
 }
 
+.btn-outline-secondary.color__blue {
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.wrapper-btn-add {
+  height: 100px;
+  display: inline-flex;
+  align-self: end;
+  flex: 0 0 auto;
+  min-height: 176px;
+  width: 49% !important;
+}
+
+.btn-outline-secondary.btn-add {
+  margin-top: 40px;
+  margin-left: 20px;
+  height:100px;
+  width: fit-content;
+}
+
 #main-sidebar {
   border-right: 1px solid $layout-boders;
 
@@ -246,6 +276,10 @@ h6 {
 
 .modal {
   overflow-y: auto !important;
+}
+
+.img-thumbnail {
+  cursor: pointer;
 }
 
 /**
@@ -270,7 +304,7 @@ h6 {
   outline: none;
   width: 100%;
 }
-.rstm-tree-item-group {
+.rstm-tree-item-group, .tree-item-group {
   padding-left: 0;
   font-size: .9rem;
   .rstm-tree-item-level0 {
@@ -301,6 +335,8 @@ h6 {
   }
   .rstm-toggle-icon{
     font-weight: 700;
+    font-size: 8px;
+    vertical-align: middle;
   }
   .rstm-tree-item {
     .rstm-toggle-icon {

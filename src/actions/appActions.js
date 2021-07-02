@@ -399,6 +399,23 @@ export const getRestaurantTreeViewDetailData = () => async (dispatch) => {
 }
 
 /**
+ * Function to fetch Restaurants admin tree view data
+ * @param {function} dispatch it is a function to dispatch actions to
+ * update the store about the content of the app
+ * @returns {Object} This contains tree view data from restaurants
+ */
+export const getRestaurantAdminTreeViewDetailData = () => async (dispatch) => {
+    dispatch(getRestaurantTreeViewDetailDataAction());
+    try {
+        let response = await API.getRestaurantAdminTreeViewDetails();
+        const data = response['data'];
+        return dispatch(getRestaurantTreeViewDetailDataSuccessAction({data}));
+    } catch (error) {
+        return dispatch(getRestaurantTreeViewDetailDataErrorAction({error: error}));
+    }
+}
+
+/**
  * Function to remove init data from Restaurants
  * @param {function} dispatch it is a function to dispatch actions to
  * update the store about the content of the app
