@@ -95,7 +95,7 @@ class Dashboard extends React.Component {
             case 'http://lulo-dashboard-dev.herokuapp.com/':
                 return 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://lulo-mobile-dev.herokuapp.com/restaurant/' + menu_id + '?scanned=true'
             case 'https://lulo-dashboard-dev.herokuapp.com/':
-                return 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://lulo-mobile-dev.herokuapp.com/restaurant/' + menu_id + '?scanned=true'        
+                return 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://lulo-mobile-dev.herokuapp.com/restaurant/' + menu_id + '?scanned=true'
             default:
                 return 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://app.oklulo.com/restaurant/' + menu_id + '?scanned=true'
         }
@@ -147,7 +147,7 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="me-3 d-flex justify-content-start">
                             <h3 className="mb-0">
-                                <img className="img-thumbnail me-3" src={this.qrurl(restaurantDetail.id)} width="180" alt=""/>
+                                <img className="img-thumbnail me-3" src={this.qrurl(restaurantDetail.id)} width="180" alt="" onClick={() => window.open(this.qrurl(restaurantDetail.id), '_blank')}/>
                                 Menu: {menuDetail.name}
                             </h3>
                             <div className="ms-3 d-flex align-items-center">
@@ -168,7 +168,7 @@ class Dashboard extends React.Component {
                                                     <h5 className="h6">{category.name}</h5>
                                                     {
                                                         category.id !== 'no_category' ?
-                                                          <button className="btn btn-link" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit Category</button>
+                                                          <button className="btn btn-link color__blue" onClick={() => this.setSelectedCategory(category)} data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit Category</button>
                                                           : <></>
                                                     }
                                                 </div>
@@ -205,17 +205,17 @@ class Dashboard extends React.Component {
                                                             </div>
                                                         </div>
                                                         <div className="d-flex pe-3 pb-1">
-                                                            <button onClick={() => this.editButton(item)} className="btn btn-link" style={{width: 'fit-content'}} >Edit</button>
-                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-link" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
+                                                            <button onClick={() => this.editButton(item)} className="btn btn-link color__blue" style={{width: 'fit-content'}} >Edit</button>
+                                                            <button onClick={() => this.setSelectedItem(item)} className="btn btn-link color__red" style={{width: 'fit-content'}} data-bs-toggle="modal" data-bs-target="#deleteItemModal">Delete</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             )
                                         })
                                     }
-                                        <div className="row-cols-xl-6 row-cols-lg-6 row-cols-md-6">
-                                            <button className="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#itemModal">
-                                                Add an item
+                                        <div className="row-cols-xl-6 row-cols-lg-6 row-cols-md-6 wrapper-btn-add">
+                                            <button className="btn btn-outline-secondary btn-add color__blue" data-bs-dismiss="modal" aria-label="Close" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                                + Add
                                             </button>
                                         </div>
                                     </div>
