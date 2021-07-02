@@ -7,8 +7,10 @@ import EditCategoryModal from '../Category/EditCategoryModal';
 import { getUser, getUserRole } from '../../api/TokenHandler';
 import DeleteCategoryModal from '../Category/DeleteCategoryModal';
 import DeleteUserModal from '../User/DeleteUserModal';
-import TreeMenu from 'react-simple-tree-menu';
+import TreeMenu, { ItemComponent }  from 'react-simple-tree-menu';
 
+const openedIcon = <span>&#9660;</span>;
+const closedIcon = <span>&#9654;</span>;
 
 const DATA_TYPES = {
     restaurant: 'restaurant',
@@ -19,6 +21,7 @@ const DATA_TYPES = {
 };
 
 class Sidenav extends Component {
+    treeChildRef = React.createRef();
 
     constructor(props) {
         super(props);
@@ -123,14 +126,22 @@ class Sidenav extends Component {
     }
 
     populateRestaurantNodes(restaurant) {
-        const menus = restaurant.menus.map((menu) => {
-            return { key: menu.id, id: menu.id, type: DATA_TYPES.menu, label: menu.name, nodes: this.getCategoriesData(menu.categories, restaurant, menu), parents: { restaurant } };
-        });
+        const userRole = getUserRole();
+        let menus = [];
+        if (userRole === 'admin') {
+            menus = restaurant.menus.map((menu) => {
+                return { key: menu.id, id: menu.id, type: DATA_TYPES.menu, label: menu.name, parents: { restaurant } };
+            });
+        } else {
+            menus = restaurant.menus.map((menu) => {
+                return { key: menu.id, id: menu.id, type: DATA_TYPES.menu, label: menu.name, nodes: this.getCategoriesData(menu.categories, restaurant, menu), parents: { restaurant } };
+            });
+        }
+
         const menusRoot = { key: 'menus_root', label: 'Menus', nodes: menus };
         const usersOwnerRoot = { key: 'users_owner_root', label: 'Owner', nodes: restaurant.owner.map((owner) => this.getUserListData(owner, restaurant)) };
         const usersBusinessManagerRoot = { key: 'users_business_manager_root', label: 'Business Manager', nodes: restaurant.business_manager.map((manager) => this.getUserListData(manager, restaurant)) };
         let usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersOwnerRoot, usersBusinessManagerRoot ] };
-        const userRole = getUserRole();
         if (userRole === 'owner') {
             usersRoot = { key: 'users_root', label: 'Users', nodes: [ usersBusinessManagerRoot ] };
         } else if (userRole === 'business manager' || userRole === '') {
@@ -165,13 +176,26 @@ class Sidenav extends Component {
                 <div className="row my-4">
                     <div className="col">
                         <div className="text-center">
-                            <button type="button" className="btn btn-outline-secondary width-100" data-bs-toggle="modal" data-bs-target="#mainModal">
+                            <button type="button" className="btn btn-outline-secondary width-70 color__blue" data-bs-toggle="modal" data-bs-target="#mainModal">
                                 <b>+</b> ADD
                             </button>
                         </div>
                     </div>
                 </div>
-                <TreeMenu data={treeData} onClickItem={this.handleTreeOnToggle} />
+                <TreeMenu data={treeData} onClickItem={this.handleTreeOnToggle} ref={this.treeChildRef}>
+                    {({ items }) => (
+                      <ul className="tree-item-group">
+                          {items.map(({ key, ...props }) => (
+                            <ItemComponent
+                              key={key}
+                              {...props}
+                              openedIcon={openedIcon}
+                              closedIcon={closedIcon}
+                            />
+                          ))}
+                      </ul>
+                    )}
+                </TreeMenu>
                 <EditCategoryModal category={{...selectedCategory}} handleChangeCategory={this.handleChangeCategory}/>
                 <DeleteCategoryModal category={{...selectedCategory}}/>
                 <DeleteUserModal user={this.state.selectedUser} />
