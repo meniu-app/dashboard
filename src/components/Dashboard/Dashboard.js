@@ -184,8 +184,12 @@ class Dashboard extends React.Component {
                                     {
                                         category.items.map((item, indexItem) => {
                                             let image = item.images.length > 0 ? `${item.images[0].image_url}` : restaurantDetail.logo_url;
-                                            if (image === 'null') {
+                                            if (image === 'null' || image === undefined) {
                                                 image = restaurantLogo
+                                            } else {
+                                                image = image.split('/');
+                                                image.splice(6, 0, 'c_scale,w_200');
+                                                image = image.join('/');
                                             }
                                             return (
                                                 <div className="col-xl-4 col-lg-6 col-md-6"  key={item.id + indexItem}>
