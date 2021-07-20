@@ -22,7 +22,7 @@ class Settings extends Component {
         }
         this.inputRef = createRef(null)
     }
-    
+
     handleBackgroundChange = (color) => {
         this.setState({ background: color.hex });
     }
@@ -34,7 +34,7 @@ class Settings extends Component {
     handleChange = address => {
         this.setState({ address });
     };
-     
+
     handleSelect = address => {
         this.setState({ address })
         // geocodeByAddress(address)
@@ -101,7 +101,7 @@ class Settings extends Component {
                                         <p className="mt-2">{newRestaurant.name}</p>
                                     }
                                 </div>
-                               
+
                             </div>
                             <div className="row mb-4">
                                 <div className="col">
@@ -161,6 +161,7 @@ class Settings extends Component {
                                                 <option value="US">United States</option>
                                                 <option value="ES">Spain</option>
                                                 <option value="MX">Mexico</option>
+                                                <option value="AR">United Arab Emirates</option>
                                             </select> :
                                             <p className="mt-2">{newRestaurant.country}</p>
                                         }
@@ -196,7 +197,7 @@ class Settings extends Component {
                             <div className="row mb-4">
                                 <div className="col-6">
                                     <label className="mb-3"><b>Brand Color</b></label>
-                                    <CirclePicker 
+                                    <CirclePicker
                                         circleSize={24}
                                         onChange={ this.handleBackgroundChange }
                                         color={newRestaurant.settings.backgroundColor}
@@ -204,7 +205,7 @@ class Settings extends Component {
                                 </div>
                                 <div className="col-6">
                                     <label className="mb-3"><b>Brand Text Color</b></label>
-                                    <CirclePicker 
+                                    <CirclePicker
                                         circleSize={24}
                                         onChange={ this.handleColorChange }
                                         color={newRestaurant.settings.color}

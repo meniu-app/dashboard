@@ -18,7 +18,7 @@ class RestaurantModal extends Component {
             address: ''
         };
     }
-    
+
     handleBackgroundChange = (color) => {
         this.setState({ background: color.hex });
     }
@@ -53,7 +53,7 @@ class RestaurantModal extends Component {
     handleChange = address => {
         this.setState({ address });
     };
-     
+
     handleSelect = address => {
         this.setState({ address })
         // geocodeByAddress(address)
@@ -144,7 +144,8 @@ class RestaurantModal extends Component {
                                             <option value="US">United States</option>
                                             <option value="ES">Spain</option>
                                             <option value="MX">Mexico</option>
-                                        </select> 
+                                            <option value="AR">United Arab Emirates</option>
+                                        </select>
                                     </div>
                                     <div className="col">
                                         <input name="zipcode" type="text" className="form-control" id="restaurantZipInput" placeholder="Zip/Postal Code" required/>
@@ -159,14 +160,14 @@ class RestaurantModal extends Component {
                                 <div className="row mb-4">
                                     <div className="col-6">
                                         <label className="mb-3">Brand Color</label>
-                                        <CirclePicker 
+                                        <CirclePicker
                                             circleSize={24}
                                             onChange={ this.handleBackgroundChange }
                                             colors={this.colors()}/>
                                     </div>
                                     <div className="col-6">
                                         <label className="mb-3">Brand Text Color</label>
-                                        <CirclePicker 
+                                        <CirclePicker
                                             circleSize={24}
                                             onChange={ this.handleColorChange }
                                             colors={this.colors()}/>
