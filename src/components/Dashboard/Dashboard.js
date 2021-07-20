@@ -79,6 +79,8 @@ class Dashboard extends React.Component {
 
     formatNumber = (value) => {
         switch (this.props.restaurantDetail.country) {
+            case 'AR':
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'DHS' }).format(value)
             case 'US':
                 return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
             case 'ES':

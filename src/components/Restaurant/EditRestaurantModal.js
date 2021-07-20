@@ -22,7 +22,7 @@ class EditRestaurantModal extends Component {
         this.handleChangeRestaurant = this.props.handleChangeRestaurant.bind(this);
         this.handleBackgroudImageChange = this.handleBackgroudImageChange.bind(this);
     }
-    
+
     handleBackgroundChange = (color) => {
         this.setState({ background: color.hex });
     }
@@ -61,7 +61,7 @@ class EditRestaurantModal extends Component {
     handleChange = address => {
         this.setState({ address });
     };
-     
+
     handleSelect = address => {
         this.setState({ address })
         // geocodeByAddress(address)
@@ -154,7 +154,8 @@ class EditRestaurantModal extends Component {
                                             <option value="US">United States</option>
                                             <option value="ES">Spain</option>
                                             <option value="MX">Mexico</option>
-                                        </select> 
+                                            <option value="AR">United Arab Emirates</option>
+                                        </select>
                                     </div>
                                     <div className="col">
                                         <input name="zipcode" type="text" className="form-control" id="editRestaurantZipInput" defaultValue={newRestaurant.zipcode} placeholder="Zip/Postal Code" required/>
@@ -169,7 +170,7 @@ class EditRestaurantModal extends Component {
                                 <div className="row mb-4">
                                     <div className="col-6">
                                         <label className="mb-3">Brand Color</label>
-                                        <CirclePicker 
+                                        <CirclePicker
                                             circleSize={24}
                                             onChange={ this.handleBackgroundChange }
                                             color={newRestaurant.settings.backgroundColor}
@@ -177,7 +178,7 @@ class EditRestaurantModal extends Component {
                                     </div>
                                     <div className="col-6">
                                         <label className="mb-3">Brand Text Color</label>
-                                        <CirclePicker 
+                                        <CirclePicker
                                             circleSize={24}
                                             onChange={ this.handleColorChange }
                                             color={newRestaurant.settings.color}
