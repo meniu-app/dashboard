@@ -57,6 +57,9 @@ class EditMenuModal extends Component {
                                         <input name="availability" className="form-check-input" type="checkbox" id="itemAvailability" defaultChecked={newMenu.availability}/>
                                         <label className="form-check-label ms-2" htmlFor="itemAvailability">Available</label>
                                     </div>
+                                    <div className="col-6">
+                                        <input name="opened_at" className="form-control" type="time" id="itemOpenedAt" defaultValue={newMenu.opened_at} />
+                                    </div>
                                 </div>
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
