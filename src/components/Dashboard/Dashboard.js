@@ -106,7 +106,7 @@ class Dashboard extends React.Component {
             case 'HN': // Honduras
                 return new Intl.NumberFormat('es-HN', { style: 'currency', currency: 'HNL' }).format(value);
             case 'MX': // Mexico
-                return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(value);
+                return 'MX$' + new Intl.NumberFormat('es-MX').format(value);
             case 'NI': // Nicaragua
                 return new Intl.NumberFormat('es-NI', { style: 'currency', currency: 'NIO' }).format(value);
             case 'PA': // Panama
@@ -126,7 +126,7 @@ class Dashboard extends React.Component {
             case 'UY': // Uruguay
                 return new Intl.NumberFormat('es-UY', { style: 'currency', currency: 'UYU' }).format(value);
             case 'VE': // Venezuela
-                return new Intl.NumberFormat('es-VE', { style: 'currency', currency: 'VES' }).format(value);
+                return 'Bs' + new Intl.NumberFormat('es-VE').format(value);
             default:
                 return '$' + new Intl.NumberFormat('es-CO').format(value);
         }
