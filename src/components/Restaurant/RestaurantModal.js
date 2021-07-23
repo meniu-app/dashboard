@@ -140,11 +140,30 @@ class RestaurantModal extends Component {
                                     <div className="col">
                                         <select name="country" className="form-control" id="restaurantCountryInput" placeholder="Country" defaultValue=''>
                                             <option value=''>Select Country</option>
+                                            <option value="AE">Argentina</option>
+                                            <option value="BO">Bolivia</option>
+                                            <option value="BR">Brazil</option>
+                                            <option value="CA">Canada</option>
+                                            <option value="CL">Chile</option>
                                             <option value="CO">Colombia</option>
-                                            <option value="US">United States</option>
-                                            <option value="ES">Spain</option>
+                                            <option value="CR">Costa Rica</option>
+                                            <option value="DO">Dominican Republic</option>
+                                            <option value="CR">Ecuador</option>
+                                            <option value="SV">El Salvador</option>
+                                            <option value="GT">Guatemala</option>
+                                            <option value="HN">Honduras</option>
                                             <option value="MX">Mexico</option>
+                                            <option value="NI">Nicaragua</option>
+                                            <option value="PA">Panama</option>
+                                            <option value="PY">Paraguay</option>
+                                            <option value="PE">Peru</option>
+                                            <option value="PH">Philippines</option>
+                                            <option value="PR">Puerto Rico</option>
+                                            <option value="ES">Spain</option>
+                                            <option value="US">United States of America</option>
                                             <option value="AR">United Arab Emirates</option>
+                                            <option value="UY">Uruguay</option>
+                                            <option value="VE">Venezuela</option>
                                         </select>
                                     </div>
                                     <div className="col">
