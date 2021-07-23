@@ -423,7 +423,8 @@ export default function(state = initialState.app, action) {
                 menuDetail: {
                     ...state.menuDetail,
                     name: action.payload.data.name,
-                    description: action.payload.data.description
+                    description: action.payload.data.description,
+                    availability:  action.payload.data.availability
                 }
             }
         case EDIT_MENU_DATA_ERROR:

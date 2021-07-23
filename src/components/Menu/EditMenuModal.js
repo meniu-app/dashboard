@@ -17,6 +17,8 @@ class EditMenuModal extends Component {
         const { appActions, menu } = props;
         event.preventDefault();
         const data = new FormData(event.target)
+        const availability = data.get('availability')
+        data.set('availability', availability === 'on' ? true : false);
         const response = await appActions.editMenuData(data, menu.id);
         if (response){
             document.getElementById('button-close-modal-menu-edit').click();
@@ -50,7 +52,12 @@ class EditMenuModal extends Component {
                                         <textarea name="description" className="form-control" id="menuDescriptionInputEdit" defaultValue={newMenu.description} rows="3" required></textarea>
                                     </div>
                                 </div>
-                                
+                                <div className="row mb-4">
+                                    <div className="col-6">
+                                        <input name="availability" className="form-check-input" type="checkbox" id="itemAvailability" defaultChecked={newMenu.availability}/>
+                                        <label className="form-check-label ms-2" htmlFor="itemAvailability">Available</label>
+                                    </div>
+                                </div>
                                 <div className="mt-3 d-flex justify-content-end">
                                     <button type="button" className="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
                                     <button type="submit" className="btn btn-success">Submit</button>
