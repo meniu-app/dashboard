@@ -26,7 +26,7 @@ class EditItemModal extends React.Component {
     async handleSubmit(event) {
         const { appActions, item, restaurantDetail } = this.props;
         event.preventDefault();
-        const {name, price, description, category, menu, image, extra_notes} = event.target;
+        const {name, price, description, category, menu, image, extra_notes, availability} = event.target;
         const formData = {
             name: name.value,
             price: price.value,
@@ -35,7 +35,8 @@ class EditItemModal extends React.Component {
             menu: menu.value,
             active: true,
             image: image,
-            extra_notes: extra_notes.value
+            extra_notes: extra_notes.value,
+            availability: availability?.checked
         }
         if (formData.category === '') {
             formData.category = null;
@@ -49,6 +50,7 @@ class EditItemModal extends React.Component {
         data.append('menu', formData.menu);
         data.append('active', formData.active);
         data.append('extra_notes', formData.extra_notes);
+        data.append('availability', formData.availability);
 
         let imageId = item.images.length > 0 ? item.images[0].id : null;
         if (formData.image.value === '')
@@ -212,7 +214,12 @@ class EditItemModal extends React.Component {
                                     }
                                 </div>
                             </div>
-                            
+                            <div className="row mb-4">
+                                <div className="col-6">
+                                    <input name="availability" className="form-check-input" type="checkbox" id="itemAvailability" defaultChecked={newItem.availability}/>
+                                    <label className="form-check-label ms-2" htmlFor="itemAvailability">Available {newItem.availability}</label>
+                                </div>
+                            </div>
                             <div className="mt-3 d-flex justify-content-end">
                                 <button type="button" className="btn btn-danger me-3" onClick={this.props.changeShowEditModal}>Cancel</button>
                                 <button type="submit" className="btn btn-success">Submit</button>

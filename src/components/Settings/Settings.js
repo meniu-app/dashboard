@@ -9,6 +9,7 @@ import PlacesAutocomplete, {
     // geocodeByAddress,
     // getLatLng
 } from 'react-places-autocomplete';
+import timezones from './timezones';
 
 class Settings extends Component {
 
@@ -80,6 +81,7 @@ class Settings extends Component {
     render () {
         const { formLoading, restaurantDetail, handleChangeRestaurant } = this.props
         const newRestaurant = {...restaurantDetail};
+        const timeZones = timezones;
 
         return (
             <div className="container mt-4">
@@ -199,6 +201,21 @@ class Settings extends Component {
                                     { this.state.formEdit ?
                                         <input name="phone" type="tel" className="form-control" id="settingsPhoneInputEdit" defaultValue={newRestaurant.phone} onChange={ handleChangeRestaurant } placeholder="3453456" required/> :
                                         <p className="mt-2">{newRestaurant.phone}</p>
+                                    }
+                                </div>
+                                <div className="col">
+                                    <label htmlFor="settingsTimrZoneInputEdit"><b>Store Time Zone</b></label>
+                                    { this.state.formEdit ?
+                                        <select name="time_zone" className="form-control" id="settingsTimrZoneInputEdit" required defaultValue={newRestaurant.time_zone}>
+                                            {
+                                                timeZones.map(timezone => {
+                                                    return <option value={timezone.value} key={timezone.value}>{timezone.text}</option>
+                                                })
+                                            }
+                                        </select>
+                                        :
+                                        <p className="mt-2">{newRestaurant.time_zone}</p>
+                                        // <input defaultValue={newRestaurant.time_zone} onChange={ handleChangeRestaurant } placeholder="America/Bogota" required/> 
                                     }
                                 </div>
                             </div>
