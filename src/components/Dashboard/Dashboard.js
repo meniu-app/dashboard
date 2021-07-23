@@ -79,16 +79,56 @@ class Dashboard extends React.Component {
 
     formatNumber = (value) => {
         switch (this.props.restaurantDetail.country) {
-            case 'AR':
-                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'DHS' }).format(value)
-            case 'US':
-                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
-            case 'ES':
-                return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value)
-            case 'MX':
-                return '$' + new Intl.NumberFormat('en-MX').format(value)
+            case 'AR': // United Arab Emirates should be AE but due to mistake and fact of usage in prod by client should stay as is
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'DHS' }).format(value);
+            case 'AE': // Argentina should be AR but due to AR already used replaced with AE
+                return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(value);
+            case 'BO': // Bolivia
+                return new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB' }).format(value);
+            case 'BR': // Brazil
+                return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+            case 'CA': // Canada
+                return new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(value);
+            case 'CL': // Chile
+                return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(value);
+            case 'CO': // Colombia
+                return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
+            case 'CR': // Costa Rica
+                return new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'CRC' }).format(value);
+            case 'DO': // Dominican Republic
+                return new Intl.NumberFormat('es-DO', { style: 'currency', currency: 'DOP' }).format(value);
+            case 'EC': // Ecuador
+                return new Intl.NumberFormat('es-EC', { style: 'currency', currency: 'USD' }).format(value);
+            case 'SV': // El Salvador
+                return new Intl.NumberFormat('es-SV', { style: 'currency', currency: 'USD' }).format(value);
+            case 'GT': // Guatemala
+                return new Intl.NumberFormat('es-GT', { style: 'currency', currency: 'GTQ' }).format(value);
+            case 'HN': // Honduras
+                return new Intl.NumberFormat('es-HN', { style: 'currency', currency: 'HNL' }).format(value);
+            case 'MX': // Mexico
+                return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(value);
+            case 'NI': // Nicaragua
+                return new Intl.NumberFormat('es-NI', { style: 'currency', currency: 'NIO' }).format(value);
+            case 'PA': // Panama
+                return new Intl.NumberFormat('es-PA', { style: 'currency', currency: 'USD' }).format(value);
+            case 'PY': // Paraguay ₲ { style: 'currency', currency: 'PYG' }
+                return '₲' + new Intl.NumberFormat('es-PY').format(value);
+            case 'PE': // Peru
+                return new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(value);
+            case 'PH': // Philippines
+                return new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(value);
+            case 'PR': // Puerto Rico
+                return new Intl.NumberFormat('es-PR', { style: 'currency', currency: 'USD' }).format(value);
+            case 'ES': // Spain
+                return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value);
+            case 'US': // United States of America
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+            case 'UY': // Uruguay
+                return new Intl.NumberFormat('es-UY', { style: 'currency', currency: 'UYU' }).format(value);
+            case 'VE': // Venezuela
+                return new Intl.NumberFormat('es-VE', { style: 'currency', currency: 'VES' }).format(value);
             default:
-                return '$' + new Intl.NumberFormat('es-CO').format(value)
+                return '$' + new Intl.NumberFormat('es-CO').format(value);
         }
     }
 
