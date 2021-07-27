@@ -7,7 +7,7 @@ import Spinner from '../Spinner';
 import { CirclePicker } from 'react-color';
 import { getUser, getUserRole } from '../../api/TokenHandler';
 import PlacesAutocomplete from 'react-places-autocomplete';
-import timezones from '../settings/timezones';
+import timezones from '../../components/settings/timezones';
 
 class RestaurantModal extends Component {
 
