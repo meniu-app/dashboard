@@ -9,7 +9,7 @@ import PlacesAutocomplete, {
     // geocodeByAddress,
     // getLatLng
 } from 'react-places-autocomplete';
-import timezones from '../../components/settings/timezones';
+import timezones from '../../components/Settings/timezones';
 
 class EditRestaurantModal extends Component {
 
