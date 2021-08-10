@@ -9,6 +9,7 @@ import PlacesAutocomplete, {
     // geocodeByAddress,
     // getLatLng
 } from 'react-places-autocomplete';
+import timezones from '../../components/Settings/timezones';
 
 class EditRestaurantModal extends Component {
 
@@ -82,6 +83,7 @@ class EditRestaurantModal extends Component {
         const { formLoading, restaurantDetail, handleChangeRestaurant } = this.props;
 
         const newRestaurant = {...restaurantDetail};
+        const timeZones = timezones;
 
         return (
             <div className="modal fade" id="editRestaurantModal" tabIndex="-1" aria-labelledby="editRestaurantModalLabel" aria-hidden="true">
@@ -178,6 +180,18 @@ class EditRestaurantModal extends Component {
                                     </div>
                                     <div className="col">
                                         <input name="zipcode" type="text" className="form-control" id="editRestaurantZipInput" defaultValue={newRestaurant.zipcode} placeholder="Zip/Postal Code" required/>
+                                    </div>
+                                </div>
+                                <div className="row mb-4">
+                                    <div className="col-6">
+                                        <label htmlFor="settingsTimrZoneInputEdit"><b>Store Time Zone</b></label>
+                                        <select name="time_zone" className="form-control" id="settingsTimrZoneInputEdit" required defaultValue={newRestaurant.time_zone}>
+                                            {
+                                                timeZones.map(timezone => {
+                                                    return <option value={timezone.value} key={timezone.value}>{timezone.text}</option>
+                                                })
+                                            }
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="row mb-4">

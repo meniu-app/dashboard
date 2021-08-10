@@ -13,7 +13,8 @@ class MenuModal extends Component {
 
         event.preventDefault();
         const data = new FormData(event.target)
-        data.append('restaurant', restaurantDetail.id)
+        data.append('restaurant', restaurantDetail.id);
+        data.append('availability', true);
         const response = await appActions.addMenuData(data)
         if (response){
             document.getElementById('button-close-modal-menu').click();

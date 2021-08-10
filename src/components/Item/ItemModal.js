@@ -38,6 +38,7 @@ class ItemModal extends Component {
         data.append('menu', formData.menu);
         data.append('active', formData.active);
         data.append('extra_notes', formData.extra_notes);
+        data.append('availability', true);
 
         if (!this.state.showSelect) {
             const newCategory = await appActions.addCategoryData({
